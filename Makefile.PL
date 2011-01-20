@@ -1,0 +1,19 @@
+use strict;
+use warnings;
+use ExtUtils::MakeMaker;
+
+WriteMakefile(
+    NAME                => 'Lingua::IT::Ita2heb',
+    AUTHOR              => q{Amir E. Aharoni <amir.aharoni@mail.huji.ac.il>},
+    VERSION_FROM        => 'lib/Lingua/IT/Ita2heb.pm',
+    ABSTRACT_FROM       => 'lib/Lingua/IT/Ita2heb.pm',
+    ($ExtUtils::MakeMaker::VERSION >= 6.3002
+      ? ('LICENSE'=> 'perl')
+      : ()),
+    PL_FILES            => {},
+    PREREQ_PM => {
+        'Test::More' => 0,
+    },
+    dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
+    clean               => { FILES => 'Lingua-IT-Ita2heb-*' },
+);
