@@ -1,7 +1,9 @@
 package Lingua::IT::Ita2heb;
 
-use warnings;
+use 5.10.0;
+
 use strict;
+use warnings;
 use utf8;
 
 use Carp;
@@ -57,9 +59,9 @@ my $KHOLAM          = 'ֹ';
 my $KUBUTS          = 'ֻ';
 my $RAFE            = 'ֿ';
 
-my $DAGESH = $MAPIK = 'ּ';
+my $DAGESH = my $MAPIK = 'ּ';
 my $KHOLAM_MALE = $VAV . $KHOLAM;
-my $SHURUK      = $VAV . $SHURUK;
+my $SHURUK      = $VAV . $DAGESH;
 my $KHIRIK_MALE = $KHIRIK . $YOD;
 
 my $LATIN_VOWEL = qr/aeiou/xms;
@@ -97,9 +99,10 @@ sub ita_to_heb {
     my @ita_letters = split qr//, lc $ita;
 
     foreach my $ita_letter_index (0 .. $#ita_letters) {
-        my $ita_letter = $ita_letters[];
+        my $ita_letter = $ita_letters[$ita_letter_index];
+        
         if ($word_init and $ita_letter =~ $LATIN_VOWEL) {
-            $heb .= $HEBREW_LETTER{'aleph'};
+            $heb .= $ALEPH;
         }
         
         my $hebrew_to_add;
@@ -114,7 +117,7 @@ sub ita_to_heb {
             when ('d') {
                 $hebrew_to_add = $DALET;
             }
-            when ([qw (e è é) ) {
+            when ([qw (e è é)]) {
                 $hebrew_to_add = $SEGOL;
             }
             when ('f') {
@@ -167,7 +170,7 @@ sub ita_to_heb {
         
         if ($ita_letter_index == $#ita_letters) {
             if ($hebrew_to_add ~~ [ $KAMATS, $SEGOL ]) {
-                $heb .= $HEBREW_LETTER{'he'};
+                $heb .= $HE;
             }
         }
         
@@ -183,11 +186,11 @@ my $NO_CLOSED_PAST_THIS = 3;
 sub closed_syllable {
     my ($letters_ref, $letter_index) = @_;
     
-    if (($#{letters_ref} - $letter_index) < $NO_CLOSED_PAST_THIS) {
+    if (($#{$letters_ref} - $letter_index) < $NO_CLOSED_PAST_THIS) {
         return 0;
     }
     
-    for $offset (1, 2) {
+    for my $offset (1, 2) {
         if ($letters_ref->[$letter_index + $offset] =~ $LATIN_VOWEL) {
             return 0;
         }
