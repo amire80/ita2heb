@@ -6,14 +6,13 @@ use warnings;
 
 use Test::More tests => 1;
 use Lingua::IT::Ita2heb;
-use utf8;
 use charnames ':full';
 use English '-no_match_vars';
 use open ':encoding(utf8)';
 
 our $VERSION = '0.01';
 
-my $log_filename = '05-g.log';
+my $log_filename = __FILE__ . '.log';
 open my $log, '>', $log_filename    ## no critic InputOutput::RequireBriefOpen
     or croak("Couldn't open $log_filename for writing: $OS_ERROR");
 
