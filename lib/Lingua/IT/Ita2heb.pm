@@ -5,6 +5,7 @@ use 5.010;
 use strict;
 use warnings;
 use utf8;
+use charnames ':full';
 
 use Carp;
 
@@ -22,46 +23,46 @@ Version 0.01
 
 our $VERSION = '0.01';
 
-my $ALEPH           = q{א};
-my $BET             = q{ב};
-my $GIMEL           = q{ג};
-my $DALET           = q{ד};
-my $HE              = q{ה};
-my $VAV             = q{ו};
-my $ZAYIN           = q{ז};
-my $KHET            = q{ח};
-my $TET             = q{ט};
-my $YOD             = q{י};
-my $KAF             = q{כ};
-my $KAF_SOFIT       = q{ך};
-my $LAMED           = q{ל};
-my $MEM             = q{מ};
-my $MEM_SOFIT       = q{ם};
-my $NUN             = q{נ};
-my $NUN_SOFIT       = q{ן};
-my $SAMEKH          = q{ס};
-my $AYIN            = q{ע};
-my $PE              = q{פ};
-my $PE_SOFIT        = q{ף};
-my $TSADE           = q{צ};
-my $TSADE_SOFIT     = q{ץ};
-my $KOF             = q{ק};
-my $RESH            = q{ר};
-my $SHIN            = q{ש};
-my $TAV             = q{ת};
-my $KAMATS          = q{ָ};
-my $KHATAF_KAMATS   = q{ֳ};
-my $PATAKH          = q{ַ};
-my $KHATAF_PATAKH   = q{ֲ};
-my $TSERE           = q{ֵ};
-my $SEGOL           = q{ֶ};
-my $KHATAF_SEGOL    = q{ֱ};
-my $KHIRIK          = q{ִ};
-my $KHOLAM          = q{ֹ};
-my $KUBUTS          = q{ֻ};
-my $RAFE            = q{ֿ};
+my $ALEF            = "\N{HEBREW LETTER ALEF}";
+my $BET             = "\N{HEBREW LETTER BET}";
+my $GIMEL           = "\N{HEBREW LETTER GIMEL}";
+my $DALET           = "\N{HEBREW LETTER DALET}";
+my $HE              = "\N{HEBREW LETTER HE}";
+my $VAV             = "\N{HEBREW LETTER VAV}";
+my $ZAYIN           = "\N{HEBREW LETTER ZAYIN}";
+my $KHET            = "\N{HEBREW LETTER HET}";
+my $TET             = "\N{HEBREW LETTER TET}";
+my $YOD             = "\N{HEBREW LETTER YOD}";
+my $KAF             = "\N{HEBREW LETTER KAF}";;
+my $KAF_SOFIT       = "\N{HEBREW LETTER FINAL KAF}";
+my $LAMED           = "\N{HEBREW LETTER LAMED}";
+my $MEM             = "\N{HEBREW LETTER MEM}";
+my $MEM_SOFIT       = "\N{HEBREW LETTER FINAL MEM}";
+my $NUN             = "\N{HEBREW LETTER NUN}";
+my $NUN_SOFIT       = "\N{HEBREW LETTER FINAL NUN}";
+my $SAMEKH          = "\N{HEBREW LETTER SAMEKH}";
+my $AYIN            = "\N{HEBREW LETTER AYIN}";
+my $PE              = "\N{HEBREW LETTER PE}";
+my $PE_SOFIT        = "\N{HEBREW LETTER FINAL PE}";
+my $TSADE           = "\N{HEBREW LETTER TSADI}";
+my $TSADE_SOFIT     = "\N{HEBREW LETTER FINAL TSADI}";
+my $KOF             = "\N{HEBREW LETTER QOF}";
+my $RESH            = "\N{HEBREW LETTER RESH}";
+my $SHIN            = "\N{HEBREW LETTER SHIN}";
+my $TAV             = "\N{HEBREW LETTER TAV}";
+my $KAMATS          = "\N{HEBREW POINT QAMATS}";
+my $KHATAF_KAMATS   = "\N{HEBREW POINT HATAF QAMATS}";
+my $PATAKH          = "\N{HEBREW POINT PATAH}";
+my $KHATAF_PATAKH   = "\N{HEBREW POINT HATAF PATAH}";
+my $TSERE           = "\N{HEBREW POINT TSERE}";
+my $SEGOL           = "\N{HEBREW POINT SEGOL}";
+my $KHATAF_SEGOL    = "\N{HEBREW POINT HATAF SEGOL}";
+my $KHIRIK          = "\N{HEBREW POINT HIRIQ}";
+my $KHOLAM          = "\N{HEBREW POINT HOLAM}";
+my $KUBUTS          = "\N{HEBREW POINT QUBUTS}";
+my $RAFE            = "\N{HEBREW POINT RAFE}";
 
-my $DAGESH = my $MAPIK = q{ּ};
+my $DAGESH = my $MAPIK = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 my $KHOLAM_MALE = $VAV . $KHOLAM;
 my $SHURUK      = $VAV . $DAGESH;
 my $KHIRIK_MALE = $KHIRIK . $YOD;
@@ -87,6 +88,20 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head2 ita_to_heb
 
+Given an Italian word, returns a vocalized Hebrew string.
+
+Additional options:
+
+* disable_rafe: by default, the rafe sign will be used to the initial petter pe
+if it represents an [f] sound. If you don't want it, run it like this:
+
+    my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Firenze', disable_rafe => 1);
+
+* disable_dagesh: by default, dagesh will be used whereber possible to
+represent consonant gemination. If you don't want it, run it like this:
+
+    my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Palazzo', disable_dagesh => 1);
+
 =cut
 
 sub ita_to_heb {
@@ -104,7 +119,7 @@ sub ita_to_heb {
         my $ita_letter = $ita_letters[$ita_letter_index];
 
         if ($word_init and $ita_letter =~ $LATIN_VOWEL) {
-            $heb .= $ALEPH;
+            $heb .= $ALEF;
         }
 
         my $hebrew_to_add;
@@ -119,7 +134,7 @@ sub ita_to_heb {
             when ('d') {
                 $hebrew_to_add = $DALET;
             }
-            when ([qw (e è é)]) {
+            when ([qw(è e é)]) {
                 $hebrew_to_add = $SEGOL;
             }
             when ('f') {
@@ -129,7 +144,7 @@ sub ita_to_heb {
                     $hebrew_to_add .= $RAFE;
                 }
             }
-            when ([qw(i ì í î)]) {
+            when ([qw(i í ì î)]) {
                 $hebrew_to_add = $KHIRIK_MALE;
             }
             when ('k') {
@@ -183,6 +198,15 @@ sub ita_to_heb {
 
     return $heb;
 }
+
+=head2 ita_to_heb
+
+Checks that the vowel is in a closed syllable.
+
+Arguments: a reference to a list of characters and
+the index of the vowel to check.
+
+=cut
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 sub closed_syllable {
