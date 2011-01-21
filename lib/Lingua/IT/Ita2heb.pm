@@ -66,7 +66,7 @@ my $KHOLAM_MALE = $VAV . $KHOLAM;
 my $SHURUK      = $VAV . $DAGESH;
 my $KHIRIK_MALE = $KHIRIK . $YOD;
 
-my $LATIN_VOWEL = qr/aeiou/xms;
+my $LATIN_VOWEL = qr/[aeiou]/xms;
 
 =head1 SYNOPSIS
 
@@ -159,7 +159,7 @@ sub ita_to_heb {
             when ('t') {
                 $hebrew_to_add = $TET;
             }
-            when ([qw(i ù ú)]) {
+            when ([qw(u ù ú)]) {
                 $hebrew_to_add = $SHURUK;
             }
             default {

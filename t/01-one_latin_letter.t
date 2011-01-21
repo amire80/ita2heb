@@ -2,6 +2,7 @@
 
 use Test::More tests => 24;
 use Lingua::IT::Ita2heb;
+use utf8;
 
 ok( Lingua::IT::Ita2heb::ita_to_heb('a') eq 'אָה',   'a' );
 ok( Lingua::IT::Ita2heb::ita_to_heb('à') eq 'אָה',   'a with grave' );
