@@ -203,7 +203,14 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     $add_geresh = 1;
                 }
 
-                $hebrew_to_add .= $GIMEL;
+                if (    $ita_letter_index < $#ita_letters
+                    and $ita_letters[ $ita_letter_index + 1 ] eq 'n')
+                {
+                    $hebrew_to_add .= $NUN . $SHEVA . $YOD;
+                }
+                else {
+                    $hebrew_to_add .= $GIMEL;
+                }
             }
             when ('h') {    # Niente.
             }
@@ -230,6 +237,11 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $MEM;
             }
             when ('n') {
+                if (    $ita_letter_index
+                    and $ita_letters[ $ita_letter_index - 1 ] eq 'g')
+                {
+                    next ITA_LETTER;
+                }
                 $hebrew_to_add .= $NUN;
             }
             when (@TYPES_OF_O) {
@@ -296,12 +308,16 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
         $heb .= $hebrew_to_add;
 
-        if (    $ita_letter_index
+        if (
+                $ita_letter_index
             and not $ita_letter ~~ @ALL_LATIN_VOWELS
             and defined $ita_letters[ $ita_letter_index + 1 ]
             and not $ita_letters[ $ita_letter_index + 1 ] ~~
             [ @ALL_LATIN_VOWELS, 'h' ]
-            and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ])
+            and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
+            and not($ita_letter eq 'g'
+                and $ita_letters[ $ita_letter_index + 1 ] eq 'n')
+            )
         {
             $heb .= $SHEVA;
         }
