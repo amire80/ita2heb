@@ -258,7 +258,8 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
         if ($ita_letter ~~ @REQUIRES_DAGESH_PHONETIC                # Dagesh phonetic (b, p)
             or ($geminated and not $option{disable_dagesh})         # Dagesh geminating
-            or (    $ita_letter_index == 0                          # Dagesh lene (bgdkft) XXX
+            or (    (  $ita_letter_index == 0                      # Dagesh lene (bgdkft) XXX
+                    or not $ita_letters[ $ita_letter_index - 1 ] ~~ @ALL_LATIN_VOWELS )
                 and $hebrew_to_add ~~ @REQUIRES_DAGESH_LENE
                 and not ($ita_letter ~~ @REQUIRES_DAGESH_PHONETIC)))
         {
