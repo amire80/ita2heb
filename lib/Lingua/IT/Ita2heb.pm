@@ -203,6 +203,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     $add_geresh = 1;
                 }
 
+                # XXX Missing support for gli
                 if (    $ita_letter_index < $#ita_letters
                     and $ita_letters[ $ita_letter_index + 1 ] eq 'n')
                 {

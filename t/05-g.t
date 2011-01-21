@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 6;
+use Test::More tests => 7;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 use English '-no_match_vars';
@@ -111,6 +111,24 @@ ok(
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER HE}",
     'Sardegna'
+);
+
+say {$log} 'Castagneto ' . Lingua::IT::Ita2heb::ita_to_heb('Castagneto');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('Castagneto') eq "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW POINT PATAH}"
+        . "\N{HEBREW LETTER SAMEKH}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER TET}"
+        . "\N{HEBREW POINT PATAH}"
+        . "\N{HEBREW LETTER NUN}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW LETTER TET}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'Castagneto'
 );
 
 close $log
