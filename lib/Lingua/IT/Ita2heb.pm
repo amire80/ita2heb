@@ -398,11 +398,6 @@ Amir E. Aharoni, C<< <amir.aharoni at mail.huji.ac.il> >>
 
     my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Castelmezzano');
 
-=head1 EXPORT
-
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
 =head1 SUBROUTINES/METHODS
 
 =head2 ita_to_heb
@@ -411,20 +406,30 @@ Given an Italian word, returns a vocalized Hebrew string.
 
 Additional options:
 
-* disable_rafe: by default, the rafe sign will be used to the initial petter pe
+=over
+
+=item * disable_rafe
+
+By default, the rafe sign will be added to the initial petter pe
 if it represents an [f] sound. If you don't want it, run it like this:
 
     my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Firenze', disable_rafe => 1);
 
-* disable_dagesh: by default, dagesh will be used whereber possible to
+=item * disable_dagesh
+
+By default, dagesh will be used wherever possible to
 represent consonant gemination. If you don't want it, run it like this:
 
     my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Palazzo', disable_dagesh => 1);
 
-* ascii_geresh: by default, Unicode HEBREW PUNCTUATION GERESH is used to indicate
+=item * ascii_geresh
+
+By default, Unicode HEBREW PUNCTUATION GERESH is used to indicate
 the sounds of ci and gi. If you want to use the ASCII apostrophe, run it like this:
 
     my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Cicerone', ascii_geresh => 1);
+
+=back
 
 =head2 closed_syllable
 
@@ -435,7 +440,13 @@ the index of the vowel to check.
 
 =head1 DIAGNOSTICS
 
-* "Unknown letter LETTER in the source" - the LETTER doesn't look a part of the Italian orthography.
+=over
+
+=item * Unknown letter LETTER in the source
+
+The LETTER doesn't look like a part of the Italian orthography.
+
+=back
 
 =head1 BUGS AND LIMITATIONS
 
@@ -451,7 +462,7 @@ Nothing special.
 
 =head1 INCOMPATIBILITIES
 
-This program doesn't woth with Perl earlier than 5.10 and with non-Unicode strings.
+This program doesn't work with Perl earlier than 5.10 and with non-Unicode strings.
 
 =head1 SUPPORT
 
@@ -461,7 +472,7 @@ You can find documentation for this module with the perldoc command.
 
 You can also look for information at:
 
-=over 4
+=over
 
 =item * RT: CPAN's request tracker
 
@@ -483,7 +494,7 @@ L<http://search.cpan.org/dist/Lingua-IT-Ita2heb/>
 
 =head1 ACKNOWLEDGEMENTS
 
-I thank each and every of teachers thanks to whom i know Italian and Hebrew.
+I thank all my Italian and Hebrew teachers.
 
 I thank Shlomi Fish for important technical support.
 
@@ -491,10 +502,17 @@ I thank Shlomi Fish for important technical support.
 
 Copyright 2011 Amir E. Aharoni.
 
-* the GNU General Public License version 3 as published
+This program is free software; you can redistribute it and
+modify it under the terms of either:
+
+=over
+
+=item * the GNU General Public License version 3 as published
 by the Free Software Foundation.
 
-* or the Artistic License version 2.0.
+=item * or the Artistic License version 2.0.
+
+=back
 
 See http://dev.perl.org/licenses/ for more information.
 
