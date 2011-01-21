@@ -318,7 +318,7 @@ __END__
 
 =head1 NAME
 
-Lingua::IT::Ita2heb
+Lingua::IT::Ita2heb - transliterate Italian words into vocalized Hebrew.
 
 =head1 DESCRIPTION
 
