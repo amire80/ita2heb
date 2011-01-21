@@ -1,0 +1,9 @@
+--backup-and-modify-in-place
+--maximum-line-length=78
+--continuation-indentation=4
+--nooutdent-long-lines
+--nooutdent-labels
+--outdent-keyword-list="next last redo goto"
+--paren-tightness=2
+--nospace-for-semicolon
+--nooutdent-long-comments
