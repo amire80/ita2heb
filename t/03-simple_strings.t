@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 use Lingua::IT::Ita2heb;
 use utf8;
 use charnames ':full';
@@ -75,7 +75,6 @@ ok(
     'amma, disable dagesh'
 );
 
-say $log 'capo ' . Lingua::IT::Ita2heb::ita_to_heb('capo');
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('capo') eq "\N{HEBREW LETTER QOF}"
         . "\N{HEBREW POINT QAMATS}"
@@ -86,7 +85,6 @@ ok(
     'capo'
 );
 
-say $log 'cibo ' . Lingua::IT::Ita2heb::ita_to_heb('cibo');
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('cibo') eq "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW POINT HIRIQ}"
@@ -99,7 +97,6 @@ ok(
     'cibo'
 );
 
-say $log 'cibo ' . Lingua::IT::Ita2heb::ita_to_heb('cibo', ascii_geresh => 1);
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('cibo', ascii_geresh => 1) eq "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW POINT HIRIQ}"
@@ -110,6 +107,18 @@ ok(
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
     'cibo, ascii geresh'
+);
+
+say $log 'ciuco ' . Lingua::IT::Ita2heb::ita_to_heb('ciuco');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('ciuco') eq "\N{HEBREW LETTER TSADI}"
+        . "\N{HEBREW PUNCTUATION GERESH}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'ciuco'
 );
 
 close $log;

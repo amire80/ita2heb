@@ -51,11 +51,11 @@ my $KHIRIK        = "\N{HEBREW POINT HIRIQ}";
 my $KHOLAM        = "\N{HEBREW POINT HOLAM}";
 my $KUBUTS        = "\N{HEBREW POINT QUBUTS}";
 my $RAFE          = "\N{HEBREW POINT RAFE}";
-my $GERESH        = "\N{HEBREW PUNCTUATION GERESH}";
 my $DAGESH        = my $MAPIK = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 my $KHOLAM_MALE   = $VAV . $KHOLAM;
 my $SHURUK        = $VAV . $DAGESH;
 my $KHIRIK_MALE   = $KHIRIK . $YOD;
+my $TRUE_GERESH   = "\N{HEBREW PUNCTUATION GERESH}";
 
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
 my @TYPES_OF_E = (
@@ -92,15 +92,14 @@ Readonly my $NO_CLOSED_PAST_THIS => 3;
 sub ita_to_heb {
     my ($ita, %option) = @_;
 
-    if ($option{ascii_geresh}) {
-        $GERESH = q{'};
-    }
+    my $GERESH = $option{ascii_geresh} ? q{'} : $TRUE_GERESH;
 
     my $heb = q{};
 
     my @ita_letters = split qr//xms, lc $ita;
 
     my $add_geresh = 0;
+    
     foreach my $ita_letter_index (0 .. $#ita_letters) {
         my $ita_letter = $ita_letters[$ita_letter_index];
 
@@ -108,7 +107,7 @@ sub ita_to_heb {
             $heb .= $ALEF;
         }
 
-        my $hebrew_to_add;
+        my $hebrew_to_add = q{};
 
         if (    $ita_letter_index > 0
             and $ita_letter eq $ita_letters[ $ita_letter_index - 1 ])
@@ -158,7 +157,14 @@ sub ita_to_heb {
                     }
                 }
                 when (@TYPES_OF_I) {
-                    $hebrew_to_add = $add_geresh ? $KHIRIK : $KHIRIK_MALE;
+                    if ($add_geresh) {
+                        if (not $ita_letters[$ita_letter_index + 1] ~~ @ALL_VOWELS) {
+                            $hebrew_to_add = $KHIRIK;
+                        }
+                    }
+                    else {
+                        $hebrew_to_add = $KHIRIK_MALE;
+                    }
                 }
                 when ('k') {
                     $hebrew_to_add = $KOF;
@@ -201,7 +207,7 @@ sub ita_to_heb {
             }
         }
 
-        if ($add_geresh and $hebrew_to_add ~~ @VOWEL_AFTER_GERESH) {
+        if ($add_geresh and $hebrew_to_add ~~ [@VOWEL_AFTER_GERESH, q{}]) {
             $heb .= $GERESH;
             $add_geresh = 0;
         }
