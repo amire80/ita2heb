@@ -41,95 +41,168 @@ my $result_for_u =
     . "\N{HEBREW LETTER VAV}"
     . "\N{HEBREW POINT DAGESH OR MAPIQ}";    # shuruk
 
-ok(Lingua::IT::Ita2heb::ita_to_heb('a') eq $result_for_a, 'a');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER A WITH GRAVE}") eq
-        $result_for_a,
+sub check_ita_translation
+{
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ($ita, $hebrew_translation, $blurb) = @_;
+
+    return is (
+        Lingua::IT::Ita2heb::ita_to_heb(ref($ita) eq 'ARRAY' ? (@$ita) : $ita),
+        $hebrew_translation,
+        $blurb
+    );
+}
+
+check_ita_translation('a', $result_for_a, 'a');
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER A WITH GRAVE}",
+    $result_for_a,
     'a with grave'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER A WITH ACUTE}") eq
-        q{?},
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER A WITH ACUTE}",
+    q{?},
     'a with acute'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('b') eq
+
+check_ita_translation(
+    'b',
         "\N{HEBREW LETTER BET}\N{HEBREW POINT DAGESH OR MAPIQ}",
     'b'
 );
-ok(Lingua::IT::Ita2heb::ita_to_heb('c') eq "\N{HEBREW LETTER QOF}",   'c');
-ok(Lingua::IT::Ita2heb::ita_to_heb('d') eq "\N{HEBREW LETTER DALET}", 'd');
-ok(Lingua::IT::Ita2heb::ita_to_heb('e') eq $result_for_e,             'e');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER E WITH GRAVE}") eq
-        $result_for_e,
+
+check_ita_translation('c',  "\N{HEBREW LETTER QOF}", 'c');
+
+check_ita_translation('d', "\N{HEBREW LETTER DALET}", 'd');
+
+check_ita_translation('e', $result_for_e, 'e');
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER E WITH GRAVE}",
+    $result_for_e,
     'e with grave'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER E WITH ACUTE}") eq
-        $result_for_e,
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER E WITH ACUTE}",
+    $result_for_e,
     'e with acute'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('f') eq
-        "\N{HEBREW LETTER PE}\N{HEBREW POINT RAFE}",
+
+check_ita_translation(
+    'f',
+    "\N{HEBREW LETTER PE}\N{HEBREW POINT RAFE}",
     'f'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('f', disable_rafe => 1) eq
-        "\N{HEBREW LETTER PE}",
+
+check_ita_translation(
+    ['f', disable_rafe => 1, ],
+    "\N{HEBREW LETTER PE}",
     'f without rafe'
 );
-ok(Lingua::IT::Ita2heb::ita_to_heb('i') eq $result_for_i, 'i');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER I WITH GRAVE}") eq
-        $result_for_i,
+
+check_ita_translation('i', $result_for_i, 'i');
+check_ita_translation(
+    "\N{LATIN SMALL LETTER I WITH GRAVE}",
+    $result_for_i,
     'i with grave'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER I WITH ACUTE}") eq
-        $result_for_i,
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER I WITH ACUTE}",
+    $result_for_i,
     'i with acute'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb(
-        "\N{LATIN SMALL LETTER I WITH CIRCUMFLEX}") eq $result_for_i,
+
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER I WITH CIRCUMFLEX}",
+    $result_for_i,
     'i with circumflex'
 );
-ok(Lingua::IT::Ita2heb::ita_to_heb('k') eq "\N{HEBREW LETTER QOF}",   'k');
-ok(Lingua::IT::Ita2heb::ita_to_heb('l') eq "\N{HEBREW LETTER LAMED}", 'l');
-ok(Lingua::IT::Ita2heb::ita_to_heb('m') eq "\N{HEBREW LETTER MEM}",   'm')
-    ;    # XXX sofit?
-ok(Lingua::IT::Ita2heb::ita_to_heb('n') eq "\N{HEBREW LETTER NUN}", 'n')
-    ;    # XXX sofit?
-ok(Lingua::IT::Ita2heb::ita_to_heb('o') eq $result_for_o, 'o');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER O WITH GRAVE}") eq
-        $result_for_o,
+
+
+check_ita_translation(
+    'k',
+    "\N{HEBREW LETTER QOF}",   
+    'k'
+);
+
+
+check_ita_translation(
+    'l',
+    "\N{HEBREW LETTER LAMED}",
+    'l'
+);
+
+
+check_ita_translation(
+    'm',
+    "\N{HEBREW LETTER MEM}",
+    'm'
+);    # XXX sofit?
+
+check_ita_translation('n',
+ "\N{HEBREW LETTER NUN}", 
+ 'n');    # XXX sofit?
+check_ita_translation(
+    'o',
+    $result_for_o,
+    'o'
+);
+check_ita_translation(
+    "\N{LATIN SMALL LETTER O WITH GRAVE}",
+    $result_for_o,
     'o with grave'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER O WITH ACUTE}") eq
-        $result_for_o,
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER O WITH ACUTE}",
+    $result_for_o,
     'o with acute'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('p') eq
-        "\N{HEBREW LETTER PE}\N{HEBREW POINT DAGESH OR MAPIQ}",
+
+check_ita_translation(
+    'p',
+    "\N{HEBREW LETTER PE}\N{HEBREW POINT DAGESH OR MAPIQ}",
     'p'
 );    # not sofit!
-ok(Lingua::IT::Ita2heb::ita_to_heb('r') eq "\N{HEBREW LETTER RESH}",   'r');
-ok(Lingua::IT::Ita2heb::ita_to_heb('s') eq "\N{HEBREW LETTER SAMEKH}", 's');
-ok(Lingua::IT::Ita2heb::ita_to_heb('t') eq "\N{HEBREW LETTER TET}",    't');
-ok(Lingua::IT::Ita2heb::ita_to_heb('u') eq $result_for_u,              'u');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER U WITH GRAVE}") eq
-        $result_for_u,
+
+check_ita_translation(
+    'r',
+    "\N{HEBREW LETTER RESH}",
+    'r'
+);
+
+check_ita_translation(
+    's',
+    "\N{HEBREW LETTER SAMEKH}",
+    's'
+);
+
+check_ita_translation(
+    't',
+    "\N{HEBREW LETTER TET}",
+    't'
+);
+
+check_ita_translation(
+    'u',
+    $result_for_u,
+    'u'
+);
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER U WITH GRAVE}",
+    $result_for_u,
     'u with grave'
 );
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER U WITH ACUTE}") eq
-        $result_for_u,
+
+check_ita_translation(
+    "\N{LATIN SMALL LETTER U WITH ACUTE}",
+    $result_for_u,
     'u with acute'
 );
 
