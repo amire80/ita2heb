@@ -1,5 +1,5 @@
 #!perl -T
-
+## no critic
 use strict;
 use warnings;
 use Test::More;
