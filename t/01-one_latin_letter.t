@@ -35,7 +35,19 @@ my $result_for_u =
     . "\N{HEBREW LETTER VAV}"
     . "\N{HEBREW POINT DAGESH OR MAPIQ}";    # shuruk
 
-ok(Lingua::IT::Ita2heb::ita_to_heb('a') eq $result_for_a, 'a');
+sub check_ita_translation
+{
+    local $Test::Builder::Level = $Test::Builder::Level + 1;
+    my ($ita_original, $hebrew_translation, $blurb) = @_;
+
+    return is (
+        Lingua::IT::Ita2heb::ita_to_heb($ita_original),
+        $hebrew_translation,
+        $blurb
+    );
+}
+
+check_ita_translation('a', $result_for_a, 'a');
 ok(
     Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER A WITH GRAVE}") eq
         $result_for_a,
