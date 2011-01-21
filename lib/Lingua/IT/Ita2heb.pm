@@ -175,6 +175,19 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                         $hebrew_to_add .= $RAFE;
                     }
                 }
+                when ('g') {
+                    if (
+                        $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER
+                        or (    $ita_letters[ $ita_letter_index + 1 ] eq 'g'
+                            and $ita_letters[ $ita_letter_index + 2 ] ~~
+                            @CG_MODIFIER)
+                        )
+                    {
+                        $add_geresh    = 1;
+                    }
+                    
+                    $hebrew_to_add = $GIMEL;
+                }
                 when ('h') {    # Niente.
                 }
                 when (@TYPES_OF_I) {
