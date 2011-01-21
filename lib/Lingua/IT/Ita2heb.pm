@@ -251,6 +251,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             when ('p') {
                 $hebrew_to_add .= $PE;
             }
+            when ('q') {
+                $hebrew_to_add .= $QOF . $SHEVA . $VAV;
+            }
             when ('r') {
                 $hebrew_to_add .= $RESH;
             }
@@ -272,6 +275,10 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $TET;
             }
             when (@TYPES_OF_U) {
+                if ($ita_letter_index and $ita_letters[ $ita_letter_index - 1 ] eq 'q') {
+                    next;
+                }
+                
                 $hebrew_to_add .= $SHURUK;
             }
             default {

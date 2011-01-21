@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 use English '-no_match_vars';
@@ -115,11 +115,28 @@ ok(
         . "\N{HEBREW POINT SEGOL}" # XXX Actually should be tsere
         . "\N{HEBREW PUNCTUATION GERESH}"
         . "\N{HEBREW LETTER ZAYIN}"
-        . "\N{HEBREW POINT SEGOL}" # XXX Actually should be tsere
+        . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER NUN}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER HE}",
     'Cesena'
+);
+
+say {$log} 'Quassolo ' . Lingua::IT::Ita2heb::ita_to_heb('Quassolo');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('Quassolo') eq
+        "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT PATAH}"
+        . "\N{HEBREW LETTER SAMEKH}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}"
+        . "\N{HEBREW LETTER LAMED}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'Quassolo'
 );
 
 close $log
