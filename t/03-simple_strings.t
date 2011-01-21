@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 6;
+use Test::More tests => 7;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 use English '-no_match_vars';
@@ -38,7 +38,7 @@ ok(
     'abba'
 );
 
-say {$log} 'abba ' . Lingua::IT::Ita2heb::ita_to_heb('aba', disable_dagesh => 1);
+say {$log} 'abba, disable dagesh ' . Lingua::IT::Ita2heb::ita_to_heb('aba', disable_dagesh => 1);
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('abba', disable_dagesh => 1) eq
         "\N{HEBREW LETTER ALEF}"
@@ -71,13 +71,27 @@ ok(
     'amma'
 );
 
-say {$log} 'amma ' . Lingua::IT::Ita2heb::ita_to_heb('amma', disable_dagesh => 1);
+say {$log} 'amma, disable dagesh ' . Lingua::IT::Ita2heb::ita_to_heb('amma', disable_dagesh => 1);
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('amma', disable_dagesh => 1) eq
         "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW LETTER MEM}"
         . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER HE}",
+    'amma, disable dagesh'
+);
+
+say {$log} 'monte ' . Lingua::IT::Ita2heb::ita_to_heb('monte');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('monte', disable_dagesh => 1) eq
+        "\N{HEBREW LETTER MEM}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}"
+        . "\N{HEBREW LETTER NUN}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER TET}"
+        . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER HE}",
     'amma, disable dagesh'
 );
