@@ -9,7 +9,6 @@ use Lingua::IT::Ita2heb;
 use utf8;
 use charnames ':full';
 use English '-no_match_vars';
-use open ':encoding(utf8)';
 
 our $VERSION = '0.01';
 
