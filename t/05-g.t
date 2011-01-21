@@ -29,7 +29,8 @@ ok(
 
 say {$log} 'Giardinello ' . Lingua::IT::Ita2heb::ita_to_heb('Giardinello');
 ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Giardinello') eq "\N{HEBREW LETTER GIMEL}"
+    Lingua::IT::Ita2heb::ita_to_heb('Giardinello') eq
+        "\N{HEBREW LETTER GIMEL}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW PUNCTUATION GERESH}"

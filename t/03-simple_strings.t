@@ -38,7 +38,8 @@ ok(
     'abba'
 );
 
-say {$log} 'abba, disable dagesh ' . Lingua::IT::Ita2heb::ita_to_heb('aba', disable_dagesh => 1);
+say {$log} 'abba, disable dagesh '
+    . Lingua::IT::Ita2heb::ita_to_heb('aba', disable_dagesh => 1);
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('abba', disable_dagesh => 1) eq
         "\N{HEBREW LETTER ALEF}"
@@ -71,7 +72,8 @@ ok(
     'amma'
 );
 
-say {$log} 'amma, disable dagesh ' . Lingua::IT::Ita2heb::ita_to_heb('amma', disable_dagesh => 1);
+say {$log} 'amma, disable dagesh '
+    . Lingua::IT::Ita2heb::ita_to_heb('amma', disable_dagesh => 1);
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('amma', disable_dagesh => 1) eq
         "\N{HEBREW LETTER ALEF}"
@@ -99,8 +101,7 @@ ok(
 # Check that Dagesh is not added to Resh
 say {$log} 'Serra ' . Lingua::IT::Ita2heb::ita_to_heb('Serra');
 ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Serra') eq
-        "\N{HEBREW LETTER SAMEKH}"
+    Lingua::IT::Ita2heb::ita_to_heb('Serra') eq "\N{HEBREW LETTER SAMEKH}"
         . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER RESH}"
         . "\N{HEBREW POINT QAMATS}"
@@ -110,9 +111,8 @@ ok(
 
 say {$log} 'Cesena ' . Lingua::IT::Ita2heb::ita_to_heb('Cesena');
 ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Cesena') eq
-        "\N{HEBREW LETTER TSADI}"
-        . "\N{HEBREW POINT SEGOL}" # XXX Actually should be tsere
+    Lingua::IT::Ita2heb::ita_to_heb('Cesena') eq "\N{HEBREW LETTER TSADI}"
+        . "\N{HEBREW POINT SEGOL}"    # XXX Actually should be tsere
         . "\N{HEBREW PUNCTUATION GERESH}"
         . "\N{HEBREW LETTER ZAYIN}"
         . "\N{HEBREW POINT SEGOL}"
@@ -124,8 +124,7 @@ ok(
 
 say {$log} 'Quassolo ' . Lingua::IT::Ita2heb::ita_to_heb('Quassolo');
 ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Quassolo') eq
-        "\N{HEBREW LETTER QOF}"
+    Lingua::IT::Ita2heb::ita_to_heb('Quassolo') eq "\N{HEBREW LETTER QOF}"
         . "\N{HEBREW POINT SHEVA}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT PATAH}"
