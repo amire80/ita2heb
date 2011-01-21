@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More tests => 13;
 use Lingua::IT::Ita2heb;
 use utf8;
 use charnames ':full';
@@ -111,7 +111,6 @@ ok(
     'cibo, ascii geresh'
 );
 
-say $log "ciabatta " . Lingua::IT::Ita2heb::ita_to_heb('ciabatta');
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('ciabatta') eq "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW POINT QAMATS}"
@@ -123,7 +122,18 @@ ok(
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER HE}",
-    'ciuco'
+    'ciabatta'
+);
+
+say $log "cieco " . Lingua::IT::Ita2heb::ita_to_heb('cieco');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('cieco') eq "\N{HEBREW LETTER TSADI}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW PUNCTUATION GERESH}"
+        . "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'cieco'
 );
 
 ok(
@@ -136,7 +146,7 @@ ok(
         . "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER HE}",
-    'ciuco'
+    "cioe'"
 );
 
 ok(
