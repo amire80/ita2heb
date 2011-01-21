@@ -50,6 +50,7 @@ my $HATAF_SEGOL  = "\N{HEBREW POINT HATAF SEGOL}";
 my $HIRIQ        = "\N{HEBREW POINT HIRIQ}";
 my $HOLAM        = "\N{HEBREW POINT HOLAM}";
 my $QUBUTS       = "\N{HEBREW POINT QUBUTS}";
+my $SHEVA        = "\N{HEBREW POINT SHEVA}";
 my $RAFE         = "\N{HEBREW POINT RAFE}";
 my $DAGESH       = my $MAPIQ = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 my $HOLAM_MALE   = $VAV . $HOLAM;
@@ -119,55 +120,64 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             $heb .= $ALEF;
         }
 
-        $wrote_vowel = 0;
-
         my $hebrew_to_add = q{};
 
         if (    $ita_letter_index > 0
-            and $ita_letter eq $ita_letters[ $ita_letter_index - 1 ])
+            and not $ita_letters[ $ita_letter_index ]     eq 'h'
+            and not $ita_letters[ $ita_letter_index ]     ~~ @ALL_VOWELS
+            and not $ita_letters[ $ita_letter_index - 1 ] ~~ @ALL_VOWELS)
         {
-            if (    not $ita_letter ~~ @REQUIRES_DAGESH
-                and not $option{disable_dagesh})
-            {
-                $hebrew_to_add .= $DAGESH;
+            if ($ita_letter eq $ita_letters[ $ita_letter_index - 1 ]) {
+                if (    not $ita_letter ~~ @REQUIRES_DAGESH
+                    and not $option{disable_dagesh})
+                {
+                    $heb .= $DAGESH;
+                }
             }
+            else {
+                $heb .= $SHEVA;
+            }
+
+            $wrote_vowel = 0;
         }
         else {
+            $wrote_vowel = 0;
+
             given ($ita_letter) {
                 when (@TYPES_OF_A) {
                     if (closed_syllable(\@ita_letters, $ita_letter_index)) {
-                        $hebrew_to_add = $PATAH;
+                        $hebrew_to_add .= $PATAH;
                     }
                     else {
-                        $hebrew_to_add = $QAMATS;
+                        $hebrew_to_add .= $QAMATS;
                     }
                 }
                 when ('b') {
-                    $hebrew_to_add = $BET;
+                    $hebrew_to_add .= $BET;
                 }
                 when ('c') {
-                    if (
-                        $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER
-                        or (    $ita_letters[ $ita_letter_index + 1 ] eq 'c'
+                    if (($ita_letter_index < $#ita_letters and $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER)
+                        or (    $ita_letter_index < ($#ita_letters - 1)
+                            and $ita_letters[ $ita_letter_index + 1 ] eq 'c'
                             and $ita_letters[ $ita_letter_index + 2 ] ~~
                             @CG_MODIFIER)
                         )
                     {
-                        $hebrew_to_add = $TSADI;
+                        $hebrew_to_add .= $TSADI;
                         $add_geresh    = 1;
                     }
                     else {
-                        $hebrew_to_add = $QOF;
+                        $hebrew_to_add .= $QOF;
                     }
                 }
                 when ('d') {
-                    $hebrew_to_add = $DALET;
+                    $hebrew_to_add .= $DALET;
                 }
                 when (@TYPES_OF_E) {
-                    $hebrew_to_add = $SEGOL;
+                    $hebrew_to_add .= $SEGOL;
                 }
                 when ('f') {
-                    $hebrew_to_add = $PE;
+                    $hebrew_to_add .= $PE;
 
                     if ($ita_letter_index == 0
                         and not $option{'disable_rafe'})
@@ -186,7 +196,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                         $add_geresh    = 1;
                     }
                     
-                    $hebrew_to_add = $GIMEL;
+                    $hebrew_to_add .= $GIMEL;
                 }
                 when ('h') {    # Niente.
                 }
@@ -196,45 +206,45 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                             not $ita_letters[ $ita_letter_index + 1 ] ~~
                             @ALL_VOWELS)
                         {
-                            $hebrew_to_add = $HIRIQ;
+                            $hebrew_to_add .= $HIRIQ;
                         }
                     }
                     else {
-                        $hebrew_to_add = $HIRIQ_MALE;
+                        $hebrew_to_add .= $HIRIQ_MALE;
                     }
                 }
                 when ('k') {
-                    $hebrew_to_add = $QOF;
+                    $hebrew_to_add .= $QOF;
                 }
                 when ('l') {
-                    $hebrew_to_add = $LAMED;
+                    $hebrew_to_add .= $LAMED;
                 }
                 when ('m') {
-                    $hebrew_to_add = $MEM;
+                    $hebrew_to_add .= $MEM;
                 }
                 when ('n') {
-                    $hebrew_to_add = $NUN;
+                    $hebrew_to_add .= $NUN;
                 }
                 when (@TYPES_OF_O) {
-                    $hebrew_to_add = $HOLAM_MALE;
+                    $hebrew_to_add .= $HOLAM_MALE;
                 }
                 when ('p') {
-                    $hebrew_to_add = $PE;
+                    $hebrew_to_add .= $PE;
                 }
                 when ('r') {
-                    $hebrew_to_add = $RESH;
+                    $hebrew_to_add .= $RESH;
                 }
                 when ('s') {
-                    $hebrew_to_add = $SAMEKH;
+                    $hebrew_to_add .= $SAMEKH;
                 }
                 when ('t') {
-                    $hebrew_to_add = $TET;
+                    $hebrew_to_add .= $TET;
                 }
                 when (@TYPES_OF_U) {
-                    $hebrew_to_add = $SHURUK;
+                    $hebrew_to_add .= $SHURUK;
                 }
                 default {
-                    $hebrew_to_add = q{?};
+                    $hebrew_to_add .= q{?};
                     carp("Unknown letter $ita_letter in the source.");
                 }
             }
