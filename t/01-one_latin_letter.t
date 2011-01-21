@@ -206,5 +206,3 @@ check_ita_transliteration(
     'u with acute'
 );
 
-diag("Testing Lingua::IT::Ita2heb $Lingua::IT::Ita2heb::VERSION, Perl $], $^X"
-);

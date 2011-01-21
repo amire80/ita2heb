@@ -151,5 +151,3 @@ ok(
 close $log
     or croak("Couldn't close $log_filename after writing: $OS_ERROR");
 
-diag("Testing Lingua::IT::Ita2heb $Lingua::IT::Ita2heb::VERSION, Perl $], $^X"
-);
