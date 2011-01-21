@@ -13,55 +13,54 @@ use Readonly;
 
 our $VERSION = '0.01';
 
-my $ALEF          = "\N{HEBREW LETTER ALEF}";
-my $BET           = "\N{HEBREW LETTER BET}";
-my $GIMEL         = "\N{HEBREW LETTER GIMEL}";
-my $DALET         = "\N{HEBREW LETTER DALET}";
-my $HE            = "\N{HEBREW LETTER HE}";
-my $VAV           = "\N{HEBREW LETTER VAV}";
-my $ZAYIN         = "\N{HEBREW LETTER ZAYIN}";
-my $KHET          = "\N{HEBREW LETTER HET}";
-my $TET           = "\N{HEBREW LETTER TET}";
-my $YOD           = "\N{HEBREW LETTER YOD}";
-my $KAF           = "\N{HEBREW LETTER KAF}";
-my $KAF_SOFIT     = "\N{HEBREW LETTER FINAL KAF}";
-my $LAMED         = "\N{HEBREW LETTER LAMED}";
-my $MEM           = "\N{HEBREW LETTER MEM}";
-my $MEM_SOFIT     = "\N{HEBREW LETTER FINAL MEM}";
-my $NUN           = "\N{HEBREW LETTER NUN}";
-my $NUN_SOFIT     = "\N{HEBREW LETTER FINAL NUN}";
-my $SAMEKH        = "\N{HEBREW LETTER SAMEKH}";
-my $AYIN          = "\N{HEBREW LETTER AYIN}";
-my $PE            = "\N{HEBREW LETTER PE}";
-my $PE_SOFIT      = "\N{HEBREW LETTER FINAL PE}";
-my $TSADI         = "\N{HEBREW LETTER TSADI}";
-my $TSADI_SOFIT   = "\N{HEBREW LETTER FINAL TSADI}";
-my $KOF           = "\N{HEBREW LETTER QOF}";
-my $RESH          = "\N{HEBREW LETTER RESH}";
-my $SHIN          = "\N{HEBREW LETTER SHIN}";
-my $TAV           = "\N{HEBREW LETTER TAV}";
-my $KAMATS        = "\N{HEBREW POINT QAMATS}";
-my $KHATAF_KAMATS = "\N{HEBREW POINT HATAF QAMATS}";
-my $PATAKH        = "\N{HEBREW POINT PATAH}";
-my $KHATAF_PATAKH = "\N{HEBREW POINT HATAF PATAH}";
-my $TSERE         = "\N{HEBREW POINT TSERE}";
-my $SEGOL         = "\N{HEBREW POINT SEGOL}";
-my $KHATAF_SEGOL  = "\N{HEBREW POINT HATAF SEGOL}";
-my $KHIRIK        = "\N{HEBREW POINT HIRIQ}";
-my $KHOLAM        = "\N{HEBREW POINT HOLAM}";
-my $KUBUTS        = "\N{HEBREW POINT QUBUTS}";
-my $RAFE          = "\N{HEBREW POINT RAFE}";
-my $DAGESH        = my $MAPIK = "\N{HEBREW POINT DAGESH OR MAPIQ}";
-my $KHOLAM_MALE   = $VAV . $KHOLAM;
-my $SHURUK        = $VAV . $DAGESH;
-my $KHIRIK_MALE   = $KHIRIK . $YOD;
-my $TRUE_GERESH   = "\N{HEBREW PUNCTUATION GERESH}";
+my $ALEF         = "\N{HEBREW LETTER ALEF}";
+my $BET          = "\N{HEBREW LETTER BET}";
+my $GIMEL        = "\N{HEBREW LETTER GIMEL}";
+my $DALET        = "\N{HEBREW LETTER DALET}";
+my $HE           = "\N{HEBREW LETTER HE}";
+my $VAV          = "\N{HEBREW LETTER VAV}";
+my $ZAYIN        = "\N{HEBREW LETTER ZAYIN}";
+my $HET          = "\N{HEBREW LETTER HET}";
+my $TET          = "\N{HEBREW LETTER TET}";
+my $YOD          = "\N{HEBREW LETTER YOD}";
+my $KAF          = "\N{HEBREW LETTER KAF}";
+my $FINAL_KAF    = "\N{HEBREW LETTER FINAL KAF}";
+my $LAMED        = "\N{HEBREW LETTER LAMED}";
+my $MEM          = "\N{HEBREW LETTER MEM}";
+my $FINAL_MEM    = "\N{HEBREW LETTER FINAL MEM}";
+my $NUN          = "\N{HEBREW LETTER NUN}";
+my $FINAL_NUN    = "\N{HEBREW LETTER FINAL NUN}";
+my $SAMEKH       = "\N{HEBREW LETTER SAMEKH}";
+my $AYIN         = "\N{HEBREW LETTER AYIN}";
+my $PE           = "\N{HEBREW LETTER PE}";
+my $FINAL_PE     = "\N{HEBREW LETTER FINAL PE}";
+my $TSADI        = "\N{HEBREW LETTER TSADI}";
+my $FINAL_TSADI  = "\N{HEBREW LETTER FINAL TSADI}";
+my $QOF          = "\N{HEBREW LETTER QOF}";
+my $RESH         = "\N{HEBREW LETTER RESH}";
+my $SHIN         = "\N{HEBREW LETTER SHIN}";
+my $TAV          = "\N{HEBREW LETTER TAV}";
+my $QAMATS       = "\N{HEBREW POINT QAMATS}";
+my $HATAF_QAMATS = "\N{HEBREW POINT HATAF QAMATS}";
+my $PATAH        = "\N{HEBREW POINT PATAH}";
+my $HATAF_PATAH  = "\N{HEBREW POINT HATAF PATAH}";
+my $TSERE        = "\N{HEBREW POINT TSERE}";
+my $SEGOL        = "\N{HEBREW POINT SEGOL}";
+my $HATAF_SEGOL  = "\N{HEBREW POINT HATAF SEGOL}";
+my $HIRIQ        = "\N{HEBREW POINT HIRIQ}";
+my $HOLAM        = "\N{HEBREW POINT HOLAM}";
+my $QUBUTS       = "\N{HEBREW POINT QUBUTS}";
+my $RAFE         = "\N{HEBREW POINT RAFE}";
+my $DAGESH       = my $MAPIQ = "\N{HEBREW POINT DAGESH OR MAPIQ}";
+my $HOLAM_MALE   = $VAV . $HOLAM;
+my $SHURUK       = $VAV . $DAGESH;
+my $HIRIQ_MALE   = $HIRIQ . $YOD;
+my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
 
 my @ALL_HEBREW_VOWELS = (
-    $KAMATS,      $KHATAF_KAMATS, $PATAKH,       $KHATAF_PATAKH,
-    $TSERE,       $SEGOL,         $KHATAF_SEGOL, $KHIRIK,
-    $KHIRIK_MALE, $KHOLAM,        $KHOLAM_MALE,  $KUBUTS,
-    $SHURUK,
+    $QAMATS,     $HATAF_QAMATS, $PATAH, $HATAF_PATAH, $TSERE,
+    $SEGOL,      $HATAF_SEGOL,  $HIRIQ, $HIRIQ_MALE,  $HOLAM,
+    $HOLAM_MALE, $QUBUTS,       $SHURUK,
 );
 
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
@@ -91,8 +90,8 @@ my @ALL_VOWELS =
 my @CG_MODIFIER = (@TYPES_OF_E, @TYPES_OF_I);
 my @REQUIRES_DAGESH = qw(b p);
 
-my @VOWEL_BEFORE_GERESH = ($KAMATS, $PATAKH, $TSERE, $SEGOL, $KHIRIK);
-my @VOWEL_AFTER_GERESH = ($KHOLAM_MALE, $SHURUK);
+my @VOWEL_BEFORE_GERESH = ($QAMATS, $PATAH, $TSERE, $SEGOL, $HIRIQ);
+my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 
@@ -137,10 +136,10 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             given ($ita_letter) {
                 when (@TYPES_OF_A) {
                     if (closed_syllable(\@ita_letters, $ita_letter_index)) {
-                        $hebrew_to_add = $PATAKH;
+                        $hebrew_to_add = $PATAH;
                     }
                     else {
-                        $hebrew_to_add = $KAMATS;
+                        $hebrew_to_add = $QAMATS;
                     }
                 }
                 when ('b') {
@@ -153,7 +152,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                         $add_geresh    = 1;
                     }
                     else {
-                        $hebrew_to_add = $KOF;
+                        $hebrew_to_add = $QOF;
                     }
                 }
                 when ('d') {
@@ -177,15 +176,15 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                             not $ita_letters[ $ita_letter_index + 1 ] ~~
                             @ALL_VOWELS)
                         {
-                            $hebrew_to_add = $KHIRIK;
+                            $hebrew_to_add = $HIRIQ;
                         }
                     }
                     else {
-                        $hebrew_to_add = $KHIRIK_MALE;
+                        $hebrew_to_add = $HIRIQ_MALE;
                     }
                 }
                 when ('k') {
-                    $hebrew_to_add = $KOF;
+                    $hebrew_to_add = $QOF;
                 }
                 when ('l') {
                     $hebrew_to_add = $LAMED;
@@ -197,7 +196,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     $hebrew_to_add = $NUN;
                 }
                 when (@TYPES_OF_O) {
-                    $hebrew_to_add = $KHOLAM_MALE;
+                    $hebrew_to_add = $HOLAM_MALE;
                 }
                 when ('p') {
                     $hebrew_to_add = $PE;
@@ -235,7 +234,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         if ($add_geresh and $hebrew_to_add ~~ @VOWEL_BEFORE_GERESH) {
             $heb .= $GERESH;
 
-            if ($hebrew_to_add eq $KHIRIK) {
+            if ($hebrew_to_add eq $HIRIQ) {
                 $heb .= $YOD;
             }
 
@@ -243,7 +242,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         }
 
         if ($ita_letter_index == $#ita_letters) {
-            if ($hebrew_to_add ~~ [ $KAMATS, $SEGOL ]) {
+            if ($hebrew_to_add ~~ [ $QAMATS, $SEGOL ]) {
                 $heb .= $HE;
             }
         }
