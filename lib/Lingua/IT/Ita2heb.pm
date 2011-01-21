@@ -131,7 +131,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
         my $hebrew_to_add = q{};
 
-        if (    $ita_letter_index > 0
+        if (    $ita_letter_index
             and $ita_letter_index < $#ita_letters
             and not $ita_letter ~~ @ALL_LATIN_VOWELS
             and $ita_letter eq $ita_letters[ $ita_letter_index + 1 ])
@@ -242,7 +242,18 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $RESH;
             }
             when ('s') {
-                $hebrew_to_add .= $SAMEKH;
+                if (    $ita_letter_index
+                    and $ita_letter_index < $#ita_letters
+                    and $ita_letters[ $ita_letter_index - 1 ] ~~
+                    @ALL_LATIN_VOWELS
+                    and $ita_letters[ $ita_letter_index + 1 ] ~~
+                    @ALL_LATIN_VOWELS)
+                {
+                    $hebrew_to_add .= $ZAYIN;
+                }
+                else {
+                    $hebrew_to_add .= $SAMEKH;
+                }
             }
             when ('t') {
                 $hebrew_to_add .= $TET;
@@ -285,7 +296,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
         $heb .= $hebrew_to_add;
 
-        if (    $ita_letter_index > 0
+        if (    $ita_letter_index
             and not $ita_letter ~~ @ALL_LATIN_VOWELS
             and defined $ita_letters[ $ita_letter_index + 1 ]
             and not $ita_letters[ $ita_letter_index + 1 ] ~~
