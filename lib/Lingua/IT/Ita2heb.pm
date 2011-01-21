@@ -57,6 +57,13 @@ my $SHURUK        = $VAV . $DAGESH;
 my $KHIRIK_MALE   = $KHIRIK . $YOD;
 my $TRUE_GERESH   = "\N{HEBREW PUNCTUATION GERESH}";
 
+my @ALL_HEBREW_VOWELS = (
+    $KAMATS,      $KHATAF_KAMATS, $PATAKH,       $KHATAF_PATAKH,
+    $TSERE,       $SEGOL,         $KHATAF_SEGOL, $KHIRIK,
+    $KHIRIK_MALE, $KHOLAM,        $KHOLAM_MALE,  $KUBUTS,
+    $SHURUK,
+);
+
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
 my @TYPES_OF_E = (
     'e',
@@ -89,7 +96,7 @@ my @VOWEL_AFTER_GERESH = ($KHOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 
-sub ita_to_heb {
+sub ita_to_heb {    ## no critic ProhibitExcessComplexity
     my ($ita, %option) = @_;
 
     my $GERESH = $option{ascii_geresh} ? q{'} : $TRUE_GERESH;
@@ -98,14 +105,22 @@ sub ita_to_heb {
 
     my @ita_letters = split qr//xms, lc $ita;
 
-    my $add_geresh = 0;
-    
+    my $add_geresh  = 0;
+    my $wrote_vowel = 0;
+
     foreach my $ita_letter_index (0 .. $#ita_letters) {
         my $ita_letter = $ita_letters[$ita_letter_index];
 
-        if ($ita_letter_index == 0 and $ita_letter ~~ @ALL_VOWELS) {
+        if (
+            $ita_letter ~~ @ALL_VOWELS
+            and (  $ita_letter_index == 0
+                or $wrote_vowel)
+            )
+        {
             $heb .= $ALEF;
         }
+
+        $wrote_vowel = 0;
 
         my $hebrew_to_add = q{};
 
@@ -158,7 +173,10 @@ sub ita_to_heb {
                 }
                 when (@TYPES_OF_I) {
                     if ($add_geresh) {
-                        if (not $ita_letters[$ita_letter_index + 1] ~~ @ALL_VOWELS) {
+                        if (
+                            not $ita_letters[ $ita_letter_index + 1 ] ~~
+                            @ALL_VOWELS)
+                        {
                             $hebrew_to_add = $KHIRIK;
                         }
                     }
@@ -207,7 +225,7 @@ sub ita_to_heb {
             }
         }
 
-        if ($add_geresh and $hebrew_to_add ~~ [@VOWEL_AFTER_GERESH, q{}]) {
+        if ($add_geresh and $hebrew_to_add ~~ [ @VOWEL_AFTER_GERESH, q{} ]) {
             $heb .= $GERESH;
             $add_geresh = 0;
         }
@@ -228,6 +246,10 @@ sub ita_to_heb {
             if ($hebrew_to_add ~~ [ $KAMATS, $SEGOL ]) {
                 $heb .= $HE;
             }
+        }
+
+        if ($hebrew_to_add ~~ @ALL_HEBREW_VOWELS) {
+            $wrote_vowel = 1;
         }
     }
 
