@@ -1,12 +1,14 @@
 package Lingua::IT::Ita2heb;
 
-use 5.10.0;
+use 5.010;
 
 use strict;
 use warnings;
 use utf8;
 
 use Carp;
+
+use Readonly;
 
 =head1 NAME
 
@@ -20,46 +22,46 @@ Version 0.01
 
 our $VERSION = '0.01';
 
-my $ALEPH           = 'א';
-my $BET             = 'ב';
-my $GIMEL           = 'ג';
-my $DALET           = 'ד';
-my $HE              = 'ה';
-my $VAV             = 'ו';
-my $ZAYIN           = 'ז';
-my $KHET            = 'ח';
-my $TET             = 'ט';
-my $YOD             = 'י';
-my $KAF             = 'כ';
-my $KAF_SOFIT       = 'ך';
-my $LAMED           = 'ל';
-my $MEM             = 'מ';
-my $MEM_SOFIT       = 'ם';
-my $NUN             = 'נ';
-my $NUN_SOFIT       = 'ן';
-my $SAMEKH          = 'ס';
-my $AYIN            = 'ע';
-my $PE              = 'פ';
-my $PE_SOFIT        = 'ף';
-my $TSADE           = 'צ';
-my $TSADE_SOFIT     = 'ץ';
-my $KOF             = 'ק';
-my $RESH            = 'ר';
-my $SHIN            = 'ש';
-my $TAV             = 'ת';
-my $KAMATS          = 'ָ';
-my $KHATAF_KAMATS   = 'ֳ';
-my $PATAKH          = 'ַ';
-my $KHATAF_PATAKH   = 'ֲ';
-my $TSERE           = 'ֵ';
-my $SEGOL           = 'ֶ';
-my $KHATAF_SEGOL    = 'ֱ';
-my $KHIRIK          = 'ִ';
-my $KHOLAM          = 'ֹ';
-my $KUBUTS          = 'ֻ';
-my $RAFE            = 'ֿ';
+my $ALEPH           = q{א};
+my $BET             = q{ב};
+my $GIMEL           = q{ג};
+my $DALET           = q{ד};
+my $HE              = q{ה};
+my $VAV             = q{ו};
+my $ZAYIN           = q{ז};
+my $KHET            = q{ח};
+my $TET             = q{ט};
+my $YOD             = q{י};
+my $KAF             = q{כ};
+my $KAF_SOFIT       = q{ך};
+my $LAMED           = q{ל};
+my $MEM             = q{מ};
+my $MEM_SOFIT       = q{ם};
+my $NUN             = q{נ};
+my $NUN_SOFIT       = q{ן};
+my $SAMEKH          = q{ס};
+my $AYIN            = q{ע};
+my $PE              = q{פ};
+my $PE_SOFIT        = q{ף};
+my $TSADE           = q{צ};
+my $TSADE_SOFIT     = q{ץ};
+my $KOF             = q{ק};
+my $RESH            = q{ר};
+my $SHIN            = q{ש};
+my $TAV             = q{ת};
+my $KAMATS          = q{ָ};
+my $KHATAF_KAMATS   = q{ֳ};
+my $PATAKH          = q{ַ};
+my $KHATAF_PATAKH   = q{ֲ};
+my $TSERE           = q{ֵ};
+my $SEGOL           = q{ֶ};
+my $KHATAF_SEGOL    = q{ֱ};
+my $KHIRIK          = q{ִ};
+my $KHOLAM          = q{ֹ};
+my $KUBUTS          = q{ֻ};
+my $RAFE            = q{ֿ};
 
-my $DAGESH = my $MAPIK = 'ּ';
+my $DAGESH = my $MAPIK = q{ּ};
 my $KHOLAM_MALE = $VAV . $KHOLAM;
 my $SHURUK      = $VAV . $DAGESH;
 my $KHIRIK_MALE = $KHIRIK . $YOD;
@@ -95,18 +97,18 @@ sub ita_to_heb {
 
     my $heb = q{};
     my $word_init = 1;
-    
-    my @ita_letters = split qr//, lc $ita;
+
+    my @ita_letters = split qr//xms, lc $ita;
 
     foreach my $ita_letter_index (0 .. $#ita_letters) {
         my $ita_letter = $ita_letters[$ita_letter_index];
-        
+
         if ($word_init and $ita_letter =~ $LATIN_VOWEL) {
             $heb .= $ALEPH;
         }
-        
+
         my $hebrew_to_add;
-        
+
         given ($ita_letter) {
             when ([qw(a à)]) {
                 $hebrew_to_add = $KAMATS;
@@ -161,41 +163,41 @@ sub ita_to_heb {
                 $hebrew_to_add = $SHURUK;
             }
             default {
-                $hebrew_to_add = '?';
+                $hebrew_to_add = q{?};
                 carp("Unknown letter $ita_letter in the source.");
             }
         }
-        
+
         $heb .= $hebrew_to_add;
-        
+
         if ($ita_letter_index == $#ita_letters) {
             if ($hebrew_to_add ~~ [ $KAMATS, $SEGOL ]) {
                 $heb .= $HE;
             }
         }
-        
+
         if ($word_init) {
             $word_init = 0;
         }
     }
-    
+
     return $heb;
 }
 
-my $NO_CLOSED_PAST_THIS = 3;
+Readonly my $NO_CLOSED_PAST_THIS => 3;
 sub closed_syllable {
     my ($letters_ref, $letter_index) = @_;
-    
+
     if (($#{$letters_ref} - $letter_index) < $NO_CLOSED_PAST_THIS) {
         return 0;
     }
-    
+
     for my $offset (1, 2) {
         if ($letters_ref->[$letter_index + $offset] =~ $LATIN_VOWEL) {
             return 0;
         }
     }
-    
+
     return 1;
 }
 
