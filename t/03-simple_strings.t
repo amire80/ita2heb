@@ -111,14 +111,18 @@ ok(
     'cibo, ascii geresh'
 );
 
+say $log "ciabatta " . Lingua::IT::Ita2heb::ita_to_heb('ciabatta');
 ok(
-    Lingua::IT::Ita2heb::ita_to_heb('ciuco') eq "\N{HEBREW LETTER TSADI}"
+    Lingua::IT::Ita2heb::ita_to_heb('ciabatta') eq "\N{HEBREW LETTER TSADI}"
+        . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW PUNCTUATION GERESH}"
-        . "\N{HEBREW LETTER VAV}"
-        . "\N{HEBREW POINT DAGESH OR MAPIQ}"    # shuruk
-        . "\N{HEBREW LETTER QOF}"
-        . "\N{HEBREW LETTER VAV}"
-        . "\N{HEBREW POINT HOLAM}",
+        . "\N{HEBREW LETTER BET}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT PATAH}"
+        . "\N{HEBREW LETTER TET}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER HE}",
     'ciuco'
 );
 
@@ -135,18 +139,14 @@ ok(
     'ciuco'
 );
 
-say $log "ciabatta " . Lingua::IT::Ita2heb::ita_to_heb('ciabatta');
 ok(
-    Lingua::IT::Ita2heb::ita_to_heb('ciabatta') eq "\N{HEBREW LETTER TSADI}"
-        . "\N{HEBREW POINT QAMATS}"
+    Lingua::IT::Ita2heb::ita_to_heb('ciuco') eq "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW PUNCTUATION GERESH}"
-        . "\N{HEBREW LETTER BET}"
-        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
-        . "\N{HEBREW POINT PATAH}"
-        . "\N{HEBREW LETTER TET}"
-        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
-        . "\N{HEBREW POINT QAMATS}"
-        . "\N{HEBREW LETTER HE}",
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"    # shuruk
+        . "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
     'ciuco'
 );
 
