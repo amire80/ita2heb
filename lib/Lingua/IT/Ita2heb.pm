@@ -275,10 +275,12 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $TET;
             }
             when (@TYPES_OF_U) {
-                if ($ita_letter_index and $ita_letters[ $ita_letter_index - 1 ] eq 'q') {
+                if (    $ita_letter_index
+                    and $ita_letters[ $ita_letter_index - 1 ] eq 'q')
+                {
                     next;
                 }
-                
+
                 $hebrew_to_add .= $SHURUK;
             }
             default {
