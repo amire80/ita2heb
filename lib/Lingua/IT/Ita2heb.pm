@@ -34,8 +34,8 @@ my $SAMEKH        = "\N{HEBREW LETTER SAMEKH}";
 my $AYIN          = "\N{HEBREW LETTER AYIN}";
 my $PE            = "\N{HEBREW LETTER PE}";
 my $PE_SOFIT      = "\N{HEBREW LETTER FINAL PE}";
-my $TSADE         = "\N{HEBREW LETTER TSADI}";
-my $TSADE_SOFIT   = "\N{HEBREW LETTER FINAL TSADI}";
+my $TSADI         = "\N{HEBREW LETTER TSADI}";
+my $TSADI_SOFIT   = "\N{HEBREW LETTER FINAL TSADI}";
 my $KOF           = "\N{HEBREW LETTER QOF}";
 my $RESH          = "\N{HEBREW LETTER RESH}";
 my $SHIN          = "\N{HEBREW LETTER SHIN}";
@@ -51,11 +51,11 @@ my $KHIRIK        = "\N{HEBREW POINT HIRIQ}";
 my $KHOLAM        = "\N{HEBREW POINT HOLAM}";
 my $KUBUTS        = "\N{HEBREW POINT QUBUTS}";
 my $RAFE          = "\N{HEBREW POINT RAFE}";
-
-my $DAGESH = my $MAPIK = "\N{HEBREW POINT DAGESH OR MAPIQ}";
-my $KHOLAM_MALE = $VAV . $KHOLAM;
-my $SHURUK      = $VAV . $DAGESH;
-my $KHIRIK_MALE = $KHIRIK . $YOD;
+my $GERESH        = "\N{HEBREW PUNCTUATION GERESH}";
+my $DAGESH        = my $MAPIK = "\N{HEBREW POINT DAGESH OR MAPIQ}";
+my $KHOLAM_MALE   = $VAV . $KHOLAM;
+my $SHURUK        = $VAV . $DAGESH;
+my $KHIRIK_MALE   = $KHIRIK . $YOD;
 
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
 my @TYPES_OF_E = (
@@ -81,18 +81,26 @@ my @TYPES_OF_U = (
 );
 my @ALL_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
-
+my @CG_MODIFIER = (@TYPES_OF_E, @TYPES_OF_I);
 my @REQUIRES_DAGESH = qw(b p);
+
+my @VOWEL_BEFORE_GERESH = ($KAMATS, $PATAKH, $TSERE, $SEGOL, $KHIRIK);
+my @VOWEL_AFTER_GERESH = ($KHOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 
 sub ita_to_heb {
     my ($ita, %option) = @_;
 
+    if ($option{ascii_geresh}) {
+        $GERESH = q{'};
+    }
+
     my $heb = q{};
 
     my @ita_letters = split qr//xms, lc $ita;
 
+    my $add_geresh = 0;
     foreach my $ita_letter_index (0 .. $#ita_letters) {
         my $ita_letter = $ita_letters[$ita_letter_index];
 
@@ -124,6 +132,16 @@ sub ita_to_heb {
                 when ('b') {
                     $hebrew_to_add = $BET;
                 }
+                when ('c') {
+                    if ($ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER)
+                    {
+                        $hebrew_to_add = $TSADI;
+                        $add_geresh    = 1;
+                    }
+                    else {
+                        $hebrew_to_add = $KOF;
+                    }
+                }
                 when ('d') {
                     $hebrew_to_add = $DALET;
                 }
@@ -140,7 +158,7 @@ sub ita_to_heb {
                     }
                 }
                 when (@TYPES_OF_I) {
-                    $hebrew_to_add = $KHIRIK_MALE;
+                    $hebrew_to_add = $add_geresh ? $KHIRIK : $KHIRIK_MALE;
                 }
                 when ('k') {
                     $hebrew_to_add = $KOF;
@@ -183,7 +201,22 @@ sub ita_to_heb {
             }
         }
 
+        if ($add_geresh and $hebrew_to_add ~~ @VOWEL_AFTER_GERESH) {
+            $heb .= $GERESH;
+            $add_geresh = 0;
+        }
+
         $heb .= $hebrew_to_add;
+
+        if ($add_geresh and $hebrew_to_add ~~ @VOWEL_BEFORE_GERESH) {
+            $heb .= $GERESH;
+
+            if ($hebrew_to_add eq $KHIRIK) {
+                $heb .= $YOD;
+            }
+
+            $add_geresh = 0;
+        }
 
         if ($ita_letter_index == $#ita_letters) {
             if ($hebrew_to_add ~~ [ $KAMATS, $SEGOL ]) {
@@ -263,6 +296,11 @@ if it represents an [f] sound. If you don't want it, run it like this:
 represent consonant gemination. If you don't want it, run it like this:
 
     my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Palazzo', disable_dagesh => 1);
+
+* ascii_geresh: by default, Unicode HEBREW PUNCTUATION GERESH is used to indicate
+the sounds of ci and gi. If you want to use the ASCII apostrophe, run it like this:
+
+    my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Cicerone', ascii_geresh => 1);
 
 =head2 closed_syllable
 

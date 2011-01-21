@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 28;
+use Test::More tests => 29;
 use Lingua::IT::Ita2heb;
 use utf8;
 use charnames ':full';
@@ -51,6 +51,7 @@ ok(
         "\N{HEBREW LETTER BET}\N{HEBREW POINT DAGESH OR MAPIQ}",
     'b'
 );
+ok(Lingua::IT::Ita2heb::ita_to_heb('c') eq "\N{HEBREW LETTER QOF}",   'c');
 ok(Lingua::IT::Ita2heb::ita_to_heb('d') eq "\N{HEBREW LETTER DALET}", 'd');
 ok(Lingua::IT::Ita2heb::ita_to_heb('e') eq $result_for_e,             'e');
 ok(
