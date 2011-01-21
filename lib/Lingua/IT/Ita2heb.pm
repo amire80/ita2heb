@@ -224,7 +224,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             }
         }
 
-        if ($add_geresh and $hebrew_to_add ~~ [ @VOWEL_AFTER_GERESH, q{} ]) {
+        if ($add_geresh and $hebrew_to_add ~~ [ @VOWEL_AFTER_GERESH ]) {
             $heb .= $GERESH;
             $add_geresh = 0;
         }
