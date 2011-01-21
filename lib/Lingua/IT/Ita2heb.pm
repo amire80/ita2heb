@@ -86,7 +86,7 @@ my @TYPES_OF_U = (
     "\N{LATIN SMALL LETTER U WITH GRAVE}",
     "\N{LATIN SMALL LETTER U WITH ACUTE}",
 );
-my @ALL_VOWELS =
+my @ALL_LATIN_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
 my @CG_MODIFIER = (@TYPES_OF_E, @TYPES_OF_I);
 my @REQUIRES_DAGESH = qw(b p);
@@ -107,12 +107,14 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
     my $add_geresh  = 0;
     my $wrote_vowel = 0;
+    my $geminated   = 0;
 
+    ITA_LETTER:
     foreach my $ita_letter_index (0 .. $#ita_letters) {
         my $ita_letter = $ita_letters[$ita_letter_index];
 
         if (
-            $ita_letter ~~ @ALL_VOWELS
+            $ita_letter ~~ @ALL_LATIN_VOWELS
             and (  $ita_letter_index == 0
                 or $wrote_vowel)
             )
@@ -123,135 +125,135 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         my $hebrew_to_add = q{};
 
         if (    $ita_letter_index > 0
-            and not $ita_letters[ $ita_letter_index ]     eq 'h'
-            and not $ita_letters[ $ita_letter_index ]     ~~ @ALL_VOWELS
-            and not $ita_letters[ $ita_letter_index - 1 ] ~~ @ALL_VOWELS)
+            and $ita_letter_index < $#ita_letters
+            and $ita_letter ~~ @ALL_LATIN_VOWELS
+            and $ita_letter eq $ita_letters[ $ita_letter_index + 1 ])
         {
-            if ($ita_letter eq $ita_letters[ $ita_letter_index - 1 ]) {
-                if (    not $ita_letter ~~ @REQUIRES_DAGESH
-                    and not $option{disable_dagesh})
-                {
-                    $heb .= $DAGESH;
-                }
-            }
-            else {
-                $heb .= $SHEVA;
-            }
-
-            $wrote_vowel = 0;
+            $geminated = 1;
+            next ITA_LETTER;
         }
-        else {
-            $wrote_vowel = 0;
+        elsif (not $geminated) {
+            $geminated = 0;
+        }
 
-            given ($ita_letter) {
-                when (@TYPES_OF_A) {
-                    if (closed_syllable(\@ita_letters, $ita_letter_index)) {
-                        $hebrew_to_add .= $PATAH;
-                    }
-                    else {
-                        $hebrew_to_add .= $QAMATS;
-                    }
-                }
-                when ('b') {
-                    $hebrew_to_add .= $BET;
-                }
-                when ('c') {
-                    if (($ita_letter_index < $#ita_letters and $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER)
-                        or (    $ita_letter_index < ($#ita_letters - 1)
-                            and $ita_letters[ $ita_letter_index + 1 ] eq 'c'
-                            and $ita_letters[ $ita_letter_index + 2 ] ~~
-                            @CG_MODIFIER)
-                        )
-                    {
-                        $hebrew_to_add .= $TSADI;
-                        $add_geresh    = 1;
-                    }
-                    else {
-                        $hebrew_to_add .= $QOF;
-                    }
-                }
-                when ('d') {
-                    $hebrew_to_add .= $DALET;
-                }
-                when (@TYPES_OF_E) {
-                    $hebrew_to_add .= $SEGOL;
-                }
-                when ('f') {
-                    $hebrew_to_add .= $PE;
+        $wrote_vowel = 0;
 
-                    if ($ita_letter_index == 0
-                        and not $option{'disable_rafe'})
-                    {
-                        $hebrew_to_add .= $RAFE;
-                    }
+        given ($ita_letter) {
+            when (@TYPES_OF_A) {
+                if (closed_syllable(\@ita_letters, $ita_letter_index)) {
+                    $hebrew_to_add .= $PATAH;
                 }
-                when ('g') {
-                    if (
-                        $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER
-                        or (    $ita_letters[ $ita_letter_index + 1 ] eq 'g'
-                            and $ita_letters[ $ita_letter_index + 2 ] ~~
-                            @CG_MODIFIER)
-                        )
-                    {
-                        $add_geresh    = 1;
-                    }
-                    
-                    $hebrew_to_add .= $GIMEL;
+                else {
+                    $hebrew_to_add .= $QAMATS;
                 }
-                when ('h') {    # Niente.
+            }
+            when ('b') {
+                $hebrew_to_add .= $BET;
+            }
+            when ('c') {
+                if (
+                    (
+                            $ita_letter_index < $#ita_letters
+                        and $ita_letters[ $ita_letter_index + 1 ] ~~
+                        @CG_MODIFIER
+                    )
+                    or (    $ita_letter_index < ($#ita_letters - 1)
+                        and $ita_letters[ $ita_letter_index + 1 ] eq 'c'
+                        and $ita_letters[ $ita_letter_index + 2 ] ~~
+                        @CG_MODIFIER)
+                    )
+                {
+                    $hebrew_to_add .= $TSADI;
+                    $add_geresh = 1;
                 }
-                when (@TYPES_OF_I) {
-                    if ($add_geresh) {
-                        if (
-                            not $ita_letters[ $ita_letter_index + 1 ] ~~
-                            @ALL_VOWELS)
-                        {
-                            $hebrew_to_add .= $HIRIQ;
-                        }
-                    }
-                    else {
-                        $hebrew_to_add .= $HIRIQ_MALE;
-                    }
-                }
-                when ('k') {
+                else {
                     $hebrew_to_add .= $QOF;
                 }
-                when ('l') {
-                    $hebrew_to_add .= $LAMED;
-                }
-                when ('m') {
-                    $hebrew_to_add .= $MEM;
-                }
-                when ('n') {
-                    $hebrew_to_add .= $NUN;
-                }
-                when (@TYPES_OF_O) {
-                    $hebrew_to_add .= $HOLAM_MALE;
-                }
-                when ('p') {
-                    $hebrew_to_add .= $PE;
-                }
-                when ('r') {
-                    $hebrew_to_add .= $RESH;
-                }
-                when ('s') {
-                    $hebrew_to_add .= $SAMEKH;
-                }
-                when ('t') {
-                    $hebrew_to_add .= $TET;
-                }
-                when (@TYPES_OF_U) {
-                    $hebrew_to_add .= $SHURUK;
-                }
-                default {
-                    $hebrew_to_add .= q{?};
-                    carp("Unknown letter $ita_letter in the source.");
-                }
             }
+            when ('d') {
+                $hebrew_to_add .= $DALET;
+            }
+            when (@TYPES_OF_E) {
+                $hebrew_to_add .= $SEGOL;
+            }
+            when ('f') {
+                $hebrew_to_add .= $PE;
 
-            if ($ita_letter ~~ @REQUIRES_DAGESH) {
-                $hebrew_to_add .= $DAGESH;
+                if ($ita_letter_index == 0
+                    and not $option{'disable_rafe'})
+                {
+                    $hebrew_to_add .= $RAFE;
+                }
             }
+            when ('g') {
+                if (
+                    $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER
+                    or (    $ita_letters[ $ita_letter_index + 1 ] eq 'g'
+                        and $ita_letters[ $ita_letter_index + 2 ] ~~
+                        @CG_MODIFIER)
+                    )
+                {
+                    $add_geresh = 1;
+                }
+
+                $hebrew_to_add .= $GIMEL;
+            }
+            when ('h') {    # Niente.
+            }
+            when (@TYPES_OF_I) {
+                if ($add_geresh) {
+                    if (
+                        not $ita_letters[ $ita_letter_index + 1 ] ~~
+                        @ALL_LATIN_VOWELS)
+                    {
+                        $hebrew_to_add .= $HIRIQ;
+                    }
+                }
+                else {
+                    $hebrew_to_add .= $HIRIQ_MALE;
+                }
+            }
+            when ('k') {
+                $hebrew_to_add .= $QOF;
+            }
+            when ('l') {
+                $hebrew_to_add .= $LAMED;
+            }
+            when ('m') {
+                $hebrew_to_add .= $MEM;
+            }
+            when ('n') {
+                $hebrew_to_add .= $NUN;
+            }
+            when (@TYPES_OF_O) {
+                $hebrew_to_add .= $HOLAM_MALE;
+            }
+            when ('p') {
+                $hebrew_to_add .= $PE;
+            }
+            when ('r') {
+                $hebrew_to_add .= $RESH;
+            }
+            when ('s') {
+                $hebrew_to_add .= $SAMEKH;
+            }
+            when ('t') {
+                $hebrew_to_add .= $TET;
+            }
+            when (@TYPES_OF_U) {
+                $hebrew_to_add .= $SHURUK;
+            }
+            default {
+                $hebrew_to_add .= q{?};
+                carp("Unknown letter $ita_letter in the source.");
+            }
+        }
+
+        if ($ita_letter ~~ @REQUIRES_DAGESH
+            or ($geminated and not $option{disable_dagesh}))
+        {
+            $hebrew_to_add .= $DAGESH;
+            $geminated = 0;
         }
 
         if ($add_geresh and $hebrew_to_add ~~ [@VOWEL_AFTER_GERESH]) {
@@ -260,6 +262,15 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         }
 
         $heb .= $hebrew_to_add;
+
+        if (    $ita_letter_index > 0
+            and not $ita_letter ~~ @ALL_LATIN_VOWELS
+            and defined $ita_letters[ $ita_letter_index + 1 ]
+            and not $ita_letters[ $ita_letter_index + 1 ] ~~ @ALL_LATIN_VOWELS
+            and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ])
+        {
+            $heb .= $SHEVA;
+        }
 
         if ($add_geresh and $hebrew_to_add ~~ @VOWEL_BEFORE_GERESH) {
             $heb .= $GERESH;
@@ -293,7 +304,7 @@ sub closed_syllable {
     }
 
     for my $offset (1, 2) {
-        if ($letters_ref->[ $letter_index + $offset ] ~~ @ALL_VOWELS) {
+        if ($letters_ref->[ $letter_index + $offset ] ~~ @ALL_LATIN_VOWELS) {
             return 0;
         }
     }
@@ -416,14 +427,16 @@ L<http://search.cpan.org/dist/Lingua-IT-Ita2heb/>
 
 =head1 ACKNOWLEDGEMENTS
 
+I thank each and every of teachers thanks to whom i know Italian and Hebrew.
 
 =head1 LICENSE AND COPYRIGHT
 
 Copyright 2011 Amir E. Aharoni.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
+* the GNU General Public License version 3 as published
+by the Free Software Foundation.
+
+* or the Artistic License version 2.0.
 
 See http://dev.perl.org/licenses/ for more information.
 
