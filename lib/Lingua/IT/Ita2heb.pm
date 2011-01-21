@@ -437,6 +437,8 @@ L<http://search.cpan.org/dist/Lingua-IT-Ita2heb/>
 
 I thank each and every of teachers thanks to whom i know Italian and Hebrew.
 
+I thank Shlomi Fish for important technical support.
+
 =head1 LICENSE AND COPYRIGHT
 
 Copyright 2011 Amir E. Aharoni.
