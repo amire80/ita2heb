@@ -133,6 +133,7 @@ ok(
     'Cicciano'
 );
 
+say {$log} 'Rocchetta ' . Lingua::IT::Ita2heb::ita_to_heb('Rocchetta');
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('Rocchetta') eq "\N{HEBREW LETTER RESH}"
         . "\N{HEBREW LETTER VAV}"

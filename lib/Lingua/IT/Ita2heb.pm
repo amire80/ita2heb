@@ -266,7 +266,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         if (    $ita_letter_index > 0
             and not $ita_letter ~~ @ALL_LATIN_VOWELS
             and defined $ita_letters[ $ita_letter_index + 1 ]
-            and not $ita_letters[ $ita_letter_index + 1 ] ~~ @ALL_LATIN_VOWELS
+            and not $ita_letters[ $ita_letter_index + 1 ] ~~ [ @ALL_LATIN_VOWELS, 'h' ]
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ])
         {
             $heb .= $SHEVA;
