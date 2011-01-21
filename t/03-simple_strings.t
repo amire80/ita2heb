@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 13;
+use Test::More tests => 16;
 use Lingua::IT::Ita2heb;
 use utf8;
 use charnames ':full';
@@ -78,6 +78,25 @@ ok(
 );
 
 ok(
+    Lingua::IT::Ita2heb::ita_to_heb('eco') eq "\N{HEBREW LETTER ALEF}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'eco'
+);
+
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('ecco') eq "\N{HEBREW LETTER ALEF}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'ecco'
+);
+
+ok(
     Lingua::IT::Ita2heb::ita_to_heb('capo') eq "\N{HEBREW LETTER QOF}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER PE}"
@@ -102,7 +121,8 @@ ok(
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('cibo', ascii_geresh => 1) eq
         "\N{HEBREW LETTER TSADI}"
-        . "\N{HEBREW POINT HIRIQ}" . q{'}
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{APOSTROPHE}"
         . "\N{HEBREW LETTER YOD}"
         . "\N{HEBREW LETTER BET}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
@@ -125,7 +145,6 @@ ok(
     'ciabatta'
 );
 
-say $log "cieco " . Lingua::IT::Ita2heb::ita_to_heb('cieco');
 ok(
     Lingua::IT::Ita2heb::ita_to_heb('cieco') eq "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW POINT SEGOL}"
@@ -158,6 +177,21 @@ ok(
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
     'ciuco'
+);
+
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('Cicciano') eq "\N{HEBREW LETTER TSADI}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW PUNCTUATION GERESH}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER TSADI}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW PUNCTUATION GERESH}"
+        . "\N{HEBREW LETTER NUN}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'Cicciano'
 );
 
 close $log;
