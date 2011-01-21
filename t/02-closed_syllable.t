@@ -31,5 +31,3 @@ ok(
 ok(Lingua::IT::Ita2heb::closed_syllable([qw( a d a m m o )], 2),
     'vowel, consonant, consonant');
 
-diag("Testing Lingua::IT::Ita2heb $Lingua::IT::Ita2heb::VERSION, Perl $], $^X"
-);
