@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 16;
+use Test::More tests => 17;
 use Lingua::IT::Ita2heb;
 use utf8;
 use charnames ':full';
@@ -14,7 +14,7 @@ use open ':encoding(utf8)';
 our $VERSION = '0.01';
 
 my $log_filename = '03-simple_strings.log';
-open my $log, '>', $log_filename
+open my $log, '>', $log_filename    ## no critic InputOutput::RequireBriefOpen
     or croak("Couldn't open $log_filename for writing: $OS_ERROR");
 
 ok(
@@ -165,7 +165,7 @@ ok(
         . "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER HE}",
-    "cioe'"
+    q(cioe')
 );
 
 ok(
@@ -194,7 +194,23 @@ ok(
     'Cicciano'
 );
 
-close $log;
+say {$log} 'Rocchetta ' . Lingua::IT::Ita2heb::ita_to_heb('Rocchetta');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('Rocchetta') eq "\N{HEBREW LETTER RESH}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}"
+        . "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW LETTER TET}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER HE}",
+    'Rocchetta'
+);
+
+close $log
+    or croak("Couldn't close $log_filename after writing: $OS_ERROR");
 
 diag("Testing Lingua::IT::Ita2heb $Lingua::IT::Ita2heb::VERSION, Perl $], $^X"
 );

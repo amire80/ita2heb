@@ -146,9 +146,12 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     $hebrew_to_add = $BET;
                 }
                 when ('c') {
-                    if (   $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER
+                    if (
+                        $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER
                         or (    $ita_letters[ $ita_letter_index + 1 ] eq 'c'
-                            and $ita_letters[ $ita_letter_index + 2 ] ~~ @CG_MODIFIER))
+                            and $ita_letters[ $ita_letter_index + 2 ] ~~
+                            @CG_MODIFIER)
+                        )
                     {
                         $hebrew_to_add = $TSADI;
                         $add_geresh    = 1;
@@ -171,6 +174,8 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     {
                         $hebrew_to_add .= $RAFE;
                     }
+                }
+                when ('h') {    # Niente.
                 }
                 when (@TYPES_OF_I) {
                     if ($add_geresh) {
@@ -226,7 +231,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             }
         }
 
-        if ($add_geresh and $hebrew_to_add ~~ [ @VOWEL_AFTER_GERESH ]) {
+        if ($add_geresh and $hebrew_to_add ~~ [@VOWEL_AFTER_GERESH]) {
             $heb .= $GERESH;
             $add_geresh = 0;
         }
