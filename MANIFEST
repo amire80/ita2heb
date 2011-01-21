@@ -2,6 +2,7 @@ Changes
 MANIFEST
 Makefile.PL
 README
+TODO
 lib/Lingua/IT/Ita2heb.pm
 t/00-load.t
 t/01-one_latin_letter.t
