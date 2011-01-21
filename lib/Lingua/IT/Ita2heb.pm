@@ -334,10 +334,6 @@ Amir E. Aharoni, C<< <amir.aharoni at mail.huji.ac.il> >>
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
     use Lingua::IT::Ita2heb;
 
     my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Castelmezzano');
