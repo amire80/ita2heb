@@ -3,6 +3,7 @@
 use Test::More tests => 24;
 use Lingua::IT::Ita2heb;
 use utf8;
+use charnames ':full';
 
 ok( Lingua::IT::Ita2heb::ita_to_heb('a') eq 'אָה',   'a' );
 ok( Lingua::IT::Ita2heb::ita_to_heb('à') eq 'אָה',   'a with grave' );
@@ -15,7 +16,7 @@ ok( Lingua::IT::Ita2heb::ita_to_heb('é') eq 'אֶה',   'e with acute' );
 ok( Lingua::IT::Ita2heb::ita_to_heb('f') eq 'פֿ',    'f' );
 ok( Lingua::IT::Ita2heb::ita_to_heb('f', disable_rafe => 1) eq 'פ', 'f without rafe' );
 ok( Lingua::IT::Ita2heb::ita_to_heb('i') eq 'אִי',   'i' );
-ok( Lingua::IT::Ita2heb::ita_to_heb('ì') eq 'אִי',   'i with grave' );
+ok( Lingua::IT::Ita2heb::ita_to_heb("\N{LATIN SMALL LETTER I WITH GRAVE}") eq 'אִי',   'i with grave' );
 ok( Lingua::IT::Ita2heb::ita_to_heb('í') eq 'אִי',   'i with acute' );
 ok( Lingua::IT::Ita2heb::ita_to_heb('î') eq 'אִי',   'i with circumflex' );
 ok( Lingua::IT::Ita2heb::ita_to_heb('k') eq 'ק',    'k' );

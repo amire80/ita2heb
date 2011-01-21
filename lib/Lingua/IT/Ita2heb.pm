@@ -67,8 +67,6 @@ my $KHOLAM_MALE = $VAV . $KHOLAM;
 my $SHURUK      = $VAV . $DAGESH;
 my $KHIRIK_MALE = $KHIRIK . $YOD;
 
-my $LATIN_VOWEL = qr/[aeiou]/xms;
-
 =head1 SYNOPSIS
 
 Quick summary of what the module does.
@@ -104,6 +102,13 @@ represent consonant gemination. If you don't want it, run it like this:
 
 =cut
 
+my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
+my @TYPES_OF_E = ('e', "\N{LATIN SMALL LETTER E WITH GRAVE}", "\N{LATIN SMALL LETTER E WITH ACUTE}");
+my @TYPES_OF_I = ('i', "\N{LATIN SMALL LETTER I WITH GRAVE}", "\N{LATIN SMALL LETTER I WITH ACUTE}", "\N{LATIN SMALL LETTER I WITH CIRCUMFLEX}");
+my @TYPES_OF_O = ('o', "\N{LATIN SMALL LETTER O WITH GRAVE}", "\N{LATIN SMALL LETTER U WITH ACUTE}");
+my @TYPES_OF_U = ('u', "\N{LATIN SMALL LETTER U WITH GRAVE}", "\N{LATIN SMALL LETTER U WITH ACUTE}");
+my @ALL_VOWELS = (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
+
 sub ita_to_heb {
     # options:
     # disable_rafe
@@ -118,14 +123,14 @@ sub ita_to_heb {
     foreach my $ita_letter_index (0 .. $#ita_letters) {
         my $ita_letter = $ita_letters[$ita_letter_index];
 
-        if ($word_init and $ita_letter =~ $LATIN_VOWEL) {
+        if ($word_init and $ita_letter ~~ @ALL_VOWELS) {
             $heb .= $ALEF;
         }
 
         my $hebrew_to_add;
 
         given ($ita_letter) {
-            when ([qw(a à)]) {
+            when (@TYPES_OF_A) {
                 $hebrew_to_add = $KAMATS;
             }
             when ('b') {
@@ -134,7 +139,7 @@ sub ita_to_heb {
             when ('d') {
                 $hebrew_to_add = $DALET;
             }
-            when ([qw(è e é)]) {
+            when (@TYPES_OF_E) {
                 $hebrew_to_add = $SEGOL;
             }
             when ('f') {
@@ -144,7 +149,7 @@ sub ita_to_heb {
                     $hebrew_to_add .= $RAFE;
                 }
             }
-            when ([qw(i í ì î)]) {
+            when (@TYPES_OF_I) {
                 $hebrew_to_add = $KHIRIK_MALE;
             }
             when ('k') {
@@ -159,7 +164,7 @@ sub ita_to_heb {
             when ('n') {
                 $hebrew_to_add = $NUN;
             }
-            when ([qw(o ò ó)]) {
+            when (@TYPES_OF_O) {
                 $hebrew_to_add = $KHOLAM_MALE;
             }
             when ('p') {
@@ -174,7 +179,7 @@ sub ita_to_heb {
             when ('t') {
                 $hebrew_to_add = $TET;
             }
-            when ([qw(u ù ú)]) {
+            when (@TYPES_OF_U) {
                 $hebrew_to_add = $SHURUK;
             }
             default {
@@ -199,7 +204,7 @@ sub ita_to_heb {
     return $heb;
 }
 
-=head2 ita_to_heb
+=head2 closed_syllable
 
 Checks that the vowel is in a closed syllable.
 
@@ -217,7 +222,7 @@ sub closed_syllable {
     }
 
     for my $offset (1, 2) {
-        if ($letters_ref->[$letter_index + $offset] =~ $LATIN_VOWEL) {
+        if ($letters_ref->[$letter_index + $offset] ~~ @ALL_VOWELS) {
             return 0;
         }
     }
