@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 7;
+use Test::More tests => 8;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 use English '-no_match_vars';
@@ -94,6 +94,18 @@ ok(
         . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER HE}",
     'amma, disable dagesh'
+);
+
+# Check that Dagesh is not added to Resh
+say {$log} 'Serra ' . Lingua::IT::Ita2heb::ita_to_heb('Serra');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('Serra') eq
+        "\N{HEBREW LETTER SAMEKH}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW LETTER RESH}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER HE}",
+    'Serra'
 );
 
 close $log
