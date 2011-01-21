@@ -126,7 +126,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
         if (    $ita_letter_index > 0
             and $ita_letter_index < $#ita_letters
-            and $ita_letter ~~ @ALL_LATIN_VOWELS
+            and not $ita_letter ~~ @ALL_LATIN_VOWELS
             and $ita_letter eq $ita_letters[ $ita_letter_index + 1 ])
         {
             $geminated = 1;
