@@ -2,11 +2,11 @@ Lingua-IT-Ita2heb
 
 This is a module for transliterating Italian words into Hebrew.
 
-It should be mostly useful for personal names.
+It is supposed to be useful for transliterating names of people and places.
 
 At this stage this is just a work that i have begun and it is
-nowhere near being fully functional or useful. You are welcome
-to submit tests, though.
+nowhere near being fully functional or useful. You are, however, welcome
+to suggest tests - tricky Italian words.
 
 INSTALLATION
 
