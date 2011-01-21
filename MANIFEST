@@ -4,6 +4,9 @@ Makefile.PL
 README
 lib/Lingua/IT/Ita2heb.pm
 t/00-load.t
+t/01-one_latin_letter.t
+t/02-closed_syllable.t
+t/03-simple_strings.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
