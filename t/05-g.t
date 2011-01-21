@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 1;
+use Test::More tests => 2;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 use English '-no_match_vars';
@@ -25,6 +25,22 @@ ok(
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
     'Pago'
+);
+
+say {$log} 'Giussano ' . Lingua::IT::Ita2heb::ita_to_heb('Giussano');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('Giussano') eq "\N{HEBREW LETTER GIMEL}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW PUNCTUATION GERESH}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW LETTER SAMEKH}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER NUN}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'Giussano'
 );
 
 close $log

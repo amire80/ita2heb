@@ -89,7 +89,14 @@ my @TYPES_OF_U = (
 my @ALL_LATIN_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
 my @CG_MODIFIER = (@TYPES_OF_E, @TYPES_OF_I);
-my @REQUIRES_DAGESH = qw(b p);
+my @REQUIRES_DAGESH_PHONETIC = qw(b p);
+
+# Dagesh qal.
+# BET and PE must not change according to these rules in transliterated
+# Italian and KAF and TAV are not needed in Italian at all.
+# Dagesh qal in GIMEL and DALET is totally artificial, but it's part
+# of the standard...
+my @REQUIRES_DAGESH_LENE = ($GIMEL, $DALET);
 
 my @VOWEL_BEFORE_GERESH = ($QAMATS, $PATAH, $TSERE, $SEGOL, $HIRIQ);
 my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
@@ -249,8 +256,11 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             }
         }
 
-        if ($ita_letter ~~ @REQUIRES_DAGESH
-            or ($geminated and not $option{disable_dagesh}))
+        if ($ita_letter ~~ @REQUIRES_DAGESH_PHONETIC                # Dagesh phonetic (b, p)
+            or ($geminated and not $option{disable_dagesh})         # Dagesh geminating
+            or (    $ita_letter_index == 0                          # Dagesh lene (bgdkft) XXX
+                and $hebrew_to_add ~~ @REQUIRES_DAGESH_LENE
+                and not ($ita_letter ~~ @REQUIRES_DAGESH_PHONETIC)))
         {
             $hebrew_to_add .= $DAGESH;
             $geminated = 0;
@@ -266,7 +276,8 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         if (    $ita_letter_index > 0
             and not $ita_letter ~~ @ALL_LATIN_VOWELS
             and defined $ita_letters[ $ita_letter_index + 1 ]
-            and not $ita_letters[ $ita_letter_index + 1 ] ~~ [ @ALL_LATIN_VOWELS, 'h' ]
+            and not $ita_letters[ $ita_letter_index + 1 ] ~~
+            [ @ALL_LATIN_VOWELS, 'h' ]
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ])
         {
             $heb .= $SHEVA;

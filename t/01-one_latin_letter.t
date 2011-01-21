@@ -75,7 +75,7 @@ check_ita_transliteration(
 
 check_ita_transliteration('c',  "\N{HEBREW LETTER QOF}", 'c');
 
-check_ita_transliteration('d', "\N{HEBREW LETTER DALET}", 'd');
+check_ita_transliteration('d', "\N{HEBREW LETTER DALET}\N{HEBREW POINT DAGESH OR MAPIQ}", 'd');
 
 check_ita_transliteration('e', $result_for_e, 'e');
 
