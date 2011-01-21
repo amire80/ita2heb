@@ -82,79 +82,104 @@ my @TYPES_OF_U = (
 my @ALL_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
 
-sub ita_to_heb {
-    my ($ita, %options) = @_;
+my @REQUIRES_DAGESH = qw(b p);
 
-    my $heb       = q{};
-    my $word_init = 1;
+Readonly my $NO_CLOSED_PAST_THIS => 3;
+
+sub ita_to_heb {
+    my ($ita, %option) = @_;
+
+    my $heb = q{};
 
     my @ita_letters = split qr//xms, lc $ita;
 
     foreach my $ita_letter_index (0 .. $#ita_letters) {
         my $ita_letter = $ita_letters[$ita_letter_index];
 
-        if ($word_init and $ita_letter ~~ @ALL_VOWELS) {
+        if ($ita_letter_index == 0 and $ita_letter ~~ @ALL_VOWELS) {
             $heb .= $ALEF;
         }
 
         my $hebrew_to_add;
 
-        given ($ita_letter) {
-            when (@TYPES_OF_A) {
-                $hebrew_to_add = $KAMATS;
+        if (    $ita_letter_index > 0
+            and $ita_letter eq $ita_letters[ $ita_letter_index - 1 ])
+        {
+            if (    not $ita_letter ~~ @REQUIRES_DAGESH
+                and not $option{disable_dagesh})
+            {
+                $hebrew_to_add .= $DAGESH;
             }
-            when ('b') {
-                $hebrew_to_add = $BET . $DAGESH;
-            }
-            when ('d') {
-                $hebrew_to_add = $DALET;
-            }
-            when (@TYPES_OF_E) {
-                $hebrew_to_add = $SEGOL;
-            }
-            when ('f') {
-                $hebrew_to_add = $PE;
+        }
+        else {
+            given ($ita_letter) {
+                when (@TYPES_OF_A) {
+                    if (closed_syllable(\@ita_letters, $ita_letter_index)) {
+                        $hebrew_to_add = $PATAKH;
+                    }
+                    else {
+                        $hebrew_to_add = $KAMATS;
+                    }
+                }
+                when ('b') {
+                    $hebrew_to_add = $BET;
+                }
+                when ('d') {
+                    $hebrew_to_add = $DALET;
+                }
+                when (@TYPES_OF_E) {
+                    $hebrew_to_add = $SEGOL;
+                }
+                when ('f') {
+                    $hebrew_to_add = $PE;
 
-                if ($word_init and not $options{'disable_rafe'}) {
-                    $hebrew_to_add .= $RAFE;
+                    if ($ita_letter_index == 0
+                        and not $option{'disable_rafe'})
+                    {
+                        $hebrew_to_add .= $RAFE;
+                    }
+                }
+                when (@TYPES_OF_I) {
+                    $hebrew_to_add = $KHIRIK_MALE;
+                }
+                when ('k') {
+                    $hebrew_to_add = $KOF;
+                }
+                when ('l') {
+                    $hebrew_to_add = $LAMED;
+                }
+                when ('m') {
+                    $hebrew_to_add = $MEM;
+                }
+                when ('n') {
+                    $hebrew_to_add = $NUN;
+                }
+                when (@TYPES_OF_O) {
+                    $hebrew_to_add = $KHOLAM_MALE;
+                }
+                when ('p') {
+                    $hebrew_to_add = $PE;
+                }
+                when ('r') {
+                    $hebrew_to_add = $RESH;
+                }
+                when ('s') {
+                    $hebrew_to_add = $SAMEKH;
+                }
+                when ('t') {
+                    $hebrew_to_add = $TET;
+                }
+                when (@TYPES_OF_U) {
+                    $hebrew_to_add = $SHURUK;
+                }
+                default {
+                    $hebrew_to_add = q{?};
+                    carp("Unknown letter $ita_letter in the source.");
                 }
             }
-            when (@TYPES_OF_I) {
-                $hebrew_to_add = $KHIRIK_MALE;
-            }
-            when ('k') {
-                $hebrew_to_add = $KOF;
-            }
-            when ('l') {
-                $hebrew_to_add = $LAMED;
-            }
-            when ('m') {
-                $hebrew_to_add = $MEM;
-            }
-            when ('n') {
-                $hebrew_to_add = $NUN;
-            }
-            when (@TYPES_OF_O) {
-                $hebrew_to_add = $KHOLAM_MALE;
-            }
-            when ('p') {
-                $hebrew_to_add = $PE . $DAGESH;
-            }
-            when ('r') {
-                $hebrew_to_add = $RESH;
-            }
-            when ('s') {
-                $hebrew_to_add = $SAMEKH;
-            }
-            when ('t') {
-                $hebrew_to_add = $TET;
-            }
-            when (@TYPES_OF_U) {
-                $hebrew_to_add = $SHURUK;
-            }
-            default {
-                $hebrew_to_add = q{?};
-                carp("Unknown letter $ita_letter in the source.");
+
+            if ($ita_letter ~~ @REQUIRES_DAGESH) {
+                $hebrew_to_add .= $DAGESH;
             }
         }
 
@@ -165,16 +190,10 @@ sub ita_to_heb {
                 $heb .= $HE;
             }
         }
-
-        if ($word_init) {
-            $word_init = 0;
-        }
     }
 
     return $heb;
 }
-
-Readonly my $NO_CLOSED_PAST_THIS => 3;
 
 sub closed_syllable {
     my ($letters_ref, $letter_index) = @_;
