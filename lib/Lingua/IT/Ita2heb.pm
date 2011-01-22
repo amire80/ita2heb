@@ -574,7 +574,8 @@ L<http://search.cpan.org/dist/Lingua-IT-Ita2heb/>
 
 I thank all my Italian and Hebrew teachers.
 
-I thank Shlomi Fish for important technical support.
+I thank Shlomi Fish for important technical support
+and refacoring the tests.
 
 =head1 LICENSE AND COPYRIGHT
 
