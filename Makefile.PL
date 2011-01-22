@@ -14,6 +14,7 @@ WriteMakefile(
         : ()),
     PL_FILES  => {},
     PREREQ_PM => { 
+        'Moose' => 0,
         'Test::More' => 0, 
         'List::MoreUtils' => 0,
     },

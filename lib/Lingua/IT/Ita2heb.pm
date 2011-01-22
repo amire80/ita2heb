@@ -13,6 +13,8 @@ use Readonly;
 
 use List::MoreUtils ();
 
+use Lingua::IT::Ita2heb::LettersSeq;
+
 our $VERSION = '0.01';
 
 my $ALEF         = "\N{HEBREW LETTER ALEF}";
@@ -141,8 +143,20 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my $wrote_vowel = 0;
     my $geminated   = 0;
 
+    my $seq = Lingua::IT::Ita2heb::LettersSeq->new(
+        {
+            ita_letters => \@ita_letters,
+        }
+    );
+
     ITA_LETTER:
     foreach my $ita_letter_index (0 .. $#ita_letters) {
+
+        if ($ita_letter_index != $seq->idx())
+        {
+            die "ita_letter_idx mismatch.";
+        }
+
         my $ita_letter = $ita_letters[$ita_letter_index];
 
         if (
@@ -447,6 +461,9 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         if ($hebrew_to_add ~~ @ALL_HEBREW_VOWELS) {
             $wrote_vowel = 1;
         }
+    }
+    continue {
+        $seq->add_to_idx(1);
     }
 
     return $heb;
