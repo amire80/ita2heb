@@ -7,30 +7,28 @@ use warnings;
 use Test::More tests => 8;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
-use English '-no_match_vars';
-use open ':encoding(utf8)';
 
-our $VERSION = '0.01';
+use lib './t/lib';
+use CheckItaTrans qw(start_log check_ita_tr);
 
-my $log_filename = __FILE__ . '.log';
-open my $log, '>', $log_filename    ## no critic InputOutput::RequireBriefOpen
-    or croak("Couldn't open $log_filename for writing: $OS_ERROR");
+start_log(__FILE__);
 
-say {$log} 'Pago ' . Lingua::IT::Ita2heb::ita_to_heb('Pago');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Pago') eq "\N{HEBREW LETTER PE}"
+# TEST
+check_ita_tr(
+    ['Pago'],
+    "\N{HEBREW LETTER PE}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER GIMEL}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
-    'Pago'
+    'Pago',
 );
 
-say {$log} 'Giardinello ' . Lingua::IT::Ita2heb::ita_to_heb('Giardinello');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Giardinello') eq
-        "\N{HEBREW LETTER GIMEL}"
+# TEST
+check_ita_tr(
+    ['Giardinello'],
+    "\N{HEBREW LETTER GIMEL}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW PUNCTUATION GERESH}"
@@ -46,12 +44,13 @@ ok(
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
-    'Giardinello'
+    'Giardinello',
 );
 
-say {$log} 'Ruggiero ' . Lingua::IT::Ita2heb::ita_to_heb('Ruggiero');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Ruggiero') eq "\N{HEBREW LETTER RESH}"
+# TEST
+check_ita_tr(
+    ['Ruggiero'],
+    "\N{HEBREW LETTER RESH}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW LETTER GIMEL}"
@@ -61,12 +60,13 @@ ok(
         . "\N{HEBREW LETTER RESH}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
-    'Ruggiero'
+    'Ruggiero',
 );
 
-say {$log} 'Giorgio ' . Lingua::IT::Ita2heb::ita_to_heb('Giorgio');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Giorgio') eq "\N{HEBREW LETTER GIMEL}"
+# TEST
+check_ita_tr(
+    ['Giorgio'],
+    "\N{HEBREW LETTER GIMEL}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW PUNCTUATION GERESH}"
         . "\N{HEBREW LETTER VAV}"
@@ -78,12 +78,13 @@ ok(
         . "\N{HEBREW PUNCTUATION GERESH}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
-    'Giorgio'
+    'Giorgio',
 );
 
-say {$log} 'Giussano ' . Lingua::IT::Ita2heb::ita_to_heb('Giussano');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Giussano') eq "\N{HEBREW LETTER GIMEL}"
+# TEST
+check_ita_tr(
+    ['Giussano'],
+    "\N{HEBREW LETTER GIMEL}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW PUNCTUATION GERESH}"
         . "\N{HEBREW LETTER VAV}"
@@ -94,12 +95,13 @@ ok(
         . "\N{HEBREW LETTER NUN}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
-    'Giussano'
+    'Giussano',
 );
 
-say {$log} 'Sardegna ' . Lingua::IT::Ita2heb::ita_to_heb('Sardegna');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Sardegna') eq "\N{HEBREW LETTER SAMEKH}"
+# TEST
+check_ita_tr(
+    ['Sardegna'],
+    "\N{HEBREW LETTER SAMEKH}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW LETTER RESH}"
         . "\N{HEBREW POINT SHEVA}"
@@ -111,12 +113,13 @@ ok(
         . "\N{HEBREW LETTER YOD}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER HE}",
-    'Sardegna'
+    'Sardegna',
 );
 
-say {$log} 'Castagneto ' . Lingua::IT::Ita2heb::ita_to_heb('Castagneto');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Castagneto') eq "\N{HEBREW LETTER QOF}"
+# TEST
+check_ita_tr(
+    ['Castagneto'],
+    "\N{HEBREW LETTER QOF}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW LETTER SAMEKH}"
         . "\N{HEBREW POINT SHEVA}"
@@ -129,12 +132,13 @@ ok(
         . "\N{HEBREW LETTER TET}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
-    'Castagneto'
+    'Castagneto',
 );
 
-say {$log} 'Vermiglio ' . Lingua::IT::Ita2heb::ita_to_heb('Vermiglio');
-ok(
-    Lingua::IT::Ita2heb::ita_to_heb('Vermiglio') eq "\N{HEBREW LETTER VAV}"
+# TEST
+check_ita_tr(
+    ['Vermiglio'],
+    "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER RESH}"
         . "\N{HEBREW POINT SHEVA}"
@@ -146,9 +150,6 @@ ok(
         . "\N{HEBREW LETTER YOD}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}",
-    'Vermiglio'
+    'Vermiglio',
 );
-
-close $log
-    or croak("Couldn't close $log_filename after writing: $OS_ERROR");
 
