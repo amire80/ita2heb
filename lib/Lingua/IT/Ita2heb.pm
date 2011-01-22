@@ -11,6 +11,8 @@ use Carp;
 
 use Readonly;
 
+use List::MoreUtils ();
+
 our $VERSION = '0.01';
 
 my $ALEF         = "\N{HEBREW LETTER ALEF}";
@@ -104,6 +106,16 @@ my @VOWEL_BEFORE_GERESH = ($QAMATS, $PATAH, $TSERE, $SEGOL, $HIRIQ);
 my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
+
+Readonly my @SHEVA_SPECS =>
+(
+    [0 => [[@ALL_LATIN_VOWELS]]],
+    [1 => [[@ALL_LATIN_VOWELS, 'h']]],
+    [0 => [['g'],\@G_SILENCERS]],
+    [0 => [['s'],['c'],\@CG_MODIFIER]],
+    [-1 => [['s'], ['c'],\@CG_MODIFIER]],
+    [0 => [['c'], ['q']]],
+);
 
 sub ita_to_heb {    ## no critic ProhibitExcessComplexity
     my ($ita, %option) = @_;
@@ -394,23 +406,25 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
         $heb .= $hebrew_to_add;
 
+        my $match_places = sub {
+            my ($start_offset, $sets_seq) = @_;
+            
+            foreach my $i (0 .. $#$sets_seq)
+            {
+                if (not $ita_letters[$i+$ita_letter_index+$start_offset] ~~
+                    @{$sets_seq->[$i]})
+                {
+                    return;
+                }
+            }
+            return 1;
+        };
+
         if (
-                not $ita_letter ~~ @ALL_LATIN_VOWELS
-            and defined $ita_letters[ $ita_letter_index + 1 ]
-            and not $ita_letters[ $ita_letter_index + 1 ] ~~
-            [ @ALL_LATIN_VOWELS, 'h' ]
+            defined $ita_letters[ $ita_letter_index + 1 ]
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
-            and not($ita_letter eq 'g'
-                and $ita_letters[ $ita_letter_index + 1 ] ~~ @G_SILENCERS)
-            and not($ita_letter eq 's'
-                and $ita_letters[ $ita_letter_index + 1 ] eq 'c'
-                and $ita_letters[ $ita_letter_index + 2 ] ~~ @CG_MODIFIER)
-            and not($ita_letter eq 'c'
-                and $ita_letters[ $ita_letter_index - 1 ] eq 's'
-                and $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER)
-            and not($ita_letter eq 'c'
-                and $ita_letters[ $ita_letter_index + 1 ] eq 'q')
-            )
+            and (List::MoreUtils::none { $match_places->(@$_) } @SHEVA_SPECS)
+        )
         {
             $heb .= $SHEVA;
         }
