@@ -151,17 +151,8 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
     ITA_LETTER:
     while (defined(my $ita_letter_index = $seq->next_index)) {
-        if ($ita_letter_index != $seq->idx())
-        {
-            die "ita_letter_idx mismatch.";
-        }
 
-        my $ita_letter = $ita_letters[$ita_letter_index];
-
-        if ($ita_letter ne $seq->current)
-        {
-            die "Letters mismatch.";
-        }
+        my $ita_letter = $seq->current;
 
         if (
             $ita_letter ~~ @ALL_LATIN_VOWELS
