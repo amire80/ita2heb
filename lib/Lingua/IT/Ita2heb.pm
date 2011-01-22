@@ -207,12 +207,17 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $SEGOL;
             }
             when ('f') {
-                $hebrew_to_add .= $PE;
+                if ($ita_letter_index and $ita_letter_index == $#ita_letters) {
+                    $hebrew_to_add .= $FINAL_PE;
+                }
+                else {
+                    $hebrew_to_add .= $PE;
 
-                if ($ita_letter_index == 0
-                    and not $option{'disable_rafe'})
-                {
-                    $hebrew_to_add .= $RAFE;
+                    if ($ita_letter_index == 0
+                        and not $option{'disable_rafe'})
+                    {
+                        $hebrew_to_add .= $RAFE;
+                    }
                 }
             }
             when ('g') {
@@ -368,7 +373,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     $hebrew_to_add .= $DALET . $DAGESH . $SHEVA . $ZAYIN;
                 }
                 else {
-                    $hebrew_to_add .= $TSADI;
+                    $hebrew_to_add .= ($ita_letter_index and $ita_letter_index == $#ita_letters)
+                        ? $FINAL_TSADI
+                        : $TSADI;
                 }
             }
             default {

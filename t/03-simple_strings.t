@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 13;
+use Test::More tests => 15;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 
@@ -178,4 +178,23 @@ check_ita_tr(
         . "\N{HEBREW POINT QAMATS}" # XXX Should be patah
         . "\N{HEBREW LETTER FINAL NUN}",
     'Filiorum',
+);
+
+check_ita_tr(
+    'af',   # not really a word
+        "\N{HEBREW LETTER ALEF}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER FINAL PE}",
+    'Filiorum',
+);
+
+check_ita_tr(
+    ['Brez'],
+    "\N{HEBREW LETTER BET}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER RESH}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW LETTER FINAL TSADI}",
+    'Brez',
 );
