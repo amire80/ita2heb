@@ -114,4 +114,8 @@ check_ita_transliteration("\N{LATIN SMALL LETTER U WITH ACUTE}",
 
 check_ita_transliteration('v', "\N{HEBREW LETTER VAV}", 'v');
 
-check_ita_transliteration('z', "\N{HEBREW LETTER DALET}\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW POINT SHEVA}\N{HEBREW LETTER ZAYIN}", 'z');
+check_ita_transliteration(
+    'z',
+    "\N{HEBREW LETTER DALET}\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW POINT SHEVA}\N{HEBREW LETTER ZAYIN}",
+    'z'
+);

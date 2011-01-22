@@ -10,22 +10,18 @@ use charnames ':full';
 use English '-no_match_vars';
 use open ':encoding(utf8)';
 
-sub closed_syllable
-{
+sub closed_syllable {    ## no critic (Subroutines::RequireArgUnpacking)
     return Lingua::IT::Ita2heb::closed_syllable(@_);
 }
 
 # TEST
-ok(!closed_syllable([qw( a d a m m )], 2),
-    'too close to the end');
+ok(!closed_syllable([qw( a d a m m )], 2), 'too close to the end');
 
 # TEST
-ok(!closed_syllable([qw( a d a m m )], 0),
-    'vowel, consonant, vowel');
+ok(!closed_syllable([qw( a d a m m )], 0), 'vowel, consonant, vowel');
 
 # TEST
-ok(!closed_syllable([qw( a a d a m )], 0),
-    'vowel, vowel, consonant');
+ok(!closed_syllable([qw( a a d a m )], 0), 'vowel, vowel, consonant');
 
 # TEST
 ok(
@@ -36,6 +32,5 @@ ok(
 );
 
 # TEST
-ok(closed_syllable([qw( a d a m m o )], 2),
-    'vowel, consonant, consonant');
+ok(closed_syllable([qw( a d a m m o )], 2), 'vowel, consonant, consonant');
 
