@@ -4,6 +4,8 @@ use 5.010;
 use strict;
 use warnings;
 
+use Readonly;
+
 use Moose;
 
 extends(
@@ -18,7 +20,7 @@ has '_ALL_LATIN_VOWELS' =>
 
 our $VERSION = '0.01';
 
-my $NO_CLOSED_PAST_THIS => 3;
+Readonly my $NO_CLOSED_PAST_THIS => 3;
 
 sub closed_syllable {
     my ($self) = @_;

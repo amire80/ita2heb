@@ -150,7 +150,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     );
 
     ITA_LETTER:
-    while (defined(my $ita_letter_index = $seq->next_index)) {
+    while (defined($seq->next_index)) {
 
         my $ita_letter = $seq->current;
 
