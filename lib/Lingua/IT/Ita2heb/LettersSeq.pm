@@ -56,6 +56,18 @@ sub next_index {
     }
 }
 
+sub at_start {
+    my ($self) = @_;
+
+    return ($self->idx == 0);
+}
+
+sub after_start {
+    my ($self) = @_;
+
+    return !($self->at_start);
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
 
 __END__
@@ -104,6 +116,14 @@ The current letter at index idx.
 =head2 next_index
 
 Increment the index and return it.
+
+=head2 at_start
+
+Determines whether this is the start of the sequence (index No. 0).
+
+=head2 after_start
+
+After the start (Index larger than 1).
 
 =head1 SUPPORT
 
