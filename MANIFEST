@@ -14,3 +14,4 @@ t/manifest.t
 t/pod-coverage.t
 t/pod.t
 t/lib/CheckItaTrans.pm
+scripts/refactor-tests.pl
