@@ -116,6 +116,20 @@ Readonly my @SHEVA_SPECS => (
     [ 0  => [ ['c'], ['q'] ] ],
 );
 
+Readonly my %SIMPLE_TRANSLITERATIONS =>
+(
+    'b'     => $BET,
+    'd'     => $DALET,
+    (map { $_ => $SEGOL } @TYPES_OF_E),
+    'k'     => $QOF,
+    'l'     => $LAMED,
+    (map { $_ => $HOLAM_MALE } @TYPES_OF_O),
+    'p'     => $PE,
+    'r'     => $RESH,
+    't'     => $TET,
+    q{ }    => q{ },
+);
+
 sub ita_to_heb {    ## no critic ProhibitExcessComplexity
     my ($ita, %option) = @_;
 
@@ -159,8 +173,8 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         $wrote_vowel = 0;
 
         given ($ita_letter) {
-            when (q{ }) {
-                $hebrew_to_add .= q{ };
+            when (%SIMPLE_TRANSLITERATIONS) {
+                $hebrew_to_add .= $SIMPLE_TRANSLITERATIONS{$_};
             }
             when (@TYPES_OF_A) {
                 if (closed_syllable(\@ita_letters, $ita_letter_index)) {
@@ -169,9 +183,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 else {
                     $hebrew_to_add .= $QAMATS;
                 }
-            }
-            when ('b') {
-                $hebrew_to_add .= $BET;
             }
             when ('c') {
                 if (
@@ -201,12 +212,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                         $hebrew_to_add .= $QOF;
                     }
                 }
-            }
-            when ('d') {
-                $hebrew_to_add .= $DALET;
-            }
-            when (@TYPES_OF_E) {
-                $hebrew_to_add .= $SEGOL;
             }
             when ('f') {
                 if ($ita_letter_index and $ita_letter_index == $#ita_letters)
@@ -277,12 +282,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     }
                 }
             }
-            when ('k') {
-                $hebrew_to_add .= $QOF;
-            }
-            when ('l') {
-                $hebrew_to_add .= $LAMED;
-            }
             when ('m') {
                 $hebrew_to_add .=
                     ($ita_letter_index and $ita_letter_index == $#ita_letters)
@@ -301,12 +300,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     ? $FINAL_NUN
                     : $NUN;
             }
-            when (@TYPES_OF_O) {
-                $hebrew_to_add .= $HOLAM_MALE;
-            }
-            when ('p') {
-                $hebrew_to_add .= $PE;
-            }
             when ('q') {
                 if (    $ita_letter_index
                     and $ita_letters[ $ita_letter_index - 1 ] eq 'c')
@@ -320,9 +313,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 }
 
                 $hebrew_to_add .= $SHEVA . $VAV;
-            }
-            when ('r') {
-                $hebrew_to_add .= $RESH;
             }
             when ('s') {
                 if (    $ita_letter_index
@@ -343,9 +333,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 else {
                     $hebrew_to_add .= $SAMEKH;
                 }
-            }
-            when ('t') {
-                $hebrew_to_add .= $TET;
             }
             when (@TYPES_OF_U) {
                 if (    $ita_letter_index
