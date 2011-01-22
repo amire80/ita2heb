@@ -15,7 +15,7 @@ start_log(__FILE__);
 
 check_ita_tr(
     'aba',
-        "\N{HEBREW LETTER ALEF}"
+    "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER BET}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
@@ -26,32 +26,33 @@ check_ita_tr(
 
 check_ita_tr(
     'abba',
-        ("\N{HEBREW LETTER ALEF}"
-        . "\N{HEBREW POINT PATAH}"
-        . "\N{HEBREW LETTER BET}"
-        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
-        . "\N{HEBREW POINT QAMATS}"
-        . "\N{HEBREW LETTER HE}"
+    (
+              "\N{HEBREW LETTER ALEF}"
+            . "\N{HEBREW POINT PATAH}"
+            . "\N{HEBREW LETTER BET}"
+            . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+            . "\N{HEBREW POINT QAMATS}"
+            . "\N{HEBREW LETTER HE}"
     ),
     'abba',
 );
 
 check_ita_tr(
-    ['abba', disable_dagesh => 1],
+    [ 'abba', disable_dagesh => 1 ],
     (
-        "\N{HEBREW LETTER ALEF}"
-        . "\N{HEBREW POINT PATAH}"
-        . "\N{HEBREW LETTER BET}"
-        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
-        . "\N{HEBREW POINT QAMATS}"
-        . "\N{HEBREW LETTER HE}"
+              "\N{HEBREW LETTER ALEF}"
+            . "\N{HEBREW POINT PATAH}"
+            . "\N{HEBREW LETTER BET}"
+            . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+            . "\N{HEBREW POINT QAMATS}"
+            . "\N{HEBREW LETTER HE}"
     ),
     'abba, disable dagesh'
 );
 
 check_ita_tr(
     'ama',
-        "\N{HEBREW LETTER ALEF}"
+    "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER MEM}"
         . "\N{HEBREW POINT QAMATS}"
@@ -61,7 +62,7 @@ check_ita_tr(
 
 check_ita_tr(
     'amma',
-        "\N{HEBREW LETTER ALEF}"
+    "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW LETTER MEM}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
@@ -71,8 +72,8 @@ check_ita_tr(
 );
 
 check_ita_tr(
-    ['amma', disable_dagesh => 1],
-        "\N{HEBREW LETTER ALEF}"
+    [ 'amma', disable_dagesh => 1 ],
+    "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW LETTER MEM}"
         . "\N{HEBREW POINT QAMATS}"
@@ -82,7 +83,7 @@ check_ita_tr(
 
 check_ita_tr(
     [ 'monte', disable_dagesh => 1 ],
-        "\N{HEBREW LETTER MEM}"
+    "\N{HEBREW LETTER MEM}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}"
         . "\N{HEBREW LETTER NUN}"
@@ -96,7 +97,7 @@ check_ita_tr(
 # Check that Dagesh is not added to Resh
 check_ita_tr(
     'Serra',
-        "\N{HEBREW LETTER SAMEKH}"
+    "\N{HEBREW LETTER SAMEKH}"
         . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER RESH}"
         . "\N{HEBREW POINT QAMATS}"
@@ -106,7 +107,7 @@ check_ita_tr(
 
 check_ita_tr(
     'Cesena',
-        "\N{HEBREW LETTER TSADI}"
+    "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW POINT SEGOL}"    # XXX Actually should be tsere
         . "\N{HEBREW PUNCTUATION GERESH}"
         . "\N{HEBREW LETTER ZAYIN}"
@@ -119,7 +120,7 @@ check_ita_tr(
 
 check_ita_tr(
     'Quassolo',
-        "\N{HEBREW LETTER QOF}"
+    "\N{HEBREW LETTER QOF}"
         . "\N{HEBREW POINT SHEVA}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT PATAH}"
@@ -134,11 +135,13 @@ check_ita_tr(
 );
 
 TODO: {
-    local $TODO = 'handling qq is not yet implemented'; ## no critic Variables::ProhibitPackageVars
-    
+    #<<<
+    local $TODO = 'handling qq is not yet implemented';
+    #>>>
+
     check_ita_tr(
         'soqquadro',
-            "\N{HEBREW LETTER SAMEKH}"
+        "\N{HEBREW LETTER SAMEKH}"
             . "\N{HEBREW LETTER VAV}"
             . "\N{HEBREW POINT HOLAM}"
             . "\N{HEBREW LETTER QOF}"
@@ -156,7 +159,7 @@ TODO: {
 
 check_ita_tr(
     'Filiorum',
-        "\N{HEBREW LETTER PE}"
+    "\N{HEBREW LETTER PE}"
         . "\N{HEBREW POINT RAFE}"
         . "\N{HEBREW POINT HIRIQ}"
         . "\N{HEBREW LETTER YOD}"
@@ -174,15 +177,15 @@ check_ita_tr(
 
 check_ita_tr(
     'San',
-        "\N{HEBREW LETTER SAMEKH}"
-        . "\N{HEBREW POINT QAMATS}" # XXX Should be patah
+    "\N{HEBREW LETTER SAMEKH}"
+        . "\N{HEBREW POINT QAMATS}"    # XXX Should be patah
         . "\N{HEBREW LETTER FINAL NUN}",
     'San',
 );
 
 check_ita_tr(
-    'af',   # not really a word
-        "\N{HEBREW LETTER ALEF}"
+    'af',                              # not really a word
+    "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER FINAL PE}",
     'Filiorum',
