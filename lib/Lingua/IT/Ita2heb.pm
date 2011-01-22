@@ -283,6 +283,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
                 $hebrew_to_add .= $SHURUK;
             }
+            when ('v') {
+                $hebrew_to_add .= $VAV;
+            }
             default {
                 $hebrew_to_add .= q{?};
                 carp("Unknown letter $ita_letter in the source.");
