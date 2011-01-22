@@ -107,6 +107,16 @@ my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 
+Readonly my @SHEVA_SPECS =>
+(
+    [0 => [[@ALL_LATIN_VOWELS]]],
+    [1 => [[@ALL_LATIN_VOWELS, 'h']]],
+    [0 => [['g'],\@G_SILENCERS]],
+    [0 => [['s'],['c'],\@CG_MODIFIER]],
+    [-1 => [['s'], ['c'],\@CG_MODIFIER]],
+    [0 => [['c'], ['q']]],
+);
+
 sub ita_to_heb {    ## no critic ProhibitExcessComplexity
     my ($ita, %option) = @_;
 
@@ -404,16 +414,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             }
             return 1;
         };
-
-        my @SHEVA_SPECS =
-        (
-            [0 => [[@ALL_LATIN_VOWELS]]],
-            [1 => [[@ALL_LATIN_VOWELS, 'h']]],
-            [0 => [['g'],\@G_SILENCERS]],
-            [0 => [['s'],['c'],\@CG_MODIFIER]],
-            [-1 => [['s'], ['c'],\@CG_MODIFIER]],
-            [0 => [['c'], ['q']]],
-        );
 
         if (
             defined $ita_letters[ $ita_letter_index + 1 ]
