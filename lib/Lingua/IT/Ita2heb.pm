@@ -164,7 +164,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         my $hebrew_to_add = q{};
 
         if (    $seq->after_start
-            and $ita_letter_index < $#ita_letters
+            and $seq->before_end
             and not $ita_letter ~~ @ALL_LATIN_VOWELS
             and $ita_letter eq $ita_letters[ $ita_letter_index + 1 ])
         {
@@ -192,7 +192,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             when ('c') {
                 if (
                     not(    $seq->after_start
-                        and $ita_letter_index < $#ita_letters
+                        and $seq->before_end
                         and $ita_letters[ $ita_letter_index - 1 ] eq 's'
                         and $ita_letters[ $ita_letter_index + 1 ] ~~
                         @CG_MODIFIER)
@@ -200,7 +200,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 {
                     if (
                         (
-                                $ita_letter_index < $#ita_letters
+                                $seq->before_end
                             and $ita_letters[ $ita_letter_index + 1 ] ~~
                             @CG_MODIFIER
                         )
@@ -243,7 +243,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     $add_geresh = 1;
                 }
 
-                if (    $ita_letter_index < $#ita_letters
+                if (    $seq->before_end
                     and $ita_letters[ $ita_letter_index + 1 ] eq 'n')
                 {
                     $hebrew_to_add .= $NUN . $SHEVA . $YOD;
@@ -263,7 +263,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 # No [i] in sci, except end of word
                 if (
                     not($seq->idx > 1
-                        and $ita_letter_index < $#ita_letters
+                        and $seq->before_end
                         and $ita_letters[ $ita_letter_index - 2 ] eq 's'
                         and $ita_letters[ $ita_letter_index - 1 ] eq 'c')
                     )
@@ -320,7 +320,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('s') {
                 if (    $seq->after_start
-                    and $ita_letter_index < $#ita_letters
+                    and $seq->before_end
                     and $ita_letters[ $ita_letter_index - 1 ] ~~
                     @ALL_LATIN_VOWELS
                     and $ita_letters[ $ita_letter_index + 1 ] ~~

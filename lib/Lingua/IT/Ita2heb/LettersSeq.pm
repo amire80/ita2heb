@@ -68,6 +68,18 @@ sub after_start {
     return !($self->at_start);
 }
 
+sub before_end {
+    my ($self) = @_;
+
+    return ($self->idx < ($self->_count - 1));
+}
+
+sub at_end {
+    my ($self) = @_;
+
+    return (not $self->before_end);
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
 
 __END__
@@ -124,6 +136,14 @@ Determines whether this is the start of the sequence (index No. 0).
 =head2 after_start
 
 After the start (Index larger than 1).
+
+=head2 at_end
+
+This is the last letter in the sequence.
+
+=head2 before_end
+
+This is before the end. C<!$self-at_end>.
 
 =head1 SUPPORT
 
