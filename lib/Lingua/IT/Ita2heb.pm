@@ -256,7 +256,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
                 # No [i] in sci, except end of word
                 if (
-                    not(    $ita_letter_index
+                    not(    $ita_letter_index > 1
                         and $ita_letter_index < $#ita_letters
                         and $ita_letters[ $ita_letter_index - 2 ] eq 's'
                         and $ita_letters[ $ita_letter_index - 1 ] eq 'c')
