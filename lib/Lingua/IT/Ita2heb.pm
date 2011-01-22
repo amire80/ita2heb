@@ -11,6 +11,8 @@ use Carp;
 
 use Readonly;
 
+use List::MoreUtils ();
+
 our $VERSION = '0.01';
 
 my $ALEF         = "\N{HEBREW LETTER ALEF}";
@@ -403,16 +405,21 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             return 1;
         };
 
+        my @SHEVA_SPECS =
+        (
+            [0 => [['g'],\@G_SILENCERS]],
+            [0 => [['s'],['c'],\@CG_MODIFIER]],
+            [-1 => [['s'], ['c'],\@CG_MODIFIER]],
+            [0 => [['c'], ['q']]],
+        );
+
         if (
                 not $ita_letter ~~ @ALL_LATIN_VOWELS
             and defined $ita_letters[ $ita_letter_index + 1 ]
             and not $ita_letters[ $ita_letter_index + 1 ] ~~
             [ @ALL_LATIN_VOWELS, 'h' ]
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
-            and not($match_places->(0 => [['g'],\@G_SILENCERS]))
-            and not($match_places->(0 => [['s'],['c'],\@CG_MODIFIER]))
-            and not($match_places->(-1 => [['s'], ['c'],\@CG_MODIFIER]))
-            and not($match_places->(0 => [['c'], ['q']]))
+            and (List::MoreUtils::none { $match_places->(@$_) } @SHEVA_SPECS)
         )
         {
             $heb .= $SHEVA;
