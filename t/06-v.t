@@ -67,7 +67,7 @@ check_ita_tr(
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW LETTER BET}"
-        . "\N{HEBREW POINT SEGOL}" # XXX Should be tsere
+        . "\N{HEBREW POINT SEGOL}"    # XXX Should be tsere
         . "\N{HEBREW LETTER RESH}"
         . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER TET}"

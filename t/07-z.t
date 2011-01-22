@@ -15,8 +15,7 @@ start_log(__FILE__);
 # TEST
 check_ita_tr(
     ['Melazzo'],
-    "\N{HEBREW LETTER MEM}"
-        . "\N{HEBREW POINT SEGOL}" # XXX should be tsere
+    "\N{HEBREW LETTER MEM}" . "\N{HEBREW POINT SEGOL}"   # XXX should be tsere
         . "\N{HEBREW LETTER LAMED}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW LETTER TSADI}"
