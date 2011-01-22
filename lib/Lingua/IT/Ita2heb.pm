@@ -407,6 +407,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
         my @SHEVA_SPECS =
         (
+            [1 => [[@ALL_LATIN_VOWELS, 'h']]],
             [0 => [['g'],\@G_SILENCERS]],
             [0 => [['s'],['c'],\@CG_MODIFIER]],
             [-1 => [['s'], ['c'],\@CG_MODIFIER]],
@@ -416,8 +417,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         if (
                 not $ita_letter ~~ @ALL_LATIN_VOWELS
             and defined $ita_letters[ $ita_letter_index + 1 ]
-            and not $ita_letters[ $ita_letter_index + 1 ] ~~
-            [ @ALL_LATIN_VOWELS, 'h' ]
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
             and (List::MoreUtils::none { $match_places->(@$_) } @SHEVA_SPECS)
         )
