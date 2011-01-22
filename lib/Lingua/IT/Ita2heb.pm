@@ -108,28 +108,27 @@ my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 
 Readonly my @SHEVA_SPECS => (
-    [ 0  => [ [ @ALL_LATIN_VOWELS ] ] ],
+    [ 0  => [ [@ALL_LATIN_VOWELS] ] ],
     [ 1  => [ [ @ALL_LATIN_VOWELS, 'h' ] ] ],
     [ 0  => [ ['g'], \@G_SILENCERS ] ],
     [ 0  => [ ['s'], ['c'], \@CG_MODIFIER ] ],
     [ -1 => [ ['s'], ['c'], \@CG_MODIFIER ] ],
-    [ 0  => [ ['c'], ['q'] ] ],
+    [ 0 => [ ['c'], ['q'] ] ],
 );
 
-Readonly my %SIMPLE_TRANSLITERATIONS =>
-(
-    'b'     => $BET,
-    'd'     => $DALET,
+Readonly my %SIMPLE_TRANSLITERATIONS => (
+    'b' => $BET,
+    'd' => $DALET,
     (map { $_ => $SEGOL } @TYPES_OF_E),
-    'k'     => $QOF,
-    'l'     => $LAMED,
+    'k' => $QOF,
+    'l' => $LAMED,
     (map { $_ => $HOLAM_MALE } @TYPES_OF_O),
-    'p'     => $PE,
-    'r'     => $RESH,
-    't'     => $TET,
+    'p' => $PE,
+    'r' => $RESH,
+    't' => $TET,
 );
 
-sub ita_to_heb {    ## no critic ProhibitExcessComplexity
+sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
 
     my $GERESH = $option{ascii_geresh} ? q{'} : $TRUE_GERESH;
@@ -186,7 +185,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             when ('c') {
                 if (
                     not(    $ita_letter_index
-                        and $ita_letter_index < ($#ita_letters - 1)
+                        and $ita_letter_index < $#ita_letters
                         and $ita_letters[ $ita_letter_index - 1 ] eq 's'
                         and $ita_letters[ $ita_letter_index + 1 ] ~~
                         @CG_MODIFIER)
@@ -417,7 +416,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     return;
                 }
             }
-            
+
             return 1;
         };
 
@@ -547,11 +546,52 @@ The LETTER doesn't look like a part of the Italian orthography.
 
 =head1 BUGS AND LIMITATIONS
 
-Please report any bugs or feature requests to C<< <amir.aharoni at mail.huji.ac.il> >>.
+This program has several known limitations because Italian pronunciation is
+sometimes unpredictable and because of the quirks of Hebrew spelling. Do
+not assume that transliterations that this program makes are correct
+and always check a reliable dictionary to be sure. Look out especially for
+the following cases:
+
+=over
+
+=item * Words with of z
+
+The letter z is assumed to have the sound of [dz] in the beginning of
+the word and [ts] elsewhere. This is right most of the time, but there are
+also many words where it is wrong.
+
+=item * Words with ia, ie, io, iu
+
+The letter i is assumed to be a semi-vowel before most of the time,
+but there are also many words where it is wrong.
+
+=item * Words with accented vowels
+
+This program treats all accented vowels equally. Accents are usually
+relevant only for indicating stress, which is hardly ever marked in Hebrew,
+but in some words they may affect pronunciation.
+
+=item * Segol is always used for the sound of e
+
+One day this program may become more clever one day and use tsere and segol
+in a way that is closer to standard Hebrew vocalization. Until then... well,
+very few people will notice anyway :)
+
+=back
+
+Please report any words that this program transliterates incorrectly
+as well as any other bugs or feature requests as issues at
+L<https://github.com/amire80/ita2heb>.
 
 =head1 DEPENDENCIES
 
-Readonly.pm.
+=over
+
+=item * Readonly.pm.
+
+=item * List::MoreUtils
+
+=back
 
 =head1 CONFIGURATION AND ENVIRONMENT
 
@@ -594,7 +634,7 @@ L<http://search.cpan.org/dist/Lingua-IT-Ita2heb/>
 I thank all my Italian and Hebrew teachers.
 
 I thank Shlomi Fish for important technical support
-and refacoring the tests.
+and refactoring the tests.
 
 =head1 LICENSE AND COPYRIGHT
 
