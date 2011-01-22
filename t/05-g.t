@@ -158,8 +158,9 @@ check_ita_tr(
     ['Guilmi'],
     "\N{HEBREW LETTER GIMEL}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
-        . "\N{HEBREW POINT SHEVA}"
         . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT HIRIQ}"
         . "\N{HEBREW LETTER YOD}"
         . "\N{HEBREW LETTER LAMED}"

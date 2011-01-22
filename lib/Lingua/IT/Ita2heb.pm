@@ -127,7 +127,6 @@ Readonly my %SIMPLE_TRANSLITERATIONS =>
     'p'     => $PE,
     'r'     => $RESH,
     't'     => $TET,
-    q{ }    => q{ },
 );
 
 sub ita_to_heb {    ## no critic ProhibitExcessComplexity
@@ -339,11 +338,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     and $ita_letters[ $ita_letter_index - 1 ] eq 'q')
                 {
                     next;
-                }
-                elsif ($ita_letters[ $ita_letter_index + 1 ] ~~
-                    @ALL_LATIN_VOWELS)
-                {
-                    $hebrew_to_add .= $SHEVA . $VAV;
                 }
                 else {
                     $hebrew_to_add .= $SHURUK;

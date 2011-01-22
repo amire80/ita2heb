@@ -177,7 +177,7 @@ check_ita_tr(
         "\N{HEBREW LETTER SAMEKH}"
         . "\N{HEBREW POINT QAMATS}" # XXX Should be patah
         . "\N{HEBREW LETTER FINAL NUN}",
-    'Filiorum',
+    'San',
 );
 
 check_ita_tr(
