@@ -159,6 +159,11 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         my $ita_letter = $ita_letters[$ita_letter_index];
 
+        if ($ita_letter ne $seq->current)
+        {
+            die "Letters mismatch.";
+        }
+
         if (
             $ita_letter ~~ @ALL_LATIN_VOWELS
             and (  $ita_letter_index == 0

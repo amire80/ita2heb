@@ -8,10 +8,24 @@ use Moose;
 
 our $VERSION = '0.01';
 
-has ita_letters => (isa => 'ArrayRef[Str]', is => 'ro');
+has ita_letters => (
+    isa => 'ArrayRef[Str]',
+    is => 'ro', 
+    traits => ['Array'],
+    handles => {
+        '_letter' => 'get',
+    },
+);
 has idx => (isa => 'Int', traits => ['Number'], is => 'rw', 
     handles => { add_to_idx => 'add',}, default => 0,
 );
+
+sub current
+{
+    my ($self) = @_;
+
+    return $self->_letter($self->idx());
+}
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
 
@@ -53,6 +67,10 @@ The letters in the sequence. An array reference.
 =head2 idx
 
 The index. An integer.
+
+=head2 current
+
+The current letter at index idx.
 
 =head1 SUPPORT
 
