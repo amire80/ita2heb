@@ -225,6 +225,10 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                         $hebrew_to_add .= $HIRIQ;
                     }
                 }
+                elsif ($ita_letters[ $ita_letter_index + 1 ] ~~ @ALL_LATIN_VOWELS)
+                {
+                    $hebrew_to_add .= $SHEVA . $YOD;
+                }
                 else {
                     $hebrew_to_add .= $HIRIQ_MALE;
                 }

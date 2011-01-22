@@ -1,9 +1,10 @@
 * make tests less bogus
 * qqu - soqquadro
-* z
-* semi-vowel i - Rubiana
+* z support is very basic, make it smarter.
+* semi-vowel i support is very basiv, make it smarter.
 * gli
 * sci
 * sce
+* support x
 * Tsere and segol are not differentiated
 * Do something clever with accented letters
