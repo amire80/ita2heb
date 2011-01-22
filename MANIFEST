@@ -10,6 +10,9 @@ t/02-closed_syllable.t
 t/03-simple_strings.t
 t/04-c.t
 t/05-g.t
+t/06-v.t
+t/07-z.t
+t/08-t.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
