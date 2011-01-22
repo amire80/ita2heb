@@ -27,7 +27,7 @@ check_ita_tr(
 # TEST
 check_ita_tr(
     ['ecco'],
-        "\N{HEBREW LETTER ALEF}"
+    "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT SEGOL}"
         . "\N{HEBREW LETTER QOF}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
@@ -39,7 +39,7 @@ check_ita_tr(
 # TEST
 check_ita_tr(
     ['capo'],
-        "\N{HEBREW LETTER QOF}"
+    "\N{HEBREW LETTER QOF}"
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER PE}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
@@ -64,7 +64,7 @@ check_ita_tr(
 
 # TEST
 check_ita_tr(
-    ['cibo', ascii_geresh => 1],
+    [ 'cibo', ascii_geresh => 1 ],
     "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW POINT HIRIQ}"
         . "\N{APOSTROPHE}"
@@ -107,7 +107,7 @@ check_ita_tr(
 # TEST
 check_ita_tr(
     'cio' . "\N{LATIN SMALL LETTER E WITH GRAVE}",
-        "\N{HEBREW LETTER TSADI}"
+    "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW PUNCTUATION GERESH}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT HOLAM}"
@@ -120,7 +120,7 @@ check_ita_tr(
 # TEST
 check_ita_tr(
     'ciuco',
-        "\N{HEBREW LETTER TSADI}"
+    "\N{HEBREW LETTER TSADI}"
         . "\N{HEBREW PUNCTUATION GERESH}"
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"    # shuruk
@@ -179,7 +179,7 @@ check_ita_tr(
 
 # TEST
 check_ita_tr(
-    ['Acqua', disable_dagesh => 1],
+    [ 'Acqua', disable_dagesh => 1 ],
     "\N{HEBREW LETTER ALEF}"
         . "\N{HEBREW POINT PATAH}"
         . "\N{HEBREW LETTER QOF}"
@@ -205,23 +205,20 @@ check_ita_tr(
     'Brescia',
 );
 
-TODO: {
-    # TEST
-    local $TODO = 'handling word-final sci is not yet implemented'; ## no critic Variables::ProhibitPackageVars
-    check_ita_tr(
-        ['Volsci'],
-        "\N{HEBREW LETTER VAV}"
-            . "\N{HEBREW LETTER VAV}"
-            . "\N{HEBREW POINT HOLAM}"
-            . "\N{HEBREW LETTER LAMED}"
-            . "\N{HEBREW POINT SHEVA}"
-            . "\N{HEBREW LETTER SHIN}"
-            . "\N{HEBREW POINT SHIN DOT}"
-            . "\N{HEBREW POINT HIRIQ}"
-            . "\N{HEBREW LETTER YOD}",
-        'Volsci'
-    );
-}
+# TEST
+check_ita_tr(
+    ['Volsci'],
+    "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}"
+        . "\N{HEBREW LETTER LAMED}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER SHIN}"
+        . "\N{HEBREW POINT SHIN DOT}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW LETTER YOD}",
+    'Volsci'
+);
 
 # TEST
 check_ita_tr(
