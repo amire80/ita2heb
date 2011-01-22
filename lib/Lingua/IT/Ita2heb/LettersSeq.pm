@@ -119,6 +119,17 @@ sub match_before {
     return $self->safe_match_places((-@$sets_seq), $sets_seq);
 }
 
+sub match_after {
+    my ($self, $sets_seq) = @_;
+
+    if ($self->idx + @$sets_seq >= $self->_count) {
+        return;
+    }
+    else {
+        return $self->safe_match_places(1, $sets_seq);
+    }
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
 
 __END__
@@ -196,6 +207,12 @@ Like match_places but return false if $start_offset is too small.
 
 Matches the sequences in order for the letters before the current one.
 If they don't exist, then it returns false.
+
+=head2 $seq->match_after(\@sets_seq)
+
+Matches the sequences in order for the letters after the curent one.
+If some of them don't exist (because the sequence is too short, then it returns
+false.
 
 =head1 SUPPORT
 

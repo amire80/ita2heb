@@ -191,23 +191,14 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('c') {
                 if (
-                    not($seq->match_before([['s']])
-                        and $seq->before_end
-                        and $ita_letters[ $ita_letter_index + 1 ] ~~
-                        @CG_MODIFIER)
-                    )
+                    not(    $seq->match_before([['s']]) 
+                        and $seq->match_after([\@CG_MODIFIER]))
+                )
                 {
                     if (
-                        (
-                                $seq->before_end
-                            and $ita_letters[ $ita_letter_index + 1 ] ~~
-                            @CG_MODIFIER
-                        )
-                        or (    $ita_letter_index < ($#ita_letters - 1)
-                            and $ita_letters[ $ita_letter_index + 1 ] eq 'c'
-                            and $ita_letters[ $ita_letter_index + 2 ] ~~
-                            @CG_MODIFIER)
-                        )
+                           $seq->match_after([\@CG_MODIFIER])
+                        or $seq->match_after([['c'], \@CG_MODIFIER])
+                    )
                     {
                         $hebrew_to_add .= $TSADI;
                         $add_geresh = 1;
@@ -233,24 +224,23 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('g') {
                 if (
-                    $ita_letters[ $ita_letter_index + 1 ] ~~ @CG_MODIFIER
-                    or (    $ita_letters[ $ita_letter_index + 1 ] eq 'g'
-                        and $ita_letters[ $ita_letter_index + 2 ] ~~
-                        @CG_MODIFIER)
-                    )
+                    $seq->match_after([\@CG_MODIFIER])
+                    or $seq->match_after([['g'],\@CG_MODIFIER])
+                )
                 {
                     $add_geresh = 1;
                 }
 
-                if (    $seq->before_end
-                    and $ita_letters[ $ita_letter_index + 1 ] eq 'n')
+                if ($seq->match_after([['n']]))
                 {
                     $hebrew_to_add .= $NUN . $SHEVA . $YOD;
                 }
                 elsif (
-                    not(    $ita_letter_index
-                        and $ita_letters[ $ita_letter_index + 1 ] eq 'l')
+                    not(
+                        $seq->after_start
+                        and $seq->match_after([['l']])
                     )
+                )
                 {
                     $hebrew_to_add .= $GIMEL;
                 }
@@ -268,15 +258,12 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 )
                 {
                     if ($add_geresh) {
-                        if (
-                            not $ita_letters[ $ita_letter_index + 1 ] ~~
-                            @ALL_LATIN_VOWELS)
+                        if (not $seq->match_after([\@ALL_LATIN_VOWELS]) )
                         {
                             $hebrew_to_add .= $HIRIQ;
                         }
                     }
-                    elsif ($ita_letters[ $ita_letter_index + 1 ] ~~
-                        @ALL_LATIN_VOWELS)
+                    elsif ($seq->match_after([\@ALL_LATIN_VOWELS]))
                     {
                         $hebrew_to_add .= $SHEVA . $YOD;
                     }
@@ -317,15 +304,12 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('s') {
                 if (    $seq->match_before([[@ALL_LATIN_VOWELS]])
-                    and $seq->before_end
-                    and $ita_letters[ $ita_letter_index + 1 ] ~~
-                    @ALL_LATIN_VOWELS)
+                    and $seq->match_after([\@ALL_LATIN_VOWELS])
+                )
                 {
                     $hebrew_to_add .= $ZAYIN;
                 }
-                elsif ( ($#ita_letters - $ita_letter_index > 1)
-                    and $ita_letters[ $ita_letter_index + 1 ] eq 'c'
-                    and $ita_letters[ $ita_letter_index + 2 ] ~~ @CG_MODIFIER)
+                elsif ($seq->match_after([['c'], \@CG_MODIFIER]))
                 {
                     $hebrew_to_add .= $SHIN;
                 }
@@ -346,8 +330,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 if (
                     $seq->after_start
                     and ($seq->match_before([[@REQUIRES_BET_FOR_V]])
-                        or $ita_letters[ $ita_letter_index + 1 ] ~~
-                        @REQUIRES_BET_FOR_V
+                        or $seq->match_after([\@REQUIRES_BET_FOR_V])
                         or $seq->at_end)
                     )
                 {
