@@ -1,9 +1,7 @@
-* make tests less bogus
 * qqu - soqquadro
 * z support is very basic, make it smarter.
 * semi-vowel i support is very basic, make it smarter.
-* sci
-* sce
+* sci onyl works properly in the middle of the word and assumes that i is not a vowel.
 * support x
 * Tsere and segol are not differentiated
 * Do something clever with accented letters
