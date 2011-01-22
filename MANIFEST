@@ -5,6 +5,7 @@ README
 TODO
 lib/Lingua/IT/Ita2heb.pm
 lib/Lingua/IT/Ita2heb/LettersSeq.pm
+lib/Lingua/IT/Ita2heb/LettersSeq/IT.pm
 t/00-load.t
 t/01-one_latin_letter.t
 t/02-closed_syllable.t

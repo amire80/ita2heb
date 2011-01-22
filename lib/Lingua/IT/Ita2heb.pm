@@ -13,7 +13,7 @@ use Readonly;
 
 use List::MoreUtils ();
 
-use Lingua::IT::Ita2heb::LettersSeq;
+use Lingua::IT::Ita2heb::LettersSeq::IT;
 
 our $VERSION = '0.01';
 
@@ -142,9 +142,10 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my $add_geresh  = 0;
     my $geminated   = 0;
 
-    my $seq = Lingua::IT::Ita2heb::LettersSeq->new(
+    my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
         {
             ita_letters => \@ita_letters,
+            _ALL_LATIN_VOWELS => \@ALL_LATIN_VOWELS,
         }
     );
 
@@ -182,7 +183,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $hebrew_to_add .= $SIMPLE_TRANSLITERATIONS{$_};
             }
             when (@TYPES_OF_A) {
-                if (closed_syllable(\@ita_letters, $ita_letter_index)) {
+                if ($seq->closed_syllable()) {
                     $hebrew_to_add .= $PATAH;
                 }
                 else {
@@ -423,17 +424,15 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 sub closed_syllable {
     my ($letters_ref, $letter_index) = @_;
 
-    if (($#{$letters_ref} - $letter_index) < $NO_CLOSED_PAST_THIS) {
-        return 0;
-    }
+    my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
+        {
+            ita_letters => $letters_ref,
+            _ALL_LATIN_VOWELS => \@ALL_LATIN_VOWELS,
+            idx => $letter_index,
+        },
+    );
 
-    for my $offset (1, 2) {
-        if ($letters_ref->[ $letter_index + $offset ] ~~ @ALL_LATIN_VOWELS) {
-            return 0;
-        }
-    }
-
-    return 1;
+    return $seq->closed_syllable();
 }
 
 1;    # End of Lingua::IT::Ita2heb
