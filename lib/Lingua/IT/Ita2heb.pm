@@ -150,8 +150,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     );
 
     ITA_LETTER:
-    foreach my $ita_letter_index (0 .. $#ita_letters) {
-
+    while (defined(my $ita_letter_index = $seq->next_index)) {
         if ($ita_letter_index != $seq->idx())
         {
             die "ita_letter_idx mismatch.";
@@ -466,9 +465,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         if ($hebrew_to_add ~~ @ALL_HEBREW_VOWELS) {
             $wrote_vowel = 1;
         }
-    }
-    continue {
-        $seq->add_to_idx(1);
     }
 
     return $heb;

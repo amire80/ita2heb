@@ -14,10 +14,12 @@ has ita_letters => (
     traits => ['Array'],
     handles => {
         '_letter' => 'get',
+        '_count' => 'count',
     },
 );
+
 has idx => (isa => 'Int', traits => ['Number'], is => 'rw', 
-    handles => { add_to_idx => 'add',}, default => 0,
+    handles => { add_to_idx => 'add',}, default => -1,
 );
 
 sub current
@@ -25,6 +27,21 @@ sub current
     my ($self) = @_;
 
     return $self->_letter($self->idx());
+}
+
+sub next_index {
+    my ($self) = @_;
+
+    if ($self->idx() == $self->_count - 1)
+    {
+        return;
+    }
+    else
+    {
+        $self->add_to_idx(1);
+
+        return $self->idx();
+    }
 }
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
@@ -71,6 +88,10 @@ The index. An integer.
 =head2 current
 
 The current letter at index idx.
+
+=head2 next_index
+
+Increment the index and return it.
 
 =head1 SUPPORT
 
