@@ -191,9 +191,8 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('c') {
                 if (
-                    not(    $seq->after_start
+                    not($seq->match_before([['s']])
                         and $seq->before_end
-                        and $ita_letters[ $ita_letter_index - 1 ] eq 's'
                         and $ita_letters[ $ita_letter_index + 1 ] ~~
                         @CG_MODIFIER)
                     )
@@ -262,11 +261,11 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
                 # No [i] in sci, except end of word
                 if (
-                    not($seq->idx > 1
-                        and $seq->before_end
-                        and $ita_letters[ $ita_letter_index - 2 ] eq 's'
-                        and $ita_letters[ $ita_letter_index - 1 ] eq 'c')
+                    not(
+                        $seq->before_end
+                        and $seq->match_before([['s'],['c']])
                     )
+                )
                 {
                     if ($add_geresh) {
                         if (
@@ -293,8 +292,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     : $MEM;
             }
             when ('n') {
-                if (    $seq->after_start
-                    and $ita_letters[ $ita_letter_index - 1 ] eq 'g')
+                if ( $seq->match_before([['g']]) )
                 {
                     next ITA_LETTER;
                 }
@@ -305,8 +303,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     : $NUN;
             }
             when ('q') {
-                if (    $seq->after_start
-                    and $ita_letters[ $ita_letter_index - 1 ] eq 'c')
+                if ( $seq->match_before([['c']]) )
                 {
                     if (not $option{disable_dagesh}) {
                         $hebrew_to_add .= $DAGESH;
@@ -319,10 +316,8 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $hebrew_to_add .= $SHEVA . $VAV;
             }
             when ('s') {
-                if (    $seq->after_start
+                if (    $seq->match_before([[@ALL_LATIN_VOWELS]])
                     and $seq->before_end
-                    and $ita_letters[ $ita_letter_index - 1 ] ~~
-                    @ALL_LATIN_VOWELS
                     and $ita_letters[ $ita_letter_index + 1 ] ~~
                     @ALL_LATIN_VOWELS)
                 {
@@ -339,8 +334,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when (@TYPES_OF_U) {
-                if (    $seq->after_start
-                    and $ita_letters[ $ita_letter_index - 1 ] eq 'q')
+                if ($seq->match_before([['q']]))
                 {
                     next;
                 }
@@ -351,8 +345,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             when ('v') {
                 if (
                     $seq->after_start
-                    and ($ita_letters[ $ita_letter_index - 1 ] ~~
-                           @REQUIRES_BET_FOR_V
+                    and ($seq->match_before([[@REQUIRES_BET_FOR_V]])
                         or $ita_letters[ $ita_letter_index + 1 ] ~~
                         @REQUIRES_BET_FOR_V
                         or $seq->at_end)
@@ -388,9 +381,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             ($geminated and not $option{disable_dagesh})   # Dagesh geminating
             or (
                 (
-                    $seq->at_start   # Dagesh lene (bgdkft) XXX
-                    or not $ita_letters[ $ita_letter_index - 1 ] ~~
-                    @ALL_LATIN_VOWELS
+                    not $seq->match_before([[@ALL_LATIN_VOWELS]])
                 )
                 and $hebrew_to_add ~~ @REQUIRES_DAGESH_LENE
                 and not($ita_letter ~~ @REQUIRES_DAGESH_PHONETIC)
