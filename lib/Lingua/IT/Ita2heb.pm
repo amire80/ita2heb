@@ -310,7 +310,12 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 }
             }
             when ('z') {
-                $hebrew_to_add .= $TSADI;
+                if (not $ita_letter_index) {
+                    $hebrew_to_add .= $DALET . $DAGESH . $SHEVA . $ZAYIN;
+                }
+                else {
+                    $hebrew_to_add .= $TSADI;
+                }
             }
             default {
                 $hebrew_to_add .= q{?};

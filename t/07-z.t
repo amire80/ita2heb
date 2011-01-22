@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 1;
+use Test::More tests => 2;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 use English '-no_match_vars';
@@ -29,6 +29,23 @@ ok(
     'Melazzo'
 );
 
+say {$log} 'Zibello ' . Lingua::IT::Ita2heb::ita_to_heb('Zibello');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('Zibello') eq "\N{HEBREW LETTER DALET}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER ZAYIN}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER BET}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW LETTER LAMED}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}",
+    'Zibello'
+);
+
 close $log
     or croak("Couldn't close $log_filename after writing: $OS_ERROR");
-
