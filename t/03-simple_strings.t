@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 12;
+use Test::More tests => 13;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 
@@ -169,5 +169,13 @@ check_ita_tr(
         . "\N{HEBREW LETTER VAV}"
         . "\N{HEBREW POINT DAGESH OR MAPIQ}"
         . "\N{HEBREW LETTER FINAL MEM}",
+    'Filiorum',
+);
+
+check_ita_tr(
+    'San',
+        "\N{HEBREW LETTER SAMEKH}"
+        . "\N{HEBREW POINT QAMATS}" # XXX Should be patah
+        . "\N{HEBREW LETTER FINAL NUN}",
     'Filiorum',
 );

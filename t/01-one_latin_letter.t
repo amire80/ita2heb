@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 29;
+use Test::More tests => 31;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 
@@ -85,9 +85,9 @@ check_ita_transliteration('k', "\N{HEBREW LETTER QOF}", 'k');
 
 check_ita_transliteration('l', "\N{HEBREW LETTER LAMED}", 'l');
 
-check_ita_transliteration('m', "\N{HEBREW LETTER FINAL MEM}", 'm');
+check_ita_transliteration('m', "\N{HEBREW LETTER MEM}", 'm');    # not sofit
 
-check_ita_transliteration('n', "\N{HEBREW LETTER NUN}", 'n');    # XXX sofit?
+check_ita_transliteration('n', "\N{HEBREW LETTER NUN}", 'n');    # not sofit
 check_ita_transliteration('o', $result_for_o,           'o');
 check_ita_transliteration("\N{LATIN SMALL LETTER O WITH GRAVE}",
     $result_for_o, 'o with grave');
@@ -112,3 +112,6 @@ check_ita_transliteration("\N{LATIN SMALL LETTER U WITH GRAVE}",
 check_ita_transliteration("\N{LATIN SMALL LETTER U WITH ACUTE}",
     $result_for_u, 'u with acute');
 
+check_ita_transliteration('v', "\N{HEBREW LETTER VAV}", 'v');
+
+check_ita_transliteration('z', "\N{HEBREW LETTER DALET}\N{HEBREW POINT DAGESH OR MAPIQ}\N{HEBREW POINT SHEVA}\N{HEBREW LETTER ZAYIN}", 'z');

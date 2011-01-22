@@ -265,7 +265,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $LAMED;
             }
             when ('m') {
-                $hebrew_to_add .= ($ita_letter_index == $#ita_letters)
+                $hebrew_to_add .= ($ita_letter_index and $ita_letter_index == $#ita_letters)
                     ? $FINAL_MEM
                     : $MEM;
             }
@@ -275,7 +275,10 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 {
                     next ITA_LETTER;
                 }
-                $hebrew_to_add .= $NUN;
+                
+                $hebrew_to_add .= ($ita_letter_index and $ita_letter_index == $#ita_letters)
+                    ? $FINAL_NUN
+                    : $NUN;
             }
             when (@TYPES_OF_O) {
                 $hebrew_to_add .= $HOLAM_MALE;
