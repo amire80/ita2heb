@@ -7,14 +7,11 @@ use warnings;
 use Test::More tests => 29;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
-use English '-no_match_vars';
-use open ':encoding(utf8)';
 
-our $VERSION = '0.01';
+use lib './t/lib';
+use CheckItaTrans qw(start_log check_ita_transliteration);
 
-my $log_filename = __FILE__ . '.log';
-open my $log, '>', $log_filename    ## no critic InputOutput::RequireBriefOpen
-    or croak("Couldn't open $log_filename for writing: $OS_ERROR");
+start_log(__FILE__);
 
 my $result_for_a =
       "\N{HEBREW LETTER ALEF}"
@@ -40,20 +37,6 @@ my $result_for_u =
       "\N{HEBREW LETTER ALEF}"
     . "\N{HEBREW LETTER VAV}"
     . "\N{HEBREW POINT DAGESH OR MAPIQ}";    # shuruk
-
-sub check_ita_transliteration {
-    my ($ita, $hebrew_transliteration, $blurb) = @_;
-    local $Test::Builder::Level =  ## no critic Variables::ProhibitPackageVars
-        $Test::Builder::Level + 1; ## no critic Variables::ProhibitPackageVars
-
-    return is(
-        Lingua::IT::Ita2heb::ita_to_heb(
-            ref($ita) eq 'ARRAY' ? (@{$ita}) : $ita
-        ),
-        $hebrew_transliteration,
-        $blurb
-    );
-}
 
 check_ita_transliteration('a', $result_for_a, 'a');
 
