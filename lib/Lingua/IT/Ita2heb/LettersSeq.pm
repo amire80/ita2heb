@@ -80,6 +80,39 @@ sub at_end {
     return (not $self->before_end);
 }
 
+sub match_places {
+    my ($self, $start_offset, $sets_seq) = @_;
+
+    foreach my $i (0 .. $#{$sets_seq}) {
+        my $let_idx = $self->idx() + $start_offset + $i;
+
+        if (($let_idx < 0) || ($let_idx >= $self->_count))
+        {
+            die "Letter index '$let_idx' is out of range.";
+        }
+
+        if (
+            not $self->_letter($let_idx)
+            ~~ @{ $sets_seq->[$i] })
+        {
+            return;
+        }
+    }
+
+    return 1;
+}
+
+sub safe_match_places {
+    my ($self, $start_offset, $sets_seq) = @_;
+
+    if ($self->idx + $start_offset >= 0) {
+        return $self->match_places($start_offset, $sets_seq);
+    }
+    else {
+        return;
+    }
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
 
 __END__
@@ -145,6 +178,14 @@ This is the last letter in the sequence.
 
 This is before the end. C<!$self-at_end>.
 
+=head2 $seq->match_places($start_offset, \@sets_seq)
+
+Match places from $start_offset onwards with @sets_seq .
+
+=head2 $seq->safe_match_places($start_offset, \@sets_seq)
+
+Like match_places but return false if $start_offset is too small.
+
 =head1 SUPPORT
 
 You can find documentation for this module with the perldoc command.
@@ -172,13 +213,6 @@ L<http://cpanratings.perl.org/d/Lingua-IT-Ita2heb>
 L<http://search.cpan.org/dist/Lingua-IT-Ita2heb/>
 
 =back
-
-=head1 ACKNOWLEDGEMENTS
-
-I thank all my Italian and Hebrew teachers.
-
-I thank Shlomi Fish for important technical support
-and refactoring the tests.
 
 =head1 LICENSE AND COPYRIGHT
 

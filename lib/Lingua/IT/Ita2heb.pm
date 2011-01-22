@@ -411,25 +411,14 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         $heb .= $hebrew_to_add;
 
-        my $match_places = sub {
-            my ($start_offset, $sets_seq) = @_;
-
-            foreach my $i (0 .. $#{$sets_seq}) {
-                if (
-                    not $ita_letters[ $i + $ita_letter_index + $start_offset ]
-                    ~~ @{ $sets_seq->[$i] })
-                {
-                    return;
-                }
-            }
-
-            return 1;
-        };
-
         if (    defined $ita_letters[ $ita_letter_index + 1 ]
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
             and
-            (List::MoreUtils::none { $match_places->(@{$_}) } @SHEVA_SPECS))
+            (List::MoreUtils::none 
+                { $seq->safe_match_places(@{$_}) }
+                @SHEVA_SPECS
+            )
+        )
         {
             $heb .= $SHEVA;
         }
