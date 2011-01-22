@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 10;
+use Test::More tests => 11;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 use English '-no_match_vars';
@@ -137,6 +137,27 @@ ok(
         . "\N{HEBREW POINT HOLAM}",
     'Quassolo'
 );
+
+TODO: {
+    local $TODO = 'handling qq is not yet implemented'; ## no critic Variables::ProhibitPackageVars
+    
+    say {$log} 'soqquadro ' . Lingua::IT::Ita2heb::ita_to_heb('soqquadro');
+    ok(
+        Lingua::IT::Ita2heb::ita_to_heb('soqquadro') eq "\N{HEBREW LETTER SAMEKH}"
+            . "\N{HEBREW LETTER VAV}"
+            . "\N{HEBREW POINT HOLAM}"
+            . "\N{HEBREW LETTER QOF}"
+            . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+            . "\N{HEBREW POINT SHEVA}"
+            . "\N{HEBREW LETTER VAV}"
+            . "\N{HEBREW POINT PATAH}"
+            . "\N{HEBREW LETTER DALET}"
+            . "\N{HEBREW LETTER RESH}"
+            . "\N{HEBREW LETTER VAV}"
+            . "\N{HEBREW POINT HOLAM}",
+        'soqquadro'
+    );
+}
 
 close $log
     or croak("Couldn't close $log_filename after writing: $OS_ERROR");

@@ -253,7 +253,16 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $PE;
             }
             when ('q') {
-                $hebrew_to_add .= $QOF . $SHEVA . $VAV;
+                if ($ita_letter_index and $ita_letters[ $ita_letter_index - 1 ] eq 'c') {
+                    if (not $option{disable_dagesh}) {
+                        $hebrew_to_add .= $DAGESH;
+                    }
+                }
+                else {
+                    $hebrew_to_add .= $QOF;
+                }
+
+                $hebrew_to_add .= $SHEVA . $VAV;
             }
             when ('r') {
                 $hebrew_to_add .= $RESH;
@@ -344,6 +353,8 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
             and not($ita_letter eq 'g'
                 and $ita_letters[ $ita_letter_index + 1 ] eq 'n')
+            and not($ita_letter eq 'c'
+                and $ita_letters[ $ita_letter_index + 1 ] eq 'q')
             )
         {
             $heb .= $SHEVA;
