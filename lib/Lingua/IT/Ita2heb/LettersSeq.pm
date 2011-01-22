@@ -130,6 +130,13 @@ sub match_after {
     }
 }
 
+sub curr_lett_eq_next {
+    my ($self) = @_;
+
+    return ($self->at_end
+        || ($self->current eq $self->_letter($self->idx+1)));
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
 
 __END__
@@ -213,6 +220,11 @@ If they don't exist, then it returns false.
 Matches the sequences in order for the letters after the curent one.
 If some of them don't exist (because the sequence is too short, then it returns
 false.
+
+=head2 $seq->curr_lett_eq_next()
+
+Whether the current letter is the same as the next or alternatively we
+are the end of the string.
 
 =head1 SUPPORT
 

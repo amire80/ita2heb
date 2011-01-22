@@ -166,7 +166,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         if (    $seq->after_start
             and $seq->before_end
             and not $ita_letter ~~ @ALL_LATIN_VOWELS
-            and $ita_letter eq $ita_letters[ $ita_letter_index + 1 ])
+            and $seq->curr_lett_eq_next)
         {
             $geminated = 1;
             next ITA_LETTER;
@@ -385,8 +385,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         $heb .= $hebrew_to_add;
 
-        if (    defined $ita_letters[ $ita_letter_index + 1 ]
-            and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
+        if ((!$seq->curr_lett_eq_next)
             and
             (List::MoreUtils::none 
                 { $seq->safe_match_places(@{$_}) }
