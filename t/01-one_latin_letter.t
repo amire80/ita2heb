@@ -85,7 +85,7 @@ check_ita_transliteration('k', "\N{HEBREW LETTER QOF}", 'k');
 
 check_ita_transliteration('l', "\N{HEBREW LETTER LAMED}", 'l');
 
-check_ita_transliteration('m', "\N{HEBREW LETTER MEM}", 'm');    # XXX sofit?
+check_ita_transliteration('m', "\N{HEBREW LETTER FINAL MEM}", 'm');
 
 check_ita_transliteration('n', "\N{HEBREW LETTER NUN}", 'n');    # XXX sofit?
 check_ita_transliteration('o', $result_for_o,           'o');

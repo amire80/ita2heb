@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 11;
+use Test::More tests => 12;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 
@@ -153,3 +153,21 @@ TODO: {
         'soqquadro'
     );
 }
+
+check_ita_tr(
+    'Filiorum',
+        "\N{HEBREW LETTER PE}"
+        . "\N{HEBREW POINT RAFE}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER LAMED}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}"
+        . "\N{HEBREW LETTER RESH}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW LETTER FINAL MEM}",
+    'Filiorum',
+);

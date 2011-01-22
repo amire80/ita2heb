@@ -265,7 +265,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $LAMED;
             }
             when ('m') {
-                $hebrew_to_add .= $MEM;
+                $hebrew_to_add .= ($ita_letter_index == $#ita_letters)
+                    ? $FINAL_MEM
+                    : $MEM;
             }
             when ('n') {
                 if (    $ita_letter_index
