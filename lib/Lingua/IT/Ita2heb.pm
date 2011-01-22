@@ -90,6 +90,7 @@ my @ALL_LATIN_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
 my @CG_MODIFIER              = (@TYPES_OF_E, @TYPES_OF_I);
 my @REQUIRES_DAGESH_PHONETIC = qw(b p);
+my @G_SILENCERS              = qw(l n);
 my @REQUIRES_BET_FOR_V       = (@TYPES_OF_O, @TYPES_OF_U);
 
 # Dagesh qal.
@@ -210,7 +211,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 {
                     $hebrew_to_add .= $NUN . $SHEVA . $YOD;
                 }
-                else {
+                elsif (not (    $ita_letter_index
+                            and $ita_letters[ $ita_letter_index + 1 ] eq 'l'))
+                {
                     $hebrew_to_add .= $GIMEL;
                 }
             }
@@ -364,7 +367,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             [ @ALL_LATIN_VOWELS, 'h' ]
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
             and not($ita_letter eq 'g'
-                and $ita_letters[ $ita_letter_index + 1 ] eq 'n')
+                and $ita_letters[ $ita_letter_index + 1 ] ~~ @G_SILENCERS)
             and not($ita_letter eq 'c'
                 and $ita_letters[ $ita_letter_index + 1 ] eq 'q')
             )
