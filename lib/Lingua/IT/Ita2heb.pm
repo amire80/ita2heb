@@ -309,6 +309,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     $hebrew_to_add .= $VAV;
                 }
             }
+            when ('z') {
+                $hebrew_to_add .= $TSADI;
+            }
             default {
                 $hebrew_to_add .= q{?};
                 carp("Unknown letter $ita_letter in the source.");
