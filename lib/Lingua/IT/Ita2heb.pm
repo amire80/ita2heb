@@ -107,14 +107,13 @@ my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 
-Readonly my @SHEVA_SPECS =>
-(
-    [0 => [[@ALL_LATIN_VOWELS]]],
-    [1 => [[@ALL_LATIN_VOWELS, 'h']]],
-    [0 => [['g'],\@G_SILENCERS]],
-    [0 => [['s'],['c'],\@CG_MODIFIER]],
-    [-1 => [['s'], ['c'],\@CG_MODIFIER]],
-    [0 => [['c'], ['q']]],
+Readonly my @SHEVA_SPECS => (
+    [ 0  => [ [@ALL_LATIN_VOWELS] ] ],
+    [ 1  => [ [ @ALL_LATIN_VOWELS, 'h' ] ] ],
+    [ 0  => [ ['g'], \@G_SILENCERS ] ],
+    [ 0  => [ ['s'], ['c'], \@CG_MODIFIER ] ],
+    [ -1 => [ ['s'], ['c'], \@CG_MODIFIER ] ],
+    [ 0 => [ ['c'], ['q'] ] ],
 );
 
 sub ita_to_heb {    ## no critic ProhibitExcessComplexity
@@ -207,7 +206,8 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $SEGOL;
             }
             when ('f') {
-                if ($ita_letter_index and $ita_letter_index == $#ita_letters) {
+                if ($ita_letter_index and $ita_letter_index == $#ita_letters)
+                {
                     $hebrew_to_add .= $FINAL_PE;
                 }
                 else {
@@ -282,7 +282,8 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $LAMED;
             }
             when ('m') {
-                $hebrew_to_add .= ($ita_letter_index and $ita_letter_index == $#ita_letters)
+                $hebrew_to_add .=
+                    ($ita_letter_index and $ita_letter_index == $#ita_letters)
                     ? $FINAL_MEM
                     : $MEM;
             }
@@ -292,8 +293,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 {
                     next ITA_LETTER;
                 }
-                
-                $hebrew_to_add .= ($ita_letter_index and $ita_letter_index == $#ita_letters)
+
+                $hebrew_to_add .=
+                    ($ita_letter_index and $ita_letter_index == $#ita_letters)
                     ? $FINAL_NUN
                     : $NUN;
             }
@@ -373,7 +375,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     $hebrew_to_add .= $DALET . $DAGESH . $SHEVA . $ZAYIN;
                 }
                 else {
-                    $hebrew_to_add .= ($ita_letter_index and $ita_letter_index == $#ita_letters)
+                    $hebrew_to_add .=
+                        (       $ita_letter_index
+                            and $ita_letter_index == $#ita_letters)
                         ? $FINAL_TSADI
                         : $TSADI;
                 }
@@ -415,11 +419,11 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
 
         my $match_places = sub {
             my ($start_offset, $sets_seq) = @_;
-            
-            foreach my $i (0 .. $#$sets_seq)
-            {
-                if (not $ita_letters[$i+$ita_letter_index+$start_offset] ~~
-                    @{$sets_seq->[$i]})
+
+            foreach my $i (0 .. $#{$sets_seq}) {
+                if (
+                    not $ita_letters[ $i + $ita_letter_index + $start_offset ]
+                    ~~ @{ $sets_seq->[$i] })
                 {
                     return;
                 }
@@ -427,11 +431,10 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
             return 1;
         };
 
-        if (
-            defined $ita_letters[ $ita_letter_index + 1 ]
+        if (    defined $ita_letters[ $ita_letter_index + 1 ]
             and $ita_letter ne $ita_letters[ $ita_letter_index + 1 ]
-            and (List::MoreUtils::none { $match_places->(@$_) } @SHEVA_SPECS)
-        )
+            and
+            (List::MoreUtils::none { $match_places->(@{$_}) } @SHEVA_SPECS))
         {
             $heb .= $SHEVA;
         }
