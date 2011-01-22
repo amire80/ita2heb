@@ -59,6 +59,7 @@ my $HOLAM_MALE   = $VAV . $HOLAM;
 my $SHURUK       = $VAV . $DAGESH;
 my $HIRIQ_MALE   = $HIRIQ . $YOD;
 my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
+my $MAQAF        = "\N{HEBREW PUNCTUATION MAQAF}";
 
 my @ALL_HEBREW_VOWELS = (
     $QAMATS,     $HATAF_QAMATS, $PATAH, $HATAF_PATAH, $TSERE,
@@ -126,6 +127,7 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'p' => $PE,
     'r' => $RESH,
     't' => $TET,
+    # q{'} => $MAQAF, # TODO: Not sure what to do with it
 );
 
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
@@ -133,6 +135,8 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
     my $GERESH = $option{ascii_geresh} ? q{'} : $TRUE_GERESH;
 
+    # TODO: Handle them somehow
+    # my $ita =~ tr/'//;
     my $heb = q{};
 
     my @ita_letters = split qr//xms, lc $ita;
