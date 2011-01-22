@@ -4,9 +4,10 @@ This is a module for transliterating Italian words into Hebrew.
 
 It is supposed to be useful for transliterating names of people and places.
 
-At this stage this is just a work that i have begun and it is
-nowhere near being fully functional or useful. You are, however, welcome
-to suggest tests - tricky Italian words.
+It manages to get many words correctly, but don't count on it to be right
+about <z>, semi-vowel <i>, and some other quirks of Italian spelling.
+
+Corrections, comments, suggestions and test-cases are welcome.
 
 INSTALLATION
 
