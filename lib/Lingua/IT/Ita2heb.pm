@@ -140,7 +140,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my @ita_letters = split qr//xms, lc $ita;
 
     my $add_geresh  = 0;
-    my $wrote_vowel = 0;
     my $geminated   = 0;
 
     my $seq = Lingua::IT::Ita2heb::LettersSeq->new(
@@ -157,7 +156,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         if (
             $ita_letter ~~ @ALL_LATIN_VOWELS
             and (  $ita_letter_index == 0
-                or $wrote_vowel)
+                or $seq->wrote_vowel)
             )
         {
             $heb .= $ALEF;
@@ -177,7 +176,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             $geminated = 0;
         }
 
-        $wrote_vowel = 0;
+        $seq->unset_wrote_vowel;
 
         given ($ita_letter) {
             when (%SIMPLE_TRANSLITERATIONS) {
@@ -454,7 +453,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         }
 
         if ($hebrew_to_add ~~ @ALL_HEBREW_VOWELS) {
-            $wrote_vowel = 1;
+            $seq->set_wrote_vowel;
         }
     }
 

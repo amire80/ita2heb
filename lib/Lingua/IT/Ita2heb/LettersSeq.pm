@@ -22,6 +22,18 @@ has idx => (isa => 'Int', traits => ['Number'], is => 'rw',
     handles => { add_to_idx => 'add',}, default => -1,
 );
 
+has wrote_vowel => (
+    isa => 'Bool',
+    is => 'ro',
+    traits => ['Bool'],
+    default => 0,
+    handles =>
+    {
+        'set_wrote_vowel' => 'set',
+        'unset_wrote_vowel' => 'unset',
+    },
+);
+
 sub current
 {
     my ($self) = @_;
