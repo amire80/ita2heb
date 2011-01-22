@@ -108,12 +108,12 @@ my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 
 Readonly my @SHEVA_SPECS => (
-    [ 0  => [ [@ALL_LATIN_VOWELS] ] ],
+    [ 0  => [ [ @ALL_LATIN_VOWELS ] ] ],
     [ 1  => [ [ @ALL_LATIN_VOWELS, 'h' ] ] ],
     [ 0  => [ ['g'], \@G_SILENCERS ] ],
     [ 0  => [ ['s'], ['c'], \@CG_MODIFIER ] ],
     [ -1 => [ ['s'], ['c'], \@CG_MODIFIER ] ],
-    [ 0 => [ ['c'], ['q'] ] ],
+    [ 0  => [ ['c'], ['q'] ] ],
 );
 
 sub ita_to_heb {    ## no critic ProhibitExcessComplexity
@@ -159,6 +159,9 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
         $wrote_vowel = 0;
 
         given ($ita_letter) {
+            when (q{ }) {
+                $hebrew_to_add .= q{ };
+            }
             when (@TYPES_OF_A) {
                 if (closed_syllable(\@ita_letters, $ita_letter_index)) {
                     $hebrew_to_add .= $PATAH;
@@ -231,7 +234,6 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     $add_geresh = 1;
                 }
 
-                # XXX Missing support for gli
                 if (    $ita_letter_index < $#ita_letters
                     and $ita_letters[ $ita_letter_index + 1 ] eq 'n')
                 {
@@ -351,8 +353,14 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 {
                     next;
                 }
-
-                $hebrew_to_add .= $SHURUK;
+                elsif ($ita_letters[ $ita_letter_index + 1 ] ~~
+                    @ALL_LATIN_VOWELS)
+                {
+                    $hebrew_to_add .= $SHEVA . $VAV;
+                }
+                else {
+                    $hebrew_to_add .= $SHURUK;
+                }
             }
             when ('v') {
                 if (
@@ -428,6 +436,7 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                     return;
                 }
             }
+            
             return 1;
         };
 

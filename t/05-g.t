@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More tests => 9;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 
@@ -153,3 +153,19 @@ check_ita_tr(
     'Vermiglio',
 );
 
+# TEST
+check_ita_tr(
+    ['Guilmi'],
+    "\N{HEBREW LETTER GIMEL}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER LAMED}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER MEM}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW LETTER YOD}",
+    'Guilmi',
+);
