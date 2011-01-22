@@ -88,8 +88,9 @@ my @TYPES_OF_U = (
 );
 my @ALL_LATIN_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
-my @CG_MODIFIER = (@TYPES_OF_E, @TYPES_OF_I);
+my @CG_MODIFIER              = (@TYPES_OF_E, @TYPES_OF_I);
 my @REQUIRES_DAGESH_PHONETIC = qw(b p);
+my @REQUIRES_BET_FOR_V       = (@TYPES_OF_O, @TYPES_OF_U);
 
 # Dagesh qal.
 # BET and PE must not change according to these rules in transliterated
@@ -284,7 +285,20 @@ sub ita_to_heb {    ## no critic ProhibitExcessComplexity
                 $hebrew_to_add .= $SHURUK;
             }
             when ('v') {
-                $hebrew_to_add .= $VAV;
+                if (
+                    $ita_letter_index
+                    and ($ita_letters[ $ita_letter_index - 1 ] ~~
+                           @REQUIRES_BET_FOR_V
+                        or $ita_letters[ $ita_letter_index + 1 ] ~~
+                        @REQUIRES_BET_FOR_V
+                        or $ita_letter_index == $#ita_letters)
+                    )
+                {
+                    $hebrew_to_add .= $BET;
+                }
+                else {
+                    $hebrew_to_add .= $VAV;
+                }
             }
             default {
                 $hebrew_to_add .= q{?};
