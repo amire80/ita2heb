@@ -219,7 +219,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('f') {
-                if ($seq->after_start and $ita_letter_index == $#ita_letters)
+                if ($seq->after_start and $seq->at_end)
                 {
                     $hebrew_to_add .= $FINAL_PE;
                 }
@@ -288,7 +288,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('m') {
                 $hebrew_to_add .=
-                    ($seq->after_start and $ita_letter_index == $#ita_letters)
+                    ($seq->after_start and $seq->at_end)
                     ? $FINAL_MEM
                     : $MEM;
             }
@@ -300,7 +300,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
 
                 $hebrew_to_add .=
-                    ($seq->after_start and $ita_letter_index == $#ita_letters)
+                    ($seq->after_start and $seq->at_end)
                     ? $FINAL_NUN
                     : $NUN;
             }
@@ -355,7 +355,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                            @REQUIRES_BET_FOR_V
                         or $ita_letters[ $ita_letter_index + 1 ] ~~
                         @REQUIRES_BET_FOR_V
-                        or $ita_letter_index == $#ita_letters)
+                        or $seq->at_end)
                     )
                 {
                     $hebrew_to_add .= $BET;
@@ -371,7 +371,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 else {
                     $hebrew_to_add .=
                         (       $seq->after_start
-                            and $ita_letter_index == $#ita_letters)
+                            and $seq->at_end)
                         ? $FINAL_TSADI
                         : $TSADI;
                 }
@@ -444,7 +444,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             $add_geresh = 0;
         }
 
-        if ($ita_letter_index == $#ita_letters) {
+        if ($seq->at_end) {
             if ($hebrew_to_add ~~ [ $QAMATS, $SEGOL ]) {
                 $heb .= $HE;
             }
