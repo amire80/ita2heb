@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 13;
+use Test::More tests => 14;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 use English '-no_match_vars';
@@ -171,6 +171,20 @@ ok(
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER HE}",
     'Acqua'
+);
+
+say {$log} 'Brescia ' . Lingua::IT::Ita2heb::ita_to_heb('Brescia');
+ok(
+    Lingua::IT::Ita2heb::ita_to_heb('Brescia', disable_dagesh => 1) eq "\N{HEBREW LETTER BET}"
+        . "\N{HEBREW POINT DAGESH OR MAPIQ}"
+        . "\N{HEBREW POINT SHEVA}"
+        . "\N{HEBREW LETTER RESH}"
+        . "\N{HEBREW POINT SEGOL}"
+        . "\N{HEBREW LETTER SHIN}"
+        . "\N{HEBREW POINT SHIN DOT}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER HE}",
+    'Brescia'
 );
 
 close $log
