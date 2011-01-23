@@ -129,6 +129,7 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'p' => $PE,
     'r' => $RESH,
     't' => $TET,
+    'x' => $SHIN, # This isn't right, of course
 );
 
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
