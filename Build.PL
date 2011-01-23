@@ -36,7 +36,7 @@ my $build = Test::Run::Builder->new(
     {
         'Test::More' => 0,
     },
-    license => 'artistic2',
+    license => 'artistic_2',
     create_makefile_pl => 'traditional',
     meta_merge =>
     {
