@@ -199,12 +199,12 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             when ('c') {
                 if (
                     not(    $seq->match_before([['s']]) 
-                        and $seq->match_cg_mod_after)
+                        and $seq->match_cg_mod_after([]))
                 )
                 {
                     if (
-                           $seq->match_cg_mod_after
-                        or $seq->match_after([['c'], \@CG_MODIFIER])
+                           $seq->match_cg_mod_after([])
+                        or $seq->match_cg_mod_after([['c']])
                     )
                     {
                         $hebrew_to_add .= $TSADI;
@@ -231,8 +231,8 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('g') {
                 if (
-                    $seq->match_cg_mod_after
-                    or $seq->match_after([['g'],\@CG_MODIFIER])
+                    $seq->match_cg_mod_after([])
+                    or $seq->match_cg_mod_after([['g']])
                 )
                 {
                     $add_geresh = 1;

@@ -95,9 +95,9 @@ sub try_geminated {
 }
 
 sub match_cg_mod_after {
-    my ($seq) = @_;
+    my ($seq, $prefix) = @_;
 
-    return $seq->match_after([$seq->cg_modifier]);
+    return $seq->match_after([@$prefix, $seq->cg_modifier]);
 }
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
