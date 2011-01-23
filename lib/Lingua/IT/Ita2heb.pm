@@ -112,16 +112,6 @@ my @VOWEL_BEFORE_GERESH = ($QAMATS, $PATAH, $TSERE, $SEGOL, $HIRIQ);
 my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
-
-Readonly my @SHEVA_SPECS => (
-    [ 0  => [ [@ALL_LATIN_VOWELS] ] ],
-    [ 1  => [ [ @ALL_LATIN_VOWELS, 'h' ] ] ],
-    [ 0  => [ ['g'], \@G_SILENCERS ] ],
-    [ 0  => [ ['s'], ['c'], \@CG_MODIFIER ] ],
-    [ -1 => [ ['s'], ['c'], \@CG_MODIFIER ] ],
-    [ 0 => [ ['c'], ['q'] ] ],
-);
-
 Readonly my %SIMPLE_TRANSLITERATIONS => (
     'b' => $BET,
     'd' => $DALET,
@@ -395,13 +385,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         $heb .= $seq->text_to_add;
 
-        if ((!$seq->curr_lett_eq_next)
-            and
-            (List::MoreUtils::none 
-                { $seq->safe_match_places(@{$_}) }
-                @SHEVA_SPECS
-            )
-        )
+        if ($seq->should_add_sheva)
         {
             $heb .= $SHEVA;
         }

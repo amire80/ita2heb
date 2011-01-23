@@ -6,6 +6,8 @@ use warnings;
 use utf8;
 use charnames ':full';
 
+use Readonly;
+
 our $VERSION = '0.01';
 
 use Moose::Role;
@@ -38,6 +40,17 @@ my @ALL_LATIN_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
 
 my @CG_MODIFIER              = (@TYPES_OF_E, @TYPES_OF_I);
+my @G_SILENCERS              = qw(l n);
+
+Readonly my @SHEVA_SPECS => (
+    [ 0  => [ [@ALL_LATIN_VOWELS] ] ],
+    [ 1  => [ [ @ALL_LATIN_VOWELS, 'h' ] ] ],
+    [ 0  => [ ['g'], \@G_SILENCERS ] ],
+    [ 0  => [ ['s'], ['c'], \@CG_MODIFIER ] ],
+    [ -1 => [ ['s'], ['c'], \@CG_MODIFIER ] ],
+    [ 0 => [ ['c'], ['q'] ] ],
+);
+
 
 sub all_latin_vowels
 {
@@ -52,6 +65,10 @@ sub types_of_i
 sub cg_modifier
 {
     return \@CG_MODIFIER;
+}
+
+sub sheva_specs {
+    return \@SHEVA_SPECS;
 }
 
 no Moose::Role;
@@ -104,6 +121,10 @@ Returns an array ref of the letters considered to be "I".
 =head2 cg_modifier
 
 An array ref of CG modifiers.
+
+=head2 sheva_specs
+
+Specs of when to add a sheva.
 
 =head1 SUPPORT
 

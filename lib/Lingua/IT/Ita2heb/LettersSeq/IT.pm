@@ -107,6 +107,20 @@ sub match_optional_cg {
     return ($seq->match_cg_mod_after([]) or $seq->match_cg_mod_after($prefix));
 }
 
+sub should_add_sheva {
+    my ($seq) = @_;
+
+    return
+    (
+        (!$seq->curr_lett_eq_next)
+            and
+        (List::MoreUtils::none 
+            { $seq->safe_match_places(@{$_}) }
+            @{$seq->sheva_specs()},
+        )
+    );
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
 
 __END__
@@ -160,6 +174,10 @@ Returns if it matches a CG modifier after the current position.
 =head2 $seq->match_optional_cg([@prefix])
 
 Returns if it matches a CG modifier with an with or without the prefix.
+
+=head2 $seq->should_add_sheva()
+
+A predicate that returns whether a sheva should be added or not.
 
 =head1 SUPPORT
 
