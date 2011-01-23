@@ -12,6 +12,18 @@ extends(
     'Lingua::IT::Ita2heb::LettersSeq'
 );
 
+has geminated => (
+    isa => 'Bool',
+    is => 'ro',
+    traits => ['Bool'],
+    default => 0,
+    handles =>
+    {
+        '_set_geminated' => 'set',
+        'unset_geminated' => 'unset',
+    },
+);
+
 with( 'Lingua::IT::Ita2heb::Role::Constants' );
 
 our $VERSION = '0.01';
@@ -55,7 +67,7 @@ sub should_add_alef
     );
 }
 
-sub test_for_geminated
+sub _test_for_geminated
 {
     my ($seq) = @_;
 
@@ -67,6 +79,19 @@ sub test_for_geminated
         and not $seq->_is_current_a_vowel
         and $seq->curr_lett_eq_next
     );
+}
+
+sub try_geminated {
+    my ($seq) = @_;
+
+    my $verdict = $seq->_test_for_geminated;
+
+    if ($verdict)
+    {
+        $seq->_set_geminated;
+    }
+
+    return $verdict;
 }
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
@@ -110,9 +135,10 @@ Checks that the current letter is a closed syllable.
 
 A predicate that determines if Alef should be added.
 
-=head2 $seq->test_for_geminated()
+=head2 $seq->try_geminated()
 
-A predicate that tests if geminated should be set.
+Tests if geminated should be set, and returns it. If it should be set, sets
+it to true.
 
 =head1 SUPPORT
 

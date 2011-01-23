@@ -158,7 +158,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my @ita_letters = split qr//xms, lc $ita;
 
     my $add_geresh  = 0;
-    my $geminated   = 0;
 
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
         {
@@ -178,13 +177,9 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         my $hebrew_to_add = q{};
 
-        if ($seq->test_for_geminated)
+        if ($seq->try_geminated)
         {
-            $geminated = 1;
             next ITA_LETTER;
-        }
-        elsif (not $geminated) {
-            $geminated = 0;
         }
 
         $seq->unset_wrote_vowel;
@@ -376,7 +371,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         if (
             $ita_letter ~~ @REQUIRES_DAGESH_PHONETIC  # Dagesh phonetic (b, p)
             or
-            ($geminated and not $option{disable_dagesh})   # Dagesh geminating
+            ($seq->geminated and not $option{disable_dagesh})   # Dagesh geminating
             or (
                 (
                     not $seq->match_before([[@ALL_LATIN_VOWELS]])
@@ -390,7 +385,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $hebrew_to_add .= $DAGESH;
             }
 
-            $geminated = 0;
+            $seq->unset_geminated;
         }
 
         if ($add_geresh and $hebrew_to_add ~~ [@VOWEL_AFTER_GERESH]) {
