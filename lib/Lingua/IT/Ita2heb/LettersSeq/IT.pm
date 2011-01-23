@@ -35,13 +35,19 @@ sub closed_syllable {
 
 }
 
+sub _is_current_a_vowel {
+    my ($seq) = @_;
+
+    return $seq->current ~~ @{$seq->all_latin_vowels};
+}
+
 sub should_add_alef
 {
     my ($self) = @_;
 
     return 
     (
-        $self->current ~~ @{$self->all_latin_vowels}
+        $self->_is_current_a_vowel
         and ($self->at_start or $self->wrote_vowel)
         and not (  $self->current ~~ @{$self->types_of_i}
             and $self->match_before([$self->all_latin_vowels])
@@ -58,7 +64,7 @@ sub test_for_geminated
         $seq->after_start
         and $seq->before_end
         # TODO : extract this clause.
-        and not $seq->current ~~ @{$seq->all_latin_vowels}
+        and not $seq->_is_current_a_vowel
         and $seq->curr_lett_eq_next
     );
 }
