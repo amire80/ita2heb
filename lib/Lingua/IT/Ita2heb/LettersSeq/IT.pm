@@ -49,6 +49,20 @@ sub should_add_alef
     );
 }
 
+sub test_for_geminated
+{
+    my ($seq) = @_;
+
+    return
+    (
+        $seq->after_start
+        and $seq->before_end
+        # TODO : extract this clause.
+        and not $seq->current ~~ @{$seq->all_latin_vowels}
+        and $seq->curr_lett_eq_next
+    );
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
 
 __END__
@@ -89,6 +103,10 @@ Checks that the current letter is a closed syllable.
 =head2 $seq->should_add_alef()
 
 A predicate that determines if Alef should be added.
+
+=head2 $seq->test_for_geminated()
+
+A predicate that tests if geminated should be set.
 
 =head1 SUPPORT
 

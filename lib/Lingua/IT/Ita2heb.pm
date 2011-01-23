@@ -178,10 +178,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         my $hebrew_to_add = q{};
 
-        if (    $seq->after_start
-            and $seq->before_end
-            and not $ita_letter ~~ @ALL_LATIN_VOWELS
-            and $seq->curr_lett_eq_next)
+        if ($seq->test_for_geminated)
         {
             $geminated = 1;
             next ITA_LETTER;
