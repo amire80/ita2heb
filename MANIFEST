@@ -1,4 +1,6 @@
+Build.PL
 Changes
+inc/Test/Run/Builder.pm
 MANIFEST
 Makefile.PL
 README
@@ -15,9 +17,10 @@ t/05-g.t
 t/06-v.t
 t/07-z.t
 t/08-i.t
-t/09-apostrophe.t
+t/09-punctuation.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
 t/lib/CheckItaTrans.pm
 scripts/refactor-tests.pl
+META.yml
