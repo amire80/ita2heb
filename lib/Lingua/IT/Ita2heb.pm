@@ -318,7 +318,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 {
                     $seq->add( $ZAYIN );
                 }
-                elsif ($seq->match_after([['c'], \@CG_MODIFIER]))
+                elsif ($seq->match_cg_mod_after([['c']]))
                 {
                     $seq->add( $SHIN );
                 }
