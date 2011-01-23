@@ -62,8 +62,9 @@ sub should_add_alef
         $self->_is_current_a_vowel
         and ($self->at_start or $self->wrote_vowel)
         and not (  $self->current ~~ @{$self->types_of_i}
-            and $self->match_before([$self->all_latin_vowels])
-        and $self->match_after([$self->all_latin_vowels]))
+            and $self->match_after([$self->all_latin_vowels])
+            and ($self->match_before([$self->all_latin_vowels])
+                or $self->at_start))
     );
 }
 

@@ -266,7 +266,8 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     }
                     elsif ($seq->match_after([\@ALL_LATIN_VOWELS]))
                     {
-                        if ($seq->match_before([\@ALL_LATIN_VOWELS])) {
+                        if (   $seq->at_start
+                            or $seq->match_before([\@ALL_LATIN_VOWELS])) {
                             $seq->add( $YOD );
                         }
                         else {

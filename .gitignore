@@ -12,3 +12,4 @@ pod2htm*.tmp
 Lingua-IT-Ita2heb-*
 *.log
 driver.pl
+MYMETA.yml

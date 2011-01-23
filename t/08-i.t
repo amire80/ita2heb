@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test::More tests => 3;
 use charnames ':full';
 
 use lib './t/lib';
@@ -44,4 +44,19 @@ check_ita_tr(
         . "\N{HEBREW POINT QAMATS}"
         . "\N{HEBREW LETTER HE}",
     'Gioiosa',
+);
+
+# TEST
+check_ita_tr(
+    ['Ionica'],
+    "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}"
+        . "\N{HEBREW LETTER NUN}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER QOF}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER HE}",
+    'Ionica',
 );
