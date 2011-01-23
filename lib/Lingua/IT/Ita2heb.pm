@@ -95,6 +95,7 @@ my @TYPES_OF_U = (
 );
 my @ALL_LATIN_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
+
 my @CG_MODIFIER              = (@TYPES_OF_E, @TYPES_OF_I);
 my @REQUIRES_DAGESH_PHONETIC = qw(b p);
 my @G_SILENCERS              = qw(l n);
@@ -162,7 +163,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
         {
             ita_letters => \@ita_letters,
-            _ALL_LATIN_VOWELS => \@ALL_LATIN_VOWELS,
         }
     );
 
@@ -450,7 +450,6 @@ sub closed_syllable {
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
         {
             ita_letters => $letters_ref,
-            _ALL_LATIN_VOWELS => \@ALL_LATIN_VOWELS,
             idx => $letter_index,
         },
     );
