@@ -34,6 +34,18 @@ has wrote_vowel => (
     },
 );
 
+has text_to_add => (
+    isa => 'Str',
+    is => 'ro',
+    traits => ['String'],
+    default => q{},
+    handles =>
+    {
+        add => 'append',
+        _clear_text => 'clear',
+    }
+);
+
 sub current
 {
     my ($self) = @_;
@@ -43,6 +55,8 @@ sub current
 
 sub next_index {
     my ($self) = @_;
+
+    $self->_clear_text;
 
     if ($self->idx() == $self->_count - 1)
     {
