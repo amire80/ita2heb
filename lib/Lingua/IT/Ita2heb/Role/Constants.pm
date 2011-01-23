@@ -42,6 +42,11 @@ sub all_latin_vowels
     return \@ALL_LATIN_VOWELS;
 }
 
+sub types_of_i
+{
+    return \@TYPES_OF_I;
+}
+
 no Moose::Role;
 
 1;    # End of Lingua::IT::Ita2heb::Role::Constants
@@ -84,6 +89,10 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
 =head2 all_latin_vowels
 
 Returns a reference to an array with all the Latin/Italian vowels.
+
+=head2 types_of_i
+
+Returns an array ref of the letters considered to be "I".
 
 =head1 SUPPORT
 

@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 use charnames ':full';
 
 package MyClass;
@@ -33,5 +33,8 @@ package main;
         "u is contained in all latin vowels",
     );
 
-
+    # TEST
+    ok (scalar('i' ~~ @{$obj->types_of_i}),
+        "i is contained in types_of_i",
+    );
 }
