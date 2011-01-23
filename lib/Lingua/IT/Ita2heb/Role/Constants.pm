@@ -37,6 +37,8 @@ my @TYPES_OF_U = (
 my @ALL_LATIN_VOWELS =
     (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
 
+my @CG_MODIFIER              = (@TYPES_OF_E, @TYPES_OF_I);
+
 sub all_latin_vowels
 {
     return \@ALL_LATIN_VOWELS;
@@ -45,6 +47,11 @@ sub all_latin_vowels
 sub types_of_i
 {
     return \@TYPES_OF_I;
+}
+
+sub cg_modifier
+{
+    return \@CG_MODIFIER;
 }
 
 no Moose::Role;
@@ -93,6 +100,10 @@ Returns a reference to an array with all the Latin/Italian vowels.
 =head2 types_of_i
 
 Returns an array ref of the letters considered to be "I".
+
+=head2 cg_modifier
+
+An array ref of CG modifiers.
 
 =head1 SUPPORT
 

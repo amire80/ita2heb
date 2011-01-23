@@ -94,6 +94,12 @@ sub try_geminated {
     return $verdict;
 }
 
+sub match_cg_mod_after {
+    my ($seq) = @_;
+
+    return $seq->match_after([$seq->cg_modifier]);
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
 
 __END__
@@ -139,6 +145,10 @@ A predicate that determines if Alef should be added.
 
 Tests if geminated should be set, and returns it. If it should be set, sets
 it to true.
+
+=head2 $seq->match_cg_mod_after()
+
+Returns if it matches a CG modifier after the current position.
 
 =head1 SUPPORT
 
