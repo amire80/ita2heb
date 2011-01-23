@@ -61,6 +61,7 @@ my $HOLAM_MALE   = $VAV . $HOLAM;
 my $SHURUK       = $VAV . $DAGESH;
 my $HIRIQ_MALE   = $HIRIQ . $YOD;
 my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
+my $TRUE_MAQAF   = "\N{HEBREW PUNCTUATION MAQAF}";
 
 my @ALL_HEBREW_VOWELS = (
     $QAMATS,     $HATAF_QAMATS, $PATAH, $HATAF_PATAH, $TSERE,
@@ -76,6 +77,8 @@ my @TYPES_OF_E = (
 );
 my @TYPES_OF_I = (
     'i',
+    'y',    # XXX
+    'j',    # XXX
     "\N{LATIN SMALL LETTER I WITH GRAVE}",
     "\N{LATIN SMALL LETTER I WITH ACUTE}",
     "\N{LATIN SMALL LETTER I WITH CIRCUMFLEX}",
@@ -128,14 +131,28 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'p' => $PE,
     'r' => $RESH,
     't' => $TET,
+    'x' => $SHIN, # This isn't right, of course
 );
 
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
 
     my $GERESH = $option{ascii_geresh} ? q{'} : $TRUE_GERESH;
+    my $MAQAF  = $option{ascii_maqaf}  ? q{-} : $TRUE_MAQAF;
 
     my $heb = q{};
+
+    my %PUNCTUATION_REPLACEMENTS = (q{ }, q{ }, q{-}, $MAQAF, q{'}, q{'},);
+
+    # Recursion on punctuation marks
+    foreach my $punctuation_mark (q{ }, q{-}, q{'}) {    # order is important
+        ## no critic (RegularExpressions::RequireExtendedFormatting)
+        my $punctuation_re = qr/$punctuation_mark/ms;
+        if ($ita =~ $punctuation_re) {
+            return join $PUNCTUATION_REPLACEMENTS{$punctuation_mark},
+                map { ita_to_heb($_) } split $punctuation_re, $ita;
+        }
+    }
 
     my @ita_letters = split qr//xms, lc $ita;
 
@@ -491,6 +508,14 @@ By default, Unicode HEBREW PUNCTUATION GERESH is used to indicate
 the sounds of ci and gi. If you want to use the ASCII apostrophe, run it like this:
 
     my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Cicerone', ascii_geresh => 1);
+
+=item * ascii_maqaf
+
+By default, Unicode HEBREW PUNCTUATION MAQAF is used to indicate
+the hyphen. This is the true Hebrew hyphen at the top of the line.
+If you prefer to use the ASCII hyphen (minus), run it like this:
+
+    my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Emilia-Romagna', ascii_maqaf => 1);
 
 =back
 

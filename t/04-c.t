@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 16;
+use Test::More tests => 17;
 use Lingua::IT::Ita2heb;
 use charnames ':full';
 
@@ -232,4 +232,23 @@ check_ita_tr(
         . "\N{HEBREW POINT HIRIQ}"
         . "\N{HEBREW LETTER YOD}",
     'Scerni',
+);
+
+# TEST
+check_ita_tr(
+    ['Cimolais'],
+    "\N{HEBREW LETTER TSADI}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW PUNCTUATION GERESH}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER MEM}"
+        . "\N{HEBREW LETTER VAV}"
+        . "\N{HEBREW POINT HOLAM}"
+        . "\N{HEBREW LETTER LAMED}"
+        . "\N{HEBREW POINT QAMATS}"
+        . "\N{HEBREW LETTER ALEF}"
+        . "\N{HEBREW POINT HIRIQ}"
+        . "\N{HEBREW LETTER YOD}"
+        . "\N{HEBREW LETTER SAMEKH}",
+    'Cimolais',
 );
