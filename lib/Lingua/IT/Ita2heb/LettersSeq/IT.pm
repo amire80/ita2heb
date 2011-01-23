@@ -12,11 +12,7 @@ extends(
     'Lingua::IT::Ita2heb::LettersSeq'
 );
 
-has '_ALL_LATIN_VOWELS' =>
-(
-    is => 'ro',
-    isa => 'ArrayRef[Str]',
-);
+with( 'Lingua::IT::Ita2heb::Role::Constants' );
 
 our $VERSION = '0.01';
 
@@ -30,7 +26,7 @@ sub closed_syllable {
     }
 
     for my $offset (1, 2) {
-        if ($self->_letter($self->idx+$offset) ~~ @{$self->_ALL_LATIN_VOWELS}) {
+        if ($self->_letter($self->idx+$offset) ~~ @{$self->all_latin_vowels}) {
             return 0;
         }
     }
@@ -67,7 +63,6 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
         {
             ita_letters => \@ita_letters,  
-            _ALL_LATIN_VOWELS => \@ALL_LATIN_VOWELS,
         }
     );
 

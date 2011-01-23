@@ -18,6 +18,7 @@ t/06-v.t
 t/07-z.t
 t/08-i.t
 t/09-punctuation.t
+t/10constants-role.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
