@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 1;
+use Test::More tests => 2;
 use charnames ':full';
 
 package MyClass;
@@ -22,4 +22,9 @@ package main;
 
     # TEST
     ok ($obj, "Object was initialized.");
+
+    # TEST
+    ok (scalar('a' ~~ @{$obj->all_latin_vowels}),
+        "a is contained in all latin vowels",
+    );
 }

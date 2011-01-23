@@ -8,6 +8,10 @@ our $VERSION = '0.01';
 
 use Moose::Role;
 
+sub all_latin_vowels
+{
+    return ['a'];
+}
 
 no Moose::Role;
 
@@ -47,6 +51,10 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
     my $obj = MyClass->new();
 
 =head1 METHODS
+
+=head2 all_latin_vowels
+
+Returns a reference to an array with all the Latin/Italian vowels.
 
 =head1 SUPPORT
 
