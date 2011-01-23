@@ -12,16 +12,16 @@ use CheckItaTrans qw(start_log check_ita_tr);
 
 start_log(__FILE__);
 
-TODO: {
-    local $TODO = 'Italian apostrophe is not properly handled yet';
+# TODO: {
+    # local $TODO = 'Italian apostrophe is not properly handled yet';
     check_ita_tr(
         [q(Sant'Agata)],
         "\N{HEBREW LETTER SAMEKH}"
-            . "\N{HEBREW POINT PATAH}"
+            . "\N{HEBREW POINT QAMATS}"
             . "\N{HEBREW LETTER NUN}"
             . "\N{HEBREW POINT SHEVA}"
             . "\N{HEBREW LETTER TET}"
-            . "\N{HEBREW PUNCTUATION MAQAF}"
+            . "\N{APOSTROPHE}"
             . "\N{HEBREW LETTER ALEF}"
             . "\N{HEBREW POINT QAMATS}"
             . "\N{HEBREW LETTER GIMEL}"
@@ -31,4 +31,4 @@ TODO: {
             . "\N{HEBREW LETTER HE}",
         q(Sant'Agata),
     );
-}
+# }
