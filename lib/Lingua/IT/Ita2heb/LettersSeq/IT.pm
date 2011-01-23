@@ -100,6 +100,12 @@ sub match_cg_mod_after {
     return $seq->match_after([@$prefix, $seq->cg_modifier]);
 }
 
+sub match_optional_cg {
+    my ($seq, $prefix) = @_;
+
+    return ($seq->match_cg_mod_after([]) or $seq->match_cg_mod_after($prefix));
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
 
 __END__
@@ -146,9 +152,13 @@ A predicate that determines if Alef should be added.
 Tests if geminated should be set, and returns it. If it should be set, sets
 it to true.
 
-=head2 $seq->match_cg_mod_after()
+=head2 $seq->match_cg_mod_after([@prefix])
 
 Returns if it matches a CG modifier after the current position.
+
+=head2 $seq->match_optional_cg([@prefix])
+
+Returns if it matches a CG modifier with an with or without the prefix.
 
 =head1 SUPPORT
 
