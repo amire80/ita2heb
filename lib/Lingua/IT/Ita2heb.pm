@@ -541,6 +541,14 @@ the sounds of ci and gi. If you want to use the ASCII apostrophe, run it like th
 
     my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Cicerone', ascii_geresh => 1);
 
+=item * ascii_maqaf
+
+By default, Unicode HEBREW PUNCTUATION MAQAF is used to indicate
+the hyphen. This is the true Hebrew hyphen at the top of the line.
+If you prefer to use the ASCII hyphen (minus), run it like this:
+
+    my $hebrew_word = Lingua::IT::Ita2heb::ita_to_heb('Emilia-Romagna', ascii_maqaf => 1);
+
 =back
 
 =head2 closed_syllable
