@@ -75,6 +75,8 @@ my @TYPES_OF_E = (
 );
 my @TYPES_OF_I = (
     'i',
+    'y',    # XXX
+    'j',    # XXX
     "\N{LATIN SMALL LETTER I WITH GRAVE}",
     "\N{LATIN SMALL LETTER I WITH ACUTE}",
     "\N{LATIN SMALL LETTER I WITH CIRCUMFLEX}",
