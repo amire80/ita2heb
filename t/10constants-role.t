@@ -4,7 +4,8 @@ use 5.010;
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 5;
+use utf8;
 use charnames ':full';
 
 package MyClass;
@@ -36,5 +37,10 @@ package main;
     # TEST
     ok (scalar('i' ~~ @{$obj->types_of_i}),
         "i is contained in types_of_i",
+    );
+
+    # TEST
+    ok (scalar("\N{LATIN SMALL LETTER I WITH GRAVE}" ~~ @{$obj->types_of_i}),
+        "i with grave is contained in types_of_i",
     );
 }
