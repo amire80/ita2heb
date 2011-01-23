@@ -28,6 +28,6 @@ case $diff_exit_code in
 esac
 
 echo criticizing
-perlcritic -brutal $FILENAME
+perlcritic -brutal --verbose 8 $FILENAME
 
 exit $?
