@@ -59,7 +59,7 @@ my $HOLAM_MALE   = $VAV . $HOLAM;
 my $SHURUK       = $VAV . $DAGESH;
 my $HIRIQ_MALE   = $HIRIQ . $YOD;
 my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
-my $MAQAF        = "\N{HEBREW PUNCTUATION MAQAF}";
+my $TRUE_MAQAF   = "\N{HEBREW PUNCTUATION MAQAF}";
 
 my @ALL_HEBREW_VOWELS = (
     $QAMATS,     $HATAF_QAMATS, $PATAH, $HATAF_PATAH, $TSERE,
@@ -129,17 +129,27 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'p' => $PE,
     'r' => $RESH,
     't' => $TET,
-    # q{'} => $MAQAF, # TODO: Not sure what to do with it
 );
 
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
 
     my $GERESH = $option{ascii_geresh} ? q{'} : $TRUE_GERESH;
+    my $MAQAF  = $option{ascii_maqaf}  ? q{-} : $TRUE_MAQAF;
 
-    # TODO: Handle them somehow
-    # my $ita =~ tr/'//;
     my $heb = q{};
+
+    my %PUNCTUATION_REPLACEMENTS = (q{ }, q{ }, q{-}, $MAQAF, q{'}, q{'},);
+
+    # Recursion on punctuation marks
+    foreach my $punctuation_mark (q{ }, q{-}, q{'}) {    # order is important
+        ## no critic (RegularExpressions::RequireExtendedFormatting)
+        my $punctuation_re = qr/$punctuation_mark/ms;
+        if ($ita =~ $punctuation_re) {
+            return join $PUNCTUATION_REPLACEMENTS{$punctuation_mark},
+                map { ita_to_heb($_) } split $punctuation_re, $ita;
+        }
+    }
 
     my @ita_letters = split qr//xms, lc $ita;
 
