@@ -171,13 +171,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         my $ita_letter = $seq->current;
 
-        if (
-            $ita_letter ~~ @ALL_LATIN_VOWELS
-            and ($seq->at_start or $seq->wrote_vowel)
-            and not (   $ita_letter ~~ @TYPES_OF_I
-                    and $seq->match_before([\@ALL_LATIN_VOWELS])
-                    and $seq->match_after([\@ALL_LATIN_VOWELS]))
-        )
+        if ($seq->should_add_alef)
         {
             $heb .= $ALEF;
         }

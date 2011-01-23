@@ -35,6 +35,20 @@ sub closed_syllable {
 
 }
 
+sub should_add_alef
+{
+    my ($self) = @_;
+
+    return 
+    (
+        $self->current ~~ @{$self->all_latin_vowels}
+        and ($self->at_start or $self->wrote_vowel)
+        and not (  $self->current ~~ @{$self->types_of_i}
+            and $self->match_before([$self->all_latin_vowels])
+        and $self->match_after([$self->all_latin_vowels]))
+    );
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
 
 __END__
@@ -71,6 +85,10 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
 =head2 $seq->closed_syllable()
 
 Checks that the current letter is a closed syllable.
+
+=head2 $seq->should_add_alef()
+
+A predicate that determines if Alef should be added.
 
 =head1 SUPPORT
 
