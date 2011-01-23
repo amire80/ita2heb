@@ -175,8 +175,9 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             $ita_letter ~~ @ALL_LATIN_VOWELS
             and ($seq->at_start or $seq->wrote_vowel)
             and not (   $ita_letter ~~ @TYPES_OF_I
-                    and $seq->match_before([\@ALL_LATIN_VOWELS])
-                    and $seq->match_after([\@ALL_LATIN_VOWELS]))
+                    and $seq->match_after([\@ALL_LATIN_VOWELS])
+                    and (   $seq->match_before([\@ALL_LATIN_VOWELS])
+                        or  $seq->at_start))
         )
         {
             $heb .= $ALEF;
@@ -284,7 +285,8 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     }
                     elsif ($seq->match_after([\@ALL_LATIN_VOWELS]))
                     {
-                        if ($seq->match_before([\@ALL_LATIN_VOWELS])) {
+                        if (   $seq->at_start
+                            or $seq->match_before([\@ALL_LATIN_VOWELS])) {
                             $hebrew_to_add .= $YOD;
                         }
                         else {
