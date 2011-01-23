@@ -3,14 +3,43 @@ package Lingua::IT::Ita2heb::Role::Constants;
 use 5.010;
 use strict;
 use warnings;
+use utf8;
+use charnames ':full';
 
 our $VERSION = '0.01';
 
 use Moose::Role;
+ 
+my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
+my @TYPES_OF_E = (
+    'e',
+    "\N{LATIN SMALL LETTER E WITH GRAVE}",
+    "\N{LATIN SMALL LETTER E WITH ACUTE}",
+);
+my @TYPES_OF_I = (
+    'i',
+    'y',    # XXX
+    'j',    # XXX
+    "\N{LATIN SMALL LETTER I WITH GRAVE}",
+    "\N{LATIN SMALL LETTER I WITH ACUTE}",
+    "\N{LATIN SMALL LETTER I WITH CIRCUMFLEX}",
+);
+my @TYPES_OF_O = (
+    'o',
+    "\N{LATIN SMALL LETTER O WITH GRAVE}",
+    "\N{LATIN SMALL LETTER O WITH ACUTE}",
+);
+my @TYPES_OF_U = (
+    'u',
+    "\N{LATIN SMALL LETTER U WITH GRAVE}",
+    "\N{LATIN SMALL LETTER U WITH ACUTE}",
+);
+my @ALL_LATIN_VOWELS =
+    (@TYPES_OF_A, @TYPES_OF_E, @TYPES_OF_I, @TYPES_OF_O, @TYPES_OF_U);
 
 sub all_latin_vowels
 {
-    return ['a'];
+    return \@ALL_LATIN_VOWELS;
 }
 
 no Moose::Role;
