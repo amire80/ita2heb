@@ -182,7 +182,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('v') {
-                $seq->add_heb($seq->does_v_require_bet ? 'BET' : 'VAV');
+                $seq->handle_letter_v;
             }
             when ('z') {
                 if ($seq->at_start) {

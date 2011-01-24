@@ -186,6 +186,14 @@ sub handle_letter_s {
     return;
 }
 
+sub handle_letter_v {
+    my ($seq) = @_;
+
+    $seq->add_heb($seq->does_v_require_bet ? 'BET' : 'VAV');
+
+    return;
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -255,6 +263,8 @@ The opposite of $seq->disable_dagesh .
 =head2 $seq->handle_letter_q
 
 =head2 $seq->handle_letter_s
+
+=head2 $seq->handle_letter_v
 
 =head1 SUPPORT
 
