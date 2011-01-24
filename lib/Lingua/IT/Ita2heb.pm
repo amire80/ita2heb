@@ -47,8 +47,6 @@ my @TYPES_OF_O = (
     "\N{LATIN SMALL LETTER O WITH ACUTE}",
 );
 
-my @REQUIRES_DAGESH_PHONETIC = qw(b p);
-
 # Dagesh qal.
 # BET and PE must not change according to these rules in transliterated
 # Italian and KAF and TAV are not needed in Italian at all.
@@ -124,13 +122,13 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         }
 
         if (
-            $ita_letter ~~ @REQUIRES_DAGESH_PHONETIC  # Dagesh phonetic (b, p)
+            $seq->requires_dagesh_phonetic
             or
             ($seq->geminated and $seq->dagesh_enabled)   # Dagesh geminating
             or (
                 (not $seq->match_vowel_before)
                 and $seq->text_to_add ~~ @REQUIRES_DAGESH_LENE
-                and not($ita_letter ~~ @REQUIRES_DAGESH_PHONETIC)
+                and not( $seq->requires_dagesh_phonetic )
             )
             )
         {

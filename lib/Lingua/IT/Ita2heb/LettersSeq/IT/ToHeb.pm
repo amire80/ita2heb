@@ -310,6 +310,16 @@ sub _handle_letter_z {
     return;
 }
 
+{
+    my %map = (map { $_ => 1 } qw(b p));
+
+    sub requires_dagesh_phonetic {
+        my ($seq) = @_;
+
+        return exists($map{$seq->current});
+    }
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -367,6 +377,10 @@ Returns a lookup table of the letters that the object can handle.
 =head2 $seq->handle_letter($letter)
 
 Handles the Latin letter $letter.
+
+=head2 $seq->requires_dagesh_phonetic()
+
+Whether the current letter requires a dagesh phonetic (b or p).
 
 =head1 SUPPORT
 
