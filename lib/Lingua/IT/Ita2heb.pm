@@ -170,19 +170,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $seq->handle_letter_q;
             }
             when ('s') {
-                if (    $seq->match_vowel_before
-                    and $seq->match_vowel_after
-                )
-                {
-                    $seq->add_heb('ZAYIN')
-                }
-                elsif ($seq->match_cg_mod_after([['c']]))
-                {
-                    $seq->add_heb('SHIN')
-                }
-                else {
-                    $seq->add_heb('SAMEKH')
-                }
+                $seq->handle_letter_s;
             }
             when (@TYPES_OF_U) {
                 if ($seq->match_before([['q']]))
@@ -190,7 +178,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     next;
                 }
                 else {
-                    $seq->add_heb('SHURUK')
+                    $seq->add_heb('SHURUK');
                 }
             }
             when ('v') {
@@ -198,7 +186,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('z') {
                 if ($seq->at_start) {
-                    $seq->add_heb('DALET,DAGESH,SHEVA,ZAYIN')
+                    $seq->add_heb('DALET,DAGESH,SHEVA,ZAYIN');
                 }
                 else {
                     $seq->add_heb_final('TSADI', 'FINAL_TSADI');

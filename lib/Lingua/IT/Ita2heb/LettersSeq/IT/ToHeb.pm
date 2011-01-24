@@ -166,6 +166,25 @@ sub handle_letter_a {
     return;
 }
 
+sub handle_letter_s {
+    my ($seq) = @_;
+
+    if (    $seq->match_vowel_before
+            and $seq->match_vowel_after
+    )
+    {
+        $seq->add_heb('ZAYIN');
+    }
+    elsif ($seq->match_cg_mod_after([['c']]))
+    {
+        $seq->add_heb('SHIN');
+    }
+    else {
+        $seq->add_heb('SAMEKH');
+    }
+
+    return;
+}
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
@@ -234,6 +253,8 @@ The opposite of $seq->disable_dagesh .
 =head2 $seq->handle_letter_i
 
 =head2 $seq->handle_letter_q
+
+=head2 $seq->handle_letter_s
 
 =head1 SUPPORT
 
