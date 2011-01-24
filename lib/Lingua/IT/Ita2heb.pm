@@ -35,13 +35,10 @@ my %HEBREW_LETTERS =
         my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
         $l => (eval qq{"\\N{HEBREW POINT $heb}"}) 
     }
-    qw(QAMATS HATAF_QAMATS PATAH HATAF_PATAH),
+    qw(QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL),
     ),
 );
 
-my $TSERE        = "\N{HEBREW POINT TSERE}";
-my $SEGOL        = "\N{HEBREW POINT SEGOL}";
-my $HATAF_SEGOL  = "\N{HEBREW POINT HATAF SEGOL}";
 my $HIRIQ        = "\N{HEBREW POINT HIRIQ}";
 my $HOLAM        = "\N{HEBREW POINT HOLAM}";
 my $QUBUTS       = "\N{HEBREW POINT QUBUTS}";
@@ -56,8 +53,8 @@ my $TRUE_MAQAF   = "\N{HEBREW PUNCTUATION MAQAF}";
 
 my @ALL_HEBREW_VOWELS = (
     _heb('QAMATS'), _heb('HATAF_QAMATS'), _heb('PATAH'), _heb('HATAF_PATAH'), 
-    $TSERE,
-    $SEGOL,      $HATAF_SEGOL,  $HIRIQ, $HIRIQ_MALE,  $HOLAM,
+    _heb('TSERE'), _heb('SEGOL'), _heb('HATAF_SEGOL'),
+    $HIRIQ, $HIRIQ_MALE,  $HOLAM,
     $HOLAM_MALE, $QUBUTS,       $SHURUK,
 );
 
@@ -95,14 +92,14 @@ my @REQUIRES_DAGESH_PHONETIC = qw(b p);
 # of the standard...
 my @REQUIRES_DAGESH_LENE = (_heb('GIMEL'), _heb('DALET'));
 
-my @VOWEL_BEFORE_GERESH = (_heb('QAMATS'), _heb('PATAH'), $TSERE, $SEGOL, $HIRIQ);
+my @VOWEL_BEFORE_GERESH = (_heb('QAMATS'), _heb('PATAH'), _heb('TSERE'), _heb('SEGOL'), $HIRIQ);
 my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 Readonly my %SIMPLE_TRANSLITERATIONS => (
     'b' => _heb('BET'),
     'd' => _heb('DALET'),
-    (map { $_ => $SEGOL } @TYPES_OF_E),
+    (map { $_ => _heb('SEGOL') } @TYPES_OF_E),
     'k' => _heb('QOF'),
     'l' => _heb('LAMED'),
     (map { $_ => $HOLAM_MALE } @TYPES_OF_O),
@@ -352,7 +349,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         }
 
         if ($seq->at_end) {
-            if ($seq->text_to_add ~~ [ _heb('QAMATS'), $SEGOL ]) {
+            if ($seq->text_to_add ~~ [ _heb('QAMATS'), _heb('SEGOL') ]) {
                 $heb .= _heb('HE');
             }
         }
