@@ -183,12 +183,9 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                         and $seq->match_cg_mod_after([]))
                 )
                 {
-                    if (
-                        $seq->match_optional_cg([['c']])
-                    )
+                    if ( $seq->set_optional_cg_geresh([['c']]) )
                     {
                         $seq->add( $TSADI );
-                        $seq->set_add_geresh;
                     }
                     else {
                         $seq->add( $QOF );
@@ -204,10 +201,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('g') {
-                if ( $seq->match_optional_cg([['g']]) )
-                {
-                    $seq->set_add_geresh;
-                }
+                $seq->set_optional_cg_geresh([['g']]);
 
                 if ($seq->match_after([['n']]))
                 {

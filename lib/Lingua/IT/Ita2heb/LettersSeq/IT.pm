@@ -31,7 +31,7 @@ has add_geresh => (
     traits => ['Bool'],
     handles =>
     {
-        set_add_geresh => 'set',
+        _set_add_geresh => 'set',
         unset_add_geresh => 'unset',
     },
 );
@@ -113,10 +113,22 @@ sub match_cg_mod_after {
     return $seq->match_after([@$prefix, $seq->cg_modifier]);
 }
 
-sub match_optional_cg {
+sub _match_optional_cg {
     my ($seq, $prefix) = @_;
 
     return ($seq->match_cg_mod_after([]) or $seq->match_cg_mod_after($prefix));
+}
+
+sub set_optional_cg_geresh {
+    my $seq = shift;
+    
+    my $verdict = $seq->_match_optional_cg(@_);
+
+    if ($verdict) {
+        $seq->_set_add_geresh;
+    }
+
+    return $verdict;
 }
 
 sub should_add_sheva {
@@ -208,9 +220,10 @@ it to true.
 
 Returns if it matches a CG modifier after the current position.
 
-=head2 $seq->match_optional_cg([@prefix])
+=head2 $seq->set_optional_cg_geresh([@prefix])
 
-Returns if it matches a CG modifier with an with or without the prefix.
+Returns if it matches a CG modifier with or without the prefix. If it matches,
+sets add_geresh() .
 
 =head2 $seq->should_add_sheva()
 
