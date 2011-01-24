@@ -137,8 +137,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     }
                 }
             }
-            when ('h') {    # Niente.
-            }
             when (@TYPES_OF_U) {
                 if ($seq->match_before([['q']]))
                 {
