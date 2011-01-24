@@ -25,13 +25,11 @@ my %HEBREW_LETTERS =
     }
     qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED
        MEM FINAL_MEM NUN FINAL_NUN SAMEKH AYIN PE FINAL_PE TSADI FINAL_TSADI
+       QOF RESH TAV
     ),
 );
 
-my $QOF          = "\N{HEBREW LETTER QOF}";
-my $RESH         = "\N{HEBREW LETTER RESH}";
 my $SHIN         = "\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}";
-my $TAV          = "\N{HEBREW LETTER TAV}";
 my $QAMATS       = "\N{HEBREW POINT QAMATS}";
 my $HATAF_QAMATS = "\N{HEBREW POINT HATAF QAMATS}";
 my $PATAH        = "\N{HEBREW POINT PATAH}";
@@ -99,11 +97,11 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'b' => _heb('BET'),
     'd' => _heb('DALET'),
     (map { $_ => $SEGOL } @TYPES_OF_E),
-    'k' => $QOF,
+    'k' => _heb('QOF'),
     'l' => _heb('LAMED'),
     (map { $_ => $HOLAM_MALE } @TYPES_OF_O),
     'p' => _heb('PE'),
-    'r' => $RESH,
+    'r' => _heb('RESH'),
     't' => _heb('TET'),
     'x' => $SHIN, # This isn't right, of course
 );
@@ -182,7 +180,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                         $seq->add( _heb('TSADI') );
                     }
                     else {
-                        $seq->add( $QOF );
+                        $seq->add( _heb('QOF') );
                     }
                 }
             }
@@ -261,7 +259,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     }
                 }
                 else {
-                    $seq->add( $QOF );
+                    $seq->add( _heb('QOF') );
                 }
 
                 $seq->add( $SHEVA . _heb('VAV') );
@@ -318,7 +316,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             )
             )
         {
-            if ($seq->text_to_add ne $RESH) {
+            if ($seq->text_to_add ne _heb('RESH')) {
                 $seq->add($DAGESH);
             }
 
