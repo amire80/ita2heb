@@ -47,15 +47,22 @@ my %HEBREW_LETTERS =
     ),
 );
 
-my $HOLAM_MALE   = _heb('VAV,HOLAM');
-my $SHURUK       = _heb('VAV,DAGESH');
-my $HIRIQ_MALE   = _heb('HIRIQ,YOD');
+{
+    my %composites =
+    (
+        HOLAM_MALE   => _heb('VAV,HOLAM'),
+        SHURUK       => _heb('VAV,DAGESH'),
+        HIRIQ_MALE   => _heb('HIRIQ,YOD'),
+    );
+
+    %HEBREW_LETTERS = (%HEBREW_LETTERS, %composites);
+}
 
 my @ALL_HEBREW_VOWELS = (
     _heb('QAMATS'), _heb('HATAF_QAMATS'), _heb('PATAH'), _heb('HATAF_PATAH'), 
     _heb('TSERE'), _heb('SEGOL'), _heb('HATAF_SEGOL'),
-    _heb('HIRIQ'), $HIRIQ_MALE,  _heb('HOLAM'),
-    $HOLAM_MALE, _heb('QUBUTS'),       $SHURUK,
+    _heb('HIRIQ'), _heb('HIRIQ_MALE'),  _heb('HOLAM'),
+    _heb('HOLAM_MALE') , _heb('QUBUTS'), _heb('SHURUK'),
 );
 
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
@@ -93,7 +100,7 @@ my @REQUIRES_DAGESH_PHONETIC = qw(b p);
 my @REQUIRES_DAGESH_LENE = (_heb('GIMEL'), _heb('DALET'));
 
 my @VOWEL_BEFORE_GERESH = (_heb('QAMATS'), _heb('PATAH'), _heb('TSERE'), _heb('SEGOL'), _heb('HIRIQ'));
-my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
+my @VOWEL_AFTER_GERESH = (_heb('HOLAM_MALE'), _heb('SHURUK'));
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 Readonly my %SIMPLE_TRANSLITERATIONS => (
@@ -102,7 +109,7 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     (map { $_ => _heb('SEGOL') } @TYPES_OF_E),
     'k' => _heb('QOF'),
     'l' => _heb('LAMED'),
-    (map { $_ => $HOLAM_MALE } @TYPES_OF_O),
+    (map { $_ => _heb('HOLAM_MALE') } @TYPES_OF_O),
     'p' => _heb('PE'),
     'r' => _heb('RESH'),
     't' => _heb('TET'),
@@ -239,7 +246,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                         }
                     }
                     else {
-                        $seq->add( $HIRIQ_MALE );
+                        $seq->add( _heb('HIRIQ_MALE') );
                     }
                 }
             }
@@ -288,7 +295,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     next;
                 }
                 else {
-                    $seq->add( $SHURUK );
+                    $seq->add( _heb('SHURUK') );
                 }
             }
             when ('v') {
