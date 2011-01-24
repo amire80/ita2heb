@@ -24,14 +24,10 @@ my %HEBREW_LETTERS =
         $l => (eval qq{"\\N{HEBREW LETTER $heb}"}) 
     }
     qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED
-       MEM FINAL_MEM NUN FINAL_NUN
+       MEM FINAL_MEM NUN FINAL_NUN SAMEKH AYIN PE FINAL_PE
     ),
 );
 
-my $SAMEKH       = "\N{HEBREW LETTER SAMEKH}";
-my $AYIN         = "\N{HEBREW LETTER AYIN}";
-my $PE           = "\N{HEBREW LETTER PE}";
-my $FINAL_PE     = "\N{HEBREW LETTER FINAL PE}";
 my $TSADI        = "\N{HEBREW LETTER TSADI}";
 my $FINAL_TSADI  = "\N{HEBREW LETTER FINAL TSADI}";
 my $QOF          = "\N{HEBREW LETTER QOF}";
@@ -108,7 +104,7 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'k' => $QOF,
     'l' => _heb('LAMED'),
     (map { $_ => $HOLAM_MALE } @TYPES_OF_O),
-    'p' => $PE,
+    'p' => _heb('PE'),
     'r' => $RESH,
     't' => _heb('TET'),
     'x' => $SHIN, # This isn't right, of course
@@ -193,7 +189,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('f') {
-                if (! $seq->add_final($PE, $FINAL_PE)) {
+                if (! $seq->add_final(_heb('PE'), _heb('FINAL_PE'))) {
                     if ($seq->at_start and not $option{'disable_rafe'})
                     {
                         $seq->add( $RAFE );
@@ -284,7 +280,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     $seq->add( $SHIN );
                 }
                 else {
-                    $seq->add( $SAMEKH );
+                    $seq->add( _heb('SAMEKH') );
                 }
             }
             when (@TYPES_OF_U) {
