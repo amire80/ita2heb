@@ -209,9 +209,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('g') {
-                if (
-                    $seq->match_optional_cg([['g']])
-                )
+                if ( $seq->match_optional_cg([['g']]) )
                 {
                     $add_geresh = 1;
                 }
