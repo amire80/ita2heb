@@ -194,6 +194,19 @@ sub handle_letter_v {
     return;
 }
 
+sub handle_letter_z {
+    my ($seq) = @_;
+
+    if ($seq->at_start) {
+        $seq->add_heb('DALET,DAGESH,SHEVA,ZAYIN');
+    }
+    else {
+        $seq->add_heb_final('TSADI', 'FINAL_TSADI');
+    }
+
+    return;
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -265,6 +278,8 @@ The opposite of $seq->disable_dagesh .
 =head2 $seq->handle_letter_s
 
 =head2 $seq->handle_letter_v
+
+=head2 $seq->handle_letter_z
 
 =head1 SUPPORT
 

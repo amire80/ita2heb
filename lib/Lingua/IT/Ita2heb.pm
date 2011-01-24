@@ -185,12 +185,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $seq->handle_letter_v;
             }
             when ('z') {
-                if ($seq->at_start) {
-                    $seq->add_heb('DALET,DAGESH,SHEVA,ZAYIN');
-                }
-                else {
-                    $seq->add_heb_final('TSADI', 'FINAL_TSADI');
-                }
+                $seq->handle_letter_z;
             }
             default {
                 $seq->add(q{?});
