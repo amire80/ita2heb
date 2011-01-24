@@ -74,6 +74,14 @@ sub handle_letter {
     return $seq->$meth();
 }
 
+sub _handle_letter_a {
+    my ($seq) = @_;
+
+    $seq->add_heb($seq->closed_syllable ? 'PATAH' : 'QAMATS');
+
+    return;
+}
+
 sub _handle_letter_c {
     my ($seq) = @_;
 
@@ -173,14 +181,6 @@ sub _handle_letter_q {
     }
 
     $seq->add_heb('SHEVA,VAV');
-
-    return;
-}
-
-sub _handle_letter_a {
-    my ($seq) = @_;
-
-    $seq->add_heb($seq->closed_syllable ? 'PATAH' : 'QAMATS');
 
     return;
 }
