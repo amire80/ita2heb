@@ -39,7 +39,7 @@ has handled_letters => (
     isa => 'HashRef[Str]',
     is => 'ro',
     default => sub {
-        return +{ (map { $_ => "handle_letter_$_" } qw(c f g q s v z)),
+        return +{ (map { $_ => "_handle_letter_$_" } qw(c f g q s v z)),
             (map { $_ => "_handle_letter_a" } @{__PACKAGE__->types_of_a}),
             (map { $_ => "_handle_letter_i" } @{__PACKAGE__->types_of_i}),
 
@@ -74,7 +74,7 @@ sub handle_letter {
     return $seq->$meth();
 }
 
-sub handle_letter_c {
+sub _handle_letter_c {
     my ($seq) = @_;
 
     if (
@@ -90,7 +90,7 @@ sub handle_letter_c {
     return;
 }
 
-sub handle_letter_f {
+sub _handle_letter_f {
     my ($seq) = @_;
 
     if (! $seq->add_heb_final('PE', 'FINAL_PE')) {
@@ -103,7 +103,7 @@ sub handle_letter_f {
     return;
 }
 
-sub handle_letter_g {
+sub _handle_letter_g {
     my ($seq) = @_;
 
     $seq->set_optional_cg_geresh([['g']]);
@@ -159,7 +159,7 @@ sub _handle_letter_i {
     return;
 }
 
-sub handle_letter_q {
+sub _handle_letter_q {
     my ($seq) = @_;
 
     if ( $seq->match_before([['c']]) )
@@ -185,7 +185,7 @@ sub _handle_letter_a {
     return;
 }
 
-sub handle_letter_s {
+sub _handle_letter_s {
     my ($seq) = @_;
 
     if (    $seq->match_vowel_before
@@ -205,7 +205,7 @@ sub handle_letter_s {
     return;
 }
 
-sub handle_letter_v {
+sub _handle_letter_v {
     my ($seq) = @_;
 
     $seq->add_heb($seq->does_v_require_bet ? 'BET' : 'VAV');
@@ -213,7 +213,7 @@ sub handle_letter_v {
     return;
 }
 
-sub handle_letter_z {
+sub _handle_letter_z {
     my ($seq) = @_;
 
     if ($seq->at_start) {
@@ -281,23 +281,13 @@ Hebrew glyphs.
 
 The opposite of $seq->disable_dagesh .
 
+=head2 $seq->handled_letters()
+
+Returns a lookup table of the letters that the object can handle.
+
 =head2 $seq->handle_letter($letter)
 
 Handles the Latin letter $letter.
-
-=head2 $seq->handle_letter_c
-
-=head2 $seq->handle_letter_f
-
-=head2 $seq->handle_letter_g
-
-=head2 $seq->handle_letter_q
-
-=head2 $seq->handle_letter_s
-
-=head2 $seq->handle_letter_v
-
-=head2 $seq->handle_letter_z
 
 =head1 SUPPORT
 
