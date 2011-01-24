@@ -201,13 +201,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('f') {
-                if ($seq->middle_at_end)
-                {
-                    $seq->add( $FINAL_PE );
-                }
-                else {
-                    $seq->add( $PE );
-
+                if (! $seq->add_final($PE, $FINAL_PE)) {
                     if ($seq->at_start and not $option{'disable_rafe'})
                     {
                         $seq->add( $RAFE );
@@ -268,11 +262,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('m') {
-                $seq->add(
-                    $seq->middle_at_end
-                    ? $FINAL_MEM
-                    : $MEM
-                );
+                $seq->add_final($MEM, $FINAL_MEM);
             }
             when ('n') {
                 if ( $seq->match_before([['g']]) )
@@ -280,11 +270,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     next ITA_LETTER;
                 }
 
-                $seq->add(
-                    $seq->middle_at_end
-                    ? $FINAL_NUN
-                    : $NUN
-                );
+                $seq->add_final($NUN, $FINAL_NUN);
             }
             when ('q') {
                 if ( $seq->match_before([['c']]) )
@@ -342,11 +328,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     $seq->add( $DALET . $DAGESH . $SHEVA . $ZAYIN );
                 }
                 else {
-                    $seq->add(
-                        $seq->middle_at_end
-                        ? $FINAL_TSADI
-                        : $TSADI
-                    );
+                    $seq->add_final($TSADI, $FINAL_TSADI);
                 }
             }
             default {

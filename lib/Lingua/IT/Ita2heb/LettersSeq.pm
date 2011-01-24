@@ -157,6 +157,19 @@ sub middle_at_end {
     return ($self->after_start and $self->at_end);
 }
 
+sub add_final
+{
+    my $self = shift;
+
+    my ($non_final, $final) = @_;
+
+    my $verdict = $self->middle_at_end;
+
+    $self->add($verdict ? $final : $non_final);
+
+    return $verdict;
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
 
 __END__
@@ -250,6 +263,11 @@ are the end of the string.
 
 A predicate that returns true if the letter is after the start and right at
 the end.
+
+=head2 $seq->add_final($non_final, $final)
+
+Adds $non_final or $final depending on the return of middle_at_end and
+returns the middle_at_end verdict.
 
 =head1 SUPPORT
 
