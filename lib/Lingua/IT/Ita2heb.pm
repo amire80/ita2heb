@@ -141,15 +141,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $seq->handle_letter_a;
             }
             when ('c') {
-                if (
-                    not(    $seq->match_before([['s']]) 
-                        and $seq->match_cg_mod_after([]))
-                )
-                {
-                    $seq->add_heb(
-                        $seq->set_optional_cg_geresh([['c']]) ? 'TSADI' : 'QOF'
-                    );
-                }
+                $seq->handle_letter_c;
             }
             when ('f') {
                 $seq->handle_letter_f;

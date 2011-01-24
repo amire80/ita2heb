@@ -45,6 +45,22 @@ sub add_heb {
     return $seq->add( $seq->heb( $latinized_spec ) );
 }
 
+sub handle_letter_c {
+    my ($seq) = @_;
+
+    if (
+        not(    $seq->match_before([['s']]) 
+                and $seq->match_cg_mod_after([]))
+    )
+    {
+        $seq->add_heb(
+            $seq->set_optional_cg_geresh([['c']]) ? 'TSADI' : 'QOF'
+        );
+    }
+    
+    return;
+}
+
 sub handle_letter_f {
     my ($seq) = @_;
 
@@ -174,6 +190,8 @@ Adds the Hebrew Latinized spec $latinized_spec after converting it to the
 Hebrew glyphs.
 
 =head2 $seq->handle_letter_a
+
+=head2 $seq->handle_letter_c
 
 =head2 $seq->handle_letter_f
 
