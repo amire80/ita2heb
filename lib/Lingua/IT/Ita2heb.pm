@@ -24,12 +24,10 @@ my %HEBREW_LETTERS =
         $l => (eval qq{"\\N{HEBREW LETTER $heb}"}) 
     }
     qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED
-       MEM FINAL_MEM NUN FINAL_NUN SAMEKH AYIN PE FINAL_PE
+       MEM FINAL_MEM NUN FINAL_NUN SAMEKH AYIN PE FINAL_PE TSADI FINAL_TSADI
     ),
 );
 
-my $TSADI        = "\N{HEBREW LETTER TSADI}";
-my $FINAL_TSADI  = "\N{HEBREW LETTER FINAL TSADI}";
 my $QOF          = "\N{HEBREW LETTER QOF}";
 my $RESH         = "\N{HEBREW LETTER RESH}";
 my $SHIN         = "\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}";
@@ -181,7 +179,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 {
                     if ( $seq->set_optional_cg_geresh([['c']]) )
                     {
-                        $seq->add( $TSADI );
+                        $seq->add( _heb('TSADI') );
                     }
                     else {
                         $seq->add( $QOF );
@@ -300,7 +298,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     $seq->add( _heb('DALET') . $DAGESH . $SHEVA . _heb('ZAYIN') );
                 }
                 else {
-                    $seq->add_final($TSADI, $FINAL_TSADI);
+                    $seq->add_final(_heb('TSADI'), _heb('FINAL_TSADI'));
                 }
             }
             default {
