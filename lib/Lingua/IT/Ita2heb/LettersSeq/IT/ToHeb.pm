@@ -48,8 +48,31 @@ sub handle_letter_f {
             $seq->add( $seq->heb('RAFE') );
         }
     }
+
+    return;
 }
 
+sub handle_letter_g {
+    my ($seq) = @_;
+
+    $seq->set_optional_cg_geresh([['g']]);
+
+    if ($seq->match_after([['n']]))
+    {
+        $seq->add( $seq->heb('NUN,SHEVA,YOD') );
+    }
+    elsif (
+        not(
+            $seq->after_start
+                and $seq->match_after([['l']])
+        )
+    )
+    {
+        $seq->add( $seq->heb('GIMEL') );
+    }
+
+    return;
+}
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
@@ -97,6 +120,8 @@ Adds the Hebrew as given by $non_final and $final by first calling
 C<< ->heb() >> on them.
 
 =head2 $seq->handle_letter_f
+
+=head2 $seq->handle_letter_g
 
 =head1 SUPPORT
 

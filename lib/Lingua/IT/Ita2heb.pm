@@ -164,21 +164,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $seq->handle_letter_f;
             }
             when ('g') {
-                $seq->set_optional_cg_geresh([['g']]);
-
-                if ($seq->match_after([['n']]))
-                {
-                    $seq->add( $seq->heb('NUN,SHEVA,YOD') );
-                }
-                elsif (
-                    not(
-                        $seq->after_start
-                        and $seq->match_after([['l']])
-                    )
-                )
-                {
-                    $seq->add( $seq->heb('GIMEL') );
-                }
+                $seq->handle_letter_g;
             }
             when ('h') {    # Niente.
             }
