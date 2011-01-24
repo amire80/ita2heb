@@ -52,7 +52,6 @@ my @TYPES_OF_O = (
 # Italian and KAF and TAV are not needed in Italian at all.
 # Dagesh qal in GIMEL and DALET is totally artificial, but it's part
 # of the standard...
-my @REQUIRES_DAGESH_LENE = _list_heb( qw(GIMEL DALET) );
 
 my @VOWEL_BEFORE_GERESH = _list_heb( qw(QAMATS PATAH TSERE SEGOL HIRIQ) );
 
@@ -127,7 +126,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             ($seq->geminated and $seq->dagesh_enabled)   # Dagesh geminating
             or (
                 (not $seq->match_vowel_before)
-                and $seq->text_to_add ~~ @REQUIRES_DAGESH_LENE
+                and $seq->text_to_add_requires_dagesh_lene
                 and not( $seq->requires_dagesh_phonetic )
             )
             )

@@ -320,6 +320,16 @@ sub _handle_letter_z {
     }
 }
 
+{
+    my @REQUIRES_DAGESH_LENE = __PACKAGE__->list_heb( qw(GIMEL DALET) );
+
+    sub text_to_add_requires_dagesh_lene
+    {
+        my ($seq) = @_;
+
+        return $seq->text_to_add ~~ @REQUIRES_DAGESH_LENE;
+    }
+}
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -381,6 +391,8 @@ Handles the Latin letter $letter.
 =head2 $seq->requires_dagesh_phonetic()
 
 Whether the current letter requires a dagesh phonetic (b or p).
+
+=head2 $seq->text_to_add_requires_dagesh_lene()
 
 =head1 SUPPORT
 
