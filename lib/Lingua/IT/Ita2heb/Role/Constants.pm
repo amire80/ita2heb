@@ -68,6 +68,11 @@ sub types_of_i
     return \@TYPES_OF_I;
 }
 
+sub types_of_u
+{
+    return \@TYPES_OF_U;
+}
+
 sub cg_modifier
 {
     return \@CG_MODIFIER;
@@ -126,6 +131,10 @@ Returns an array ref of the letters considered to be "A".
 =head2 types_of_i
 
 Returns an array ref of the letters considered to be "I".
+
+=head2 types_of_u
+
+Returns an array ref of the letters considered to be "U".
 
 =head2 cg_modifier
 

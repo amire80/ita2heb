@@ -49,7 +49,7 @@ has handled_letters => (
         return +{ (map { $_ => "_handle_letter_$_" } qw(c f g h m n q s v z)),
             (map { $_ => "_handle_letter_a" } @{__PACKAGE__->types_of_a}),
             (map { $_ => "_handle_letter_i" } @{__PACKAGE__->types_of_i}),
-
+            (map { $_ => "_handle_letter_u" } @{__PACKAGE__->types_of_u}),
         };
     },
 );
@@ -232,6 +232,20 @@ sub _handle_letter_s {
     }
     else {
         $seq->add_heb('SAMEKH');
+    }
+
+    return;
+}
+
+sub _handle_letter_u {
+    my ($seq) = @_;
+
+    if ($seq->match_before([['q']]))
+    {
+        return $seq->next_letter_error_code;
+    }
+    else {
+        $seq->add_heb('SHURUK');
     }
 
     return;

@@ -46,11 +46,6 @@ my @TYPES_OF_O = (
     "\N{LATIN SMALL LETTER O WITH GRAVE}",
     "\N{LATIN SMALL LETTER O WITH ACUTE}",
 );
-my @TYPES_OF_U = (
-    'u',
-    "\N{LATIN SMALL LETTER U WITH GRAVE}",
-    "\N{LATIN SMALL LETTER U WITH ACUTE}",
-);
 
 my @REQUIRES_DAGESH_PHONETIC = qw(b p);
 
@@ -135,15 +130,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     if ($error_code eq $seq->next_letter_error_code()) {
                         next ITA_LETTER;
                     }
-                }
-            }
-            when (@TYPES_OF_U) {
-                if ($seq->match_before([['q']]))
-                {
-                    next;
-                }
-                else {
-                    $seq->add_heb('SHURUK');
                 }
             }
             default {
