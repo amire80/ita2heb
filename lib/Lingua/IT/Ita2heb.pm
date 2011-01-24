@@ -21,9 +21,9 @@ my %HEBREW_LETTERS =
 (
     ALEF => "\N{HEBREW LETTER ALEF}",
     BET => "\N{HEBREW LETTER BET}",
+    GIMEL => "\N{HEBREW LETTER GIMEL}",
 );
 
-my $GIMEL        = "\N{HEBREW LETTER GIMEL}";
 my $DALET        = "\N{HEBREW LETTER DALET}";
 my $HE           = "\N{HEBREW LETTER HE}";
 my $VAV          = "\N{HEBREW LETTER VAV}";
@@ -105,7 +105,7 @@ my @REQUIRES_DAGESH_PHONETIC = qw(b p);
 # Italian and KAF and TAV are not needed in Italian at all.
 # Dagesh qal in GIMEL and DALET is totally artificial, but it's part
 # of the standard...
-my @REQUIRES_DAGESH_LENE = ($GIMEL, $DALET);
+my @REQUIRES_DAGESH_LENE = (_heb('GIMEL'), $DALET);
 
 my @VOWEL_BEFORE_GERESH = ($QAMATS, $PATAH, $TSERE, $SEGOL, $HIRIQ);
 my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
@@ -224,7 +224,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     )
                 )
                 {
-                    $seq->add( $GIMEL );
+                    $seq->add( _heb('GIMEL') );
                 }
             }
             when ('h') {    # Niente.
