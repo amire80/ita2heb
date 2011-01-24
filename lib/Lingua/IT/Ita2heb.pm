@@ -90,8 +90,16 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
 
-    my $GERESH = $option{ascii_geresh} ? q{'} : _heb('TRUE_GERESH');
-    my $MAQAF  = $option{ascii_maqaf}  ? q{-} : _heb('TRUE_MAQAF');
+    my @ita_letters = split qr//xms, lc $ita;
+
+    my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
+        {
+            ita_letters => \@ita_letters,
+        }
+    );
+
+    my $GERESH = $option{ascii_geresh} ? q{'} : $seq->heb('TRUE_GERESH');
+    my $MAQAF  = $option{ascii_maqaf}  ? q{-} : $seq->heb('TRUE_MAQAF');
 
     my $heb = q{};
 
@@ -107,14 +115,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         }
     }
 
-    my @ita_letters = split qr//xms, lc $ita;
-
-    my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
-        {
-            ita_letters => \@ita_letters,
-        }
-    );
-
     ITA_LETTER:
     while (defined($seq->next_index)) {
 
@@ -122,7 +122,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         if ($seq->should_add_alef)
         {
-            $heb .= _heb('ALEF');
+            $heb .= $seq->heb('ALEF');
         }
 
         if ($seq->try_geminated)
@@ -138,10 +138,10 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when (@TYPES_OF_A) {
                 if ($seq->closed_syllable()) {
-                    $seq->add( _heb('PATAH') );
+                    $seq->add( $seq->heb('PATAH') );
                 }
                 else {
-                    $seq->add( _heb('QAMATS') );
+                    $seq->add( $seq->heb('QAMATS') );
                 }
             }
             when ('c') {
@@ -152,18 +152,18 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 {
                     if ( $seq->set_optional_cg_geresh([['c']]) )
                     {
-                        $seq->add( _heb('TSADI') );
+                        $seq->add( $seq->heb('TSADI') );
                     }
                     else {
-                        $seq->add( _heb('QOF') );
+                        $seq->add( $seq->heb('QOF') );
                     }
                 }
             }
             when ('f') {
-                if (! $seq->add_final(_heb('PE'), _heb('FINAL_PE'))) {
+                if (! $seq->add_final($seq->heb('PE'), _heb('FINAL_PE'))) {
                     if ($seq->at_start and not $option{'disable_rafe'})
                     {
-                        $seq->add( _heb('RAFE') );
+                        $seq->add( $seq->heb('RAFE') );
                     }
                 }
             }
@@ -172,7 +172,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
                 if ($seq->match_after([['n']]))
                 {
-                    $seq->add( _heb('NUN,SHEVA,YOD') );
+                    $seq->add( $seq->heb('NUN,SHEVA,YOD') );
                 }
                 elsif (
                     not(
@@ -181,7 +181,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     )
                 )
                 {
-                    $seq->add( _heb('GIMEL') );
+                    $seq->add( $seq->heb('GIMEL') );
                 }
             }
             when ('h') {    # Niente.
@@ -197,26 +197,26 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     if ($seq->add_geresh) {
                         if (not $seq->match_vowel_after )
                         {
-                            $seq->add( _heb('HIRIQ') );
+                            $seq->add( $seq->heb('HIRIQ') );
                         }
                     }
                     elsif ($seq->match_vowel_after)
                     {
                         if (   $seq->at_start
                             or $seq->match_vowel_before) {
-                            $seq->add( _heb('YOD') );
+                            $seq->add( $seq->heb('YOD') );
                         }
                         else {
-                            $seq->add( _heb('SHEVA,YOD') );
+                            $seq->add( $seq->heb('SHEVA,YOD') );
                         }
                     }
                     else {
-                        $seq->add( _heb('HIRIQ_MALE') );
+                        $seq->add( $seq->heb('HIRIQ_MALE') );
                     }
                 }
             }
             when ('m') {
-                $seq->add_final(_heb('MEM'), _heb('FINAL_MEM'));
+                $seq->add_final($seq->heb('MEM'), _heb('FINAL_MEM'));
             }
             when ('n') {
                 if ( $seq->match_before([['g']]) )
@@ -224,34 +224,34 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     next ITA_LETTER;
                 }
 
-                $seq->add_final(_heb('NUN'),_heb('FINAL_NUN'));
+                $seq->add_final($seq->heb('NUN'),_heb('FINAL_NUN'));
             }
             when ('q') {
                 if ( $seq->match_before([['c']]) )
                 {
                     if (not $option{disable_dagesh}) {
-                        $seq->add( _heb('DAGESH') );
+                        $seq->add( $seq->heb('DAGESH') );
                     }
                 }
                 else {
-                    $seq->add( _heb('QOF') );
+                    $seq->add( $seq->heb('QOF') );
                 }
 
-                $seq->add( _heb('SHEVA,VAV') );
+                $seq->add( $seq->heb('SHEVA,VAV') );
             }
             when ('s') {
                 if (    $seq->match_vowel_before
                     and $seq->match_vowel_after
                 )
                 {
-                    $seq->add( _heb('ZAYIN') );
+                    $seq->add( $seq->heb('ZAYIN') );
                 }
                 elsif ($seq->match_cg_mod_after([['c']]))
                 {
-                    $seq->add( _heb('SHIN') );
+                    $seq->add( $seq->heb('SHIN') );
                 }
                 else {
-                    $seq->add( _heb('SAMEKH') );
+                    $seq->add( $seq->heb('SAMEKH') );
                 }
             }
             when (@TYPES_OF_U) {
@@ -260,18 +260,18 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     next;
                 }
                 else {
-                    $seq->add( _heb('SHURUK') );
+                    $seq->add( $seq->heb('SHURUK') );
                 }
             }
             when ('v') {
-                $seq->add($seq->does_v_require_bet ? _heb('BET') : _heb('VAV'));
+                $seq->add($seq->does_v_require_bet ? $seq->heb('BET') : _heb('VAV'));
             }
             when ('z') {
                 if ($seq->at_start) {
-                    $seq->add( _heb('DALET,DAGESH,SHEVA,ZAYIN') );
+                    $seq->add( $seq->heb('DALET,DAGESH,SHEVA,ZAYIN') );
                 }
                 else {
-                    $seq->add_final(_heb('TSADI'), _heb('FINAL_TSADI'));
+                    $seq->add_final($seq->heb('TSADI'), _heb('FINAL_TSADI'));
                 }
             }
             default {
@@ -291,8 +291,8 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             )
             )
         {
-            if ($seq->text_to_add ne _heb('RESH')) {
-                $seq->add(_heb('DAGESH'));
+            if ($seq->text_to_add ne $seq->heb('RESH')) {
+                $seq->add($seq->heb('DAGESH'));
             }
 
             $seq->unset_geminated;
@@ -307,22 +307,22 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         if ($seq->should_add_sheva)
         {
-            $heb .= _heb('SHEVA');
+            $heb .= $seq->heb('SHEVA');
         }
 
         if ($seq->add_geresh and $seq->text_to_add ~~ @VOWEL_BEFORE_GERESH) {
             $heb .= $GERESH;
 
-            if ($seq->text_to_add eq _heb('HIRIQ')) {
-                $heb .= _heb('YOD');
+            if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
+                $heb .= $seq->heb('YOD');
             }
 
             $seq->unset_add_geresh;
         }
 
         if ($seq->at_end) {
-            if ($seq->text_to_add ~~ [ _list_heb(qw(QAMATS SEGOL))]) {
-                $heb .= _heb('HE');
+            if ($seq->text_to_add ~~ [ $seq->list_heb(qw(QAMATS SEGOL))]) {
+                $heb .= $seq->heb('HE');
             }
         }
 
