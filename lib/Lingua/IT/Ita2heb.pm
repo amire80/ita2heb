@@ -247,7 +247,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     elsif ($seq->match_vowel_after)
                     {
                         if (   $seq->at_start
-                            or $seq->match_before([\@ALL_LATIN_VOWELS])) {
+                            or $seq->match_vowel_before) {
                             $seq->add( $YOD );
                         }
                         else {
@@ -284,7 +284,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $seq->add( $SHEVA . $VAV );
             }
             when ('s') {
-                if (    $seq->match_before([[@ALL_LATIN_VOWELS]])
+                if (    $seq->match_vowel_before
                     and $seq->match_vowel_after
                 )
                 {
@@ -340,9 +340,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             or
             ($seq->geminated and not $option{disable_dagesh})   # Dagesh geminating
             or (
-                (
-                    not $seq->match_before([[@ALL_LATIN_VOWELS]])
-                )
+                (not $seq->match_vowel_before)
                 and $seq->text_to_add ~~ @REQUIRES_DAGESH_LENE
                 and not($ita_letter ~~ @REQUIRES_DAGESH_PHONETIC)
             )

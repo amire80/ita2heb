@@ -121,6 +121,13 @@ sub should_add_sheva {
     );
 }
 
+sub match_vowel_before {
+    my ($seq) = @_;
+
+    return $seq->match_before([$seq->all_latin_vowels]);
+}
+
+
 sub match_vowel_after {
     my ($seq) = @_;
 
@@ -184,6 +191,11 @@ Returns if it matches a CG modifier with an with or without the prefix.
 =head2 $seq->should_add_sheva()
 
 A predicate that returns whether a sheva should be added or not.
+
+=head2 $seq->match_vowel_before()
+
+A predicate that returns whether there's any Latin vowel in the character
+before the current position.
 
 =head2 $seq->match_vowel_after()
 
