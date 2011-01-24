@@ -108,6 +108,14 @@ sub handle_letter_i {
     return;
 }
 
+sub handle_letter_a {
+    my ($seq) = @_;
+
+    $seq->add_heb($seq->closed_syllable ? 'PATAH' : 'QAMATS');
+
+    return;
+}
+
 sub add_heb {
     my ($seq, $latinized_spec) = @_;
 
@@ -163,6 +171,8 @@ C<< ->heb() >> on them.
 
 Adds the Hebrew Latinized spec $latinized_spec after converting it to the
 Hebrew glyphs.
+
+=head2 $seq->handle_letter_a
 
 =head2 $seq->handle_letter_f
 

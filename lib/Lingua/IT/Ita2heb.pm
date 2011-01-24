@@ -138,12 +138,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $seq->add( $SIMPLE_TRANSLITERATIONS{$_} );
             }
             when (@TYPES_OF_A) {
-                if ($seq->closed_syllable()) {
-                    $seq->add_heb('PATAH')
-                }
-                else {
-                    $seq->add_heb('QAMATS')
-                }
+                $seq->handle_letter_a;
             }
             when ('c') {
                 if (
