@@ -39,13 +39,17 @@ my %HEBREW_LETTERS =
     HOLAM QUBUTS SHEVA RAFE),
     ),
     ( map { $_ => "\N{HEBREW POINT DAGESH OR MAPIQ}" } qw(DAGESH MAPIQ) ),
+    (
+    map { 
+        my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
+        "TRUE_$l" => (eval qq{"\\N{HEBREW PUNCTUATION $heb}"}) 
+    } qw(GERESH MAQAF)
+    ),
 );
 
 my $HOLAM_MALE   = _heb('VAV,HOLAM');
 my $SHURUK       = _heb('VAV,DAGESH');
 my $HIRIQ_MALE   = _heb('HIRIQ,YOD');
-my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
-my $TRUE_MAQAF   = "\N{HEBREW PUNCTUATION MAQAF}";
 
 my @ALL_HEBREW_VOWELS = (
     _heb('QAMATS'), _heb('HATAF_QAMATS'), _heb('PATAH'), _heb('HATAF_PATAH'), 
@@ -114,8 +118,8 @@ sub _heb {
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
 
-    my $GERESH = $option{ascii_geresh} ? q{'} : $TRUE_GERESH;
-    my $MAQAF  = $option{ascii_maqaf}  ? q{-} : $TRUE_MAQAF;
+    my $GERESH = $option{ascii_geresh} ? q{'} : _heb('TRUE_GERESH');
+    my $MAQAF  = $option{ascii_maqaf}  ? q{-} : _heb('TRUE_MAQAF');
 
     my $heb = q{};
 
