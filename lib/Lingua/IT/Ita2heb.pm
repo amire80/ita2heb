@@ -305,13 +305,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('v') {
-                if ($seq->does_v_require_bet)
-                {
-                    $seq->add( $BET );
-                }
-                else {
-                    $seq->add( $VAV );
-                }
+                $seq->add($seq->does_v_require_bet ? $BET : $VAV);
             }
             when ('z') {
                 if ($seq->at_start) {
