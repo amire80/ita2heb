@@ -19,9 +19,8 @@ our $VERSION = '0.01';
 
 my %HEBREW_LETTERS =
 (
-    ALEF => "\N{HEBREW LETTER ALEF}",
-    BET => "\N{HEBREW LETTER BET}",
-    GIMEL => "\N{HEBREW LETTER GIMEL}",
+    map { $_ => (eval qq{"\\N{HEBREW LETTER $_}"}) }
+    qw(ALEF BET GIMEL),
 );
 
 my $DALET        = "\N{HEBREW LETTER DALET}";
