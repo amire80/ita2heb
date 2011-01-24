@@ -29,6 +29,10 @@ has disable_rafe => (
 has disable_dagesh => (
     is => 'ro',
     isa => 'Bool',
+    traits => ['Bool'],
+    handles => {
+        dagesh_enabled => 'not',
+    },
 );
 
 
@@ -180,6 +184,8 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
         {
             ita_letters => \@ita_letters,
+            disable_rafe => ($option{disable_rafe} ? 1 : 0),
+            disable_dagesh => ($option{disable_dagesh} ? 1 : 0),
         }
     );
 
@@ -194,6 +200,10 @@ C<< ->heb() >> on them.
 
 Adds the Hebrew Latinized spec $latinized_spec after converting it to the
 Hebrew glyphs.
+
+=head2 $seq->dagesh_enabled
+
+The opposite of $seq->disable_dagesh .
 
 =head2 $seq->handle_letter_a
 
