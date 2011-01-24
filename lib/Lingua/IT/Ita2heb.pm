@@ -20,11 +20,9 @@ our $VERSION = '0.01';
 my %HEBREW_LETTERS =
 (
     map { $_ => (eval qq{"\\N{HEBREW LETTER $_}"}) }
-    qw(ALEF BET GIMEL DALET),
+    qw(ALEF BET GIMEL DALET HE VAV),
 );
 
-my $HE           = "\N{HEBREW LETTER HE}";
-my $VAV          = "\N{HEBREW LETTER VAV}";
 my $ZAYIN        = "\N{HEBREW LETTER ZAYIN}";
 my $HET          = "\N{HEBREW LETTER HET}";
 my $TET          = "\N{HEBREW LETTER TET}";
@@ -59,8 +57,8 @@ my $QUBUTS       = "\N{HEBREW POINT QUBUTS}";
 my $SHEVA        = "\N{HEBREW POINT SHEVA}";
 my $RAFE         = "\N{HEBREW POINT RAFE}";
 my $DAGESH       = my $MAPIQ = "\N{HEBREW POINT DAGESH OR MAPIQ}";
-my $HOLAM_MALE   = $VAV . $HOLAM;
-my $SHURUK       = $VAV . $DAGESH;
+my $HOLAM_MALE   = _heb('VAV') . $HOLAM;
+my $SHURUK       = _heb('VAV') . $DAGESH;
 my $HIRIQ_MALE   = $HIRIQ . $YOD;
 my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
 my $TRUE_MAQAF   = "\N{HEBREW PUNCTUATION MAQAF}";
@@ -278,7 +276,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     $seq->add( $QOF );
                 }
 
-                $seq->add( $SHEVA . $VAV );
+                $seq->add( $SHEVA . _heb('VAV') );
             }
             when ('s') {
                 if (    $seq->match_vowel_before
@@ -305,7 +303,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('v') {
-                $seq->add($seq->does_v_require_bet ? _heb('BET') : $VAV);
+                $seq->add($seq->does_v_require_bet ? _heb('BET') : _heb('VAV'));
             }
             when ('z') {
                 if ($seq->at_start) {
@@ -363,7 +361,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         if ($seq->at_end) {
             if ($seq->text_to_add ~~ [ $QAMATS, $SEGOL ]) {
-                $heb .= $HE;
+                $heb .= _heb('HE');
             }
         }
 
