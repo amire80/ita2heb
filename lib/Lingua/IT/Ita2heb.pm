@@ -19,6 +19,7 @@ our $VERSION = '0.01';
 
 my %HEBREW_LETTERS =
 (
+    (
     map { 
         my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
         $l => (eval qq{"\\N{HEBREW LETTER $heb}"}) 
@@ -27,9 +28,11 @@ my %HEBREW_LETTERS =
        MEM FINAL_MEM NUN FINAL_NUN SAMEKH AYIN PE FINAL_PE TSADI FINAL_TSADI
        QOF RESH TAV
     ),
+    ),
+    SHIN => "\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}",
+
 );
 
-my $SHIN         = "\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}";
 my $QAMATS       = "\N{HEBREW POINT QAMATS}";
 my $HATAF_QAMATS = "\N{HEBREW POINT HATAF QAMATS}";
 my $PATAH        = "\N{HEBREW POINT PATAH}";
@@ -103,7 +106,7 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'p' => _heb('PE'),
     'r' => _heb('RESH'),
     't' => _heb('TET'),
-    'x' => $SHIN, # This isn't right, of course
+    'x' => _heb('SHIN'), # This isn't right, of course
 );
 
 sub _heb {
@@ -273,7 +276,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
                 elsif ($seq->match_cg_mod_after([['c']]))
                 {
-                    $seq->add( $SHIN );
+                    $seq->add( _heb('SHIN') );
                 }
                 else {
                     $seq->add( _heb('SAMEKH') );
