@@ -244,10 +244,6 @@ Transliterate words in Italian into vocalized Hebrew.
 
 Version 0.01
 
-=head1 AUTHOR
-
-Amir E. Aharoni, C<< <amir.aharoni at mail.huji.ac.il> >>
-
 =head1 SYNOPSIS
 
     use Lingua::IT::Ita2heb;
@@ -421,5 +417,9 @@ by the Free Software Foundation.
 =back
 
 See http://dev.perl.org/licenses/ for more information.
+
+=head1 AUTHOR
+
+Amir E. Aharoni, C<< <amir.aharoni at mail.huji.ac.il> >>
 
 =cut

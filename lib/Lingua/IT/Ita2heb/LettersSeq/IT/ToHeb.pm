@@ -243,11 +243,6 @@ A converter of letters from Italian to Hebrew.
 
 Version 0.01
 
-=head1 AUTHOR
-
-Amir E. Aharoni, C<< <amir.aharoni at mail.huji.ac.il> >>
-and Shlomi Fish ( L<http://www.shlomifish.org/> ).
-
 =head1 SYNOPSIS
 
     use Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb;
@@ -334,5 +329,10 @@ by the Free Software Foundation.
 =back
 
 See http://dev.perl.org/licenses/ for more information.
+
+=head1 AUTHOR
+
+Amir E. Aharoni, C<< <amir.aharoni at mail.huji.ac.il> >>
+and Shlomi Fish ( L<http://www.shlomifish.org/> ).
 
 =cut
