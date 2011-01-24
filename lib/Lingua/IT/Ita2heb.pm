@@ -20,10 +20,9 @@ our $VERSION = '0.01';
 my %HEBREW_LETTERS =
 (
     map { $_ => (eval qq{"\\N{HEBREW LETTER $_}"}) }
-    qw(ALEF BET GIMEL),
+    qw(ALEF BET GIMEL DALET),
 );
 
-my $DALET        = "\N{HEBREW LETTER DALET}";
 my $HE           = "\N{HEBREW LETTER HE}";
 my $VAV          = "\N{HEBREW LETTER VAV}";
 my $ZAYIN        = "\N{HEBREW LETTER ZAYIN}";
@@ -104,7 +103,7 @@ my @REQUIRES_DAGESH_PHONETIC = qw(b p);
 # Italian and KAF and TAV are not needed in Italian at all.
 # Dagesh qal in GIMEL and DALET is totally artificial, but it's part
 # of the standard...
-my @REQUIRES_DAGESH_LENE = (_heb('GIMEL'), $DALET);
+my @REQUIRES_DAGESH_LENE = (_heb('GIMEL'), _heb('DALET'));
 
 my @VOWEL_BEFORE_GERESH = ($QAMATS, $PATAH, $TSERE, $SEGOL, $HIRIQ);
 my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
@@ -112,7 +111,7 @@ my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 Readonly my %SIMPLE_TRANSLITERATIONS => (
     'b' => _heb('BET'),
-    'd' => $DALET,
+    'd' => _heb('DALET'),
     (map { $_ => $SEGOL } @TYPES_OF_E),
     'k' => $QOF,
     'l' => $LAMED,
@@ -310,7 +309,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('z') {
                 if ($seq->at_start) {
-                    $seq->add( $DALET . $DAGESH . $SHEVA . $ZAYIN );
+                    $seq->add( _heb('DALET') . $DAGESH . $SHEVA . $ZAYIN );
                 }
                 else {
                     $seq->add_final($TSADI, $FINAL_TSADI);
