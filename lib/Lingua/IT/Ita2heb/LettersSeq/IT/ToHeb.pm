@@ -39,6 +39,12 @@ sub add_heb_final {
     return $seq->add_final(map { $seq->heb($_) } @args);
 }
 
+sub add_heb {
+    my ($seq, $latinized_spec) = @_;
+
+    return $seq->add( $seq->heb( $latinized_spec ) );
+}
+
 sub handle_letter_f {
     my ($seq) = @_;
 
@@ -116,11 +122,6 @@ sub handle_letter_a {
     return;
 }
 
-sub add_heb {
-    my ($seq, $latinized_spec) = @_;
-
-    return $seq->add( $seq->heb( $latinized_spec ) );
-}
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
