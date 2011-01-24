@@ -131,17 +131,13 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $seq->add( $SIMPLE_TRANSLITERATIONS{$_} );
             }
             when (%{$seq->handled_letters}) {
-                $seq->handle_letter($_);
+                if (defined ( my $error_code = $seq->handle_letter($_) ) ) {
+                    if ($error_code eq $seq->next_letter_error_code()) {
+                        next ITA_LETTER;
+                    }
+                }
             }
             when ('h') {    # Niente.
-            }
-            when ('n') {
-                if ( $seq->match_before([['g']]) )
-                {
-                    next ITA_LETTER;
-                }
-
-                $seq->add_heb_final('NUN', 'FINAL_NUN');
             }
             when (@TYPES_OF_U) {
                 if ($seq->match_before([['q']]))

@@ -14,6 +14,13 @@ extends(
 
 with( 'Lingua::IT::Ita2heb::Role::Constants::Hebrew' );
 
+has next_letter_error_code =>
+(
+    is => 'ro',
+    isa => 'Str',
+    default => 'NEXT_LETTER',
+);
+
 has all_hebrew_vowels =>
 (
     is => 'ro',
@@ -39,7 +46,7 @@ has handled_letters => (
     isa => 'HashRef[Str]',
     is => 'ro',
     default => sub {
-        return +{ (map { $_ => "_handle_letter_$_" } qw(c f g m q s v z)),
+        return +{ (map { $_ => "_handle_letter_$_" } qw(c f g m n q s v z)),
             (map { $_ => "_handle_letter_a" } @{__PACKAGE__->types_of_a}),
             (map { $_ => "_handle_letter_i" } @{__PACKAGE__->types_of_i}),
 
@@ -163,6 +170,19 @@ sub _handle_letter_i {
             $seq->add_heb('HIRIQ_MALE')
         }
     }
+
+    return;
+}
+
+sub _handle_letter_n {
+    my ($seq) = @_;
+
+    if ( $seq->match_before([['g']]) )
+    {
+        return $seq->next_letter_error_code;
+    }
+
+    $seq->add_heb_final('NUN', 'FINAL_NUN');
 
     return;
 }
