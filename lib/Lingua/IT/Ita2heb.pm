@@ -20,8 +20,8 @@ our $VERSION = '0.01';
 my %HEBREW_LETTERS =
 (
     map { 
-        my $l = $_; my $h = $l; $h =~ tr/_/ /;
-        $l => (eval qq{"\\N{HEBREW LETTER $h}"}) 
+        my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
+        $l => (eval qq{"\\N{HEBREW LETTER $heb}"}) 
     }
     qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED),
 );
