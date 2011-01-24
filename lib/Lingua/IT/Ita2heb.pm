@@ -11,58 +11,32 @@ use Carp;
 
 use Readonly;
 
+package Lingua::IT::Ita2heb::_Class::Heb;
+
+use Moose;
+
+with('Lingua::IT::Ita2heb::Role::Constants::Hebrew');
+
+package Lingua::IT::Ita2heb;
+
 use List::MoreUtils ();
 
 use Lingua::IT::Ita2heb::LettersSeq::IT;
 
 our $VERSION = '0.01';
 
-my %HEBREW_LETTERS =
-(
-    (
-    map { 
-        my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
-        $l => (eval qq{"\\N{HEBREW LETTER $heb}"}) 
-    }
-    qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED
-       MEM FINAL_MEM NUN FINAL_NUN SAMEKH AYIN PE FINAL_PE TSADI FINAL_TSADI
-       QOF RESH TAV
-    ),
-    ),
-    SHIN => "\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}",
-    (
-    map { 
-        my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
-        $l => (eval qq{"\\N{HEBREW POINT $heb}"}) 
-    }
-    qw(QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL HIRIQ
-    HOLAM QUBUTS SHEVA RAFE),
-    ),
-    ( map { $_ => "\N{HEBREW POINT DAGESH OR MAPIQ}" } qw(DAGESH MAPIQ) ),
-    (
-    map { 
-        my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
-        "TRUE_$l" => (eval qq{"\\N{HEBREW PUNCTUATION $heb}"}) 
-    } qw(GERESH MAQAF)
-    ),
-);
+my $heb_letters_man = Lingua::IT::Ita2heb::_Class::Heb->new();
 
-{
-    my %composites =
-    (
-        HOLAM_MALE   => _heb('VAV,HOLAM'),
-        SHURUK       => _heb('VAV,DAGESH'),
-        HIRIQ_MALE   => _heb('HIRIQ,YOD'),
-    );
-
-    %HEBREW_LETTERS = (%HEBREW_LETTERS, %composites);
+sub _heb {
+    return $heb_letters_man->heb(@_);
 }
 
-my @ALL_HEBREW_VOWELS = (
-    _list_heb(qw(
-    QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL HIRIQ
-    HIRIQ_MALE HOLAM HOLAM_MALE QUBUTS SHURUK
-    ))
+sub _list_heb {
+    return $heb_letters_man->list_heb(@_);
+}
+
+my @ALL_HEBREW_VOWELS =_list_heb( qw( QAMATS HATAF_QAMATS PATAH HATAF_PATAH
+    TSERE SEGOL HATAF_SEGOL HIRIQ HIRIQ_MALE HOLAM HOLAM_MALE QUBUTS SHURUK)
 );
 
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
@@ -116,16 +90,6 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     't' => _heb('TET'),
     'x' => _heb('SHIN'), # This isn't right, of course
 );
-
-sub _heb {
-    my $spec = shift;
-
-    return join('', @HEBREW_LETTERS{split/,/, uc($spec)});
-}
-
-sub _list_heb {
-    return (map { _heb($_) } @_);    
-}
 
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
