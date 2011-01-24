@@ -169,33 +169,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             when ('h') {    # Niente.
             }
             when (@TYPES_OF_I) {
-                if ( # No [i] in sci, except end of word
-                    not(
-                        $seq->before_end
-                        and $seq->match_before([['s'],['c']])
-                    )
-                )
-                {
-                    if ($seq->add_geresh) {
-                        if (not $seq->match_vowel_after )
-                        {
-                            $seq->add_heb('HIRIQ')
-                        }
-                    }
-                    elsif ($seq->match_vowel_after)
-                    {
-                        if (   $seq->at_start
-                            or $seq->match_vowel_before) {
-                            $seq->add_heb('YOD')
-                        }
-                        else {
-                            $seq->add_heb('SHEVA,YOD')
-                        }
-                    }
-                    else {
-                        $seq->add_heb('HIRIQ_MALE')
-                    }
-                }
+                $seq->handle_letter_i;
             }
             when ('m') {
                 $seq->add_heb_final('MEM', 'FINAL_MEM');

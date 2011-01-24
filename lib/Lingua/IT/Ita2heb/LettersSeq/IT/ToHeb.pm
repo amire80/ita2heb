@@ -74,6 +74,40 @@ sub handle_letter_g {
     return;
 }
 
+sub handle_letter_i {
+    my ($seq) = @_;
+
+    if ( # No [i] in sci, except end of word
+        not(
+            $seq->before_end
+                and $seq->match_before([['s'],['c']])
+        )
+    )
+    {
+        if ($seq->add_geresh) {
+            if (not $seq->match_vowel_after )
+            {
+                $seq->add_heb('HIRIQ')
+            }
+        }
+        elsif ($seq->match_vowel_after)
+        {
+            if (   $seq->at_start
+                    or $seq->match_vowel_before) {
+                $seq->add_heb('YOD')
+            }
+            else {
+                $seq->add_heb('SHEVA,YOD')
+            }
+        }
+        else {
+            $seq->add_heb('HIRIQ_MALE')
+        }
+    }
+
+    return;
+}
+
 sub add_heb {
     my ($seq, $latinized_spec) = @_;
 
@@ -133,6 +167,8 @@ Hebrew glyphs.
 =head2 $seq->handle_letter_f
 
 =head2 $seq->handle_letter_g
+
+=head2 $seq->handle_letter_i
 
 =head1 SUPPORT
 
