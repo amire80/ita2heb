@@ -330,6 +330,24 @@ sub _handle_letter_z {
         return $seq->text_to_add ~~ @REQUIRES_DAGESH_LENE;
     }
 }
+
+sub should_add_dagesh {
+    my ($seq) = @_;
+
+    return
+    (
+        $seq->requires_dagesh_phonetic
+            or
+        ($seq->geminated and $seq->dagesh_enabled)   # Dagesh geminating
+            or 
+        (
+            (not $seq->match_vowel_before)
+                and $seq->text_to_add_requires_dagesh_lene
+                and (not $seq->requires_dagesh_phonetic)
+        )
+    );
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -393,6 +411,11 @@ Handles the Latin letter $letter.
 Whether the current letter requires a dagesh phonetic (b or p).
 
 =head2 $seq->text_to_add_requires_dagesh_lene()
+
+=head2 $seq->should_add_dagesh()
+
+This predicate determines if a dagesh is needed to be added after the current
+letter.
 
 =head1 SUPPORT
 

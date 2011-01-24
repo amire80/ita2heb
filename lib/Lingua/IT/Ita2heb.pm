@@ -120,16 +120,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
         }
 
-        if (
-            $seq->requires_dagesh_phonetic
-            or
-            ($seq->geminated and $seq->dagesh_enabled)   # Dagesh geminating
-            or (
-                (not $seq->match_vowel_before)
-                and $seq->text_to_add_requires_dagesh_lene
-                and not( $seq->requires_dagesh_phonetic )
-            )
-            )
+        if ( $seq->should_add_dagesh )
         {
             if ($seq->text_to_add ne $seq->heb('RESH')) {
                 $seq->add_heb('DAGESH');
