@@ -40,14 +40,7 @@ my @TYPES_OF_E = (
     "\N{LATIN SMALL LETTER E WITH GRAVE}",
     "\N{LATIN SMALL LETTER E WITH ACUTE}",
 );
-my @TYPES_OF_I = (
-    'i',
-    'y',    # XXX
-    'j',    # XXX
-    "\N{LATIN SMALL LETTER I WITH GRAVE}",
-    "\N{LATIN SMALL LETTER I WITH ACUTE}",
-    "\N{LATIN SMALL LETTER I WITH CIRCUMFLEX}",
-);
+
 my @TYPES_OF_O = (
     'o',
     "\N{LATIN SMALL LETTER O WITH GRAVE}",
