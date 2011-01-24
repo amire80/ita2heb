@@ -59,10 +59,10 @@ my %HEBREW_LETTERS =
 }
 
 my @ALL_HEBREW_VOWELS = (
-    _heb('QAMATS'), _heb('HATAF_QAMATS'), _heb('PATAH'), _heb('HATAF_PATAH'), 
-    _heb('TSERE'), _heb('SEGOL'), _heb('HATAF_SEGOL'),
-    _heb('HIRIQ'), _heb('HIRIQ_MALE'),  _heb('HOLAM'),
-    _heb('HOLAM_MALE') , _heb('QUBUTS'), _heb('SHURUK'),
+    _list_heb(qw(
+    QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL HIRIQ
+    HIRIQ_MALE HOLAM HOLAM_MALE QUBUTS SHURUK
+    ))
 );
 
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
@@ -97,10 +97,11 @@ my @REQUIRES_DAGESH_PHONETIC = qw(b p);
 # Italian and KAF and TAV are not needed in Italian at all.
 # Dagesh qal in GIMEL and DALET is totally artificial, but it's part
 # of the standard...
-my @REQUIRES_DAGESH_LENE = (_heb('GIMEL'), _heb('DALET'));
+my @REQUIRES_DAGESH_LENE = _list_heb( qw(GIMEL DALET) );
 
-my @VOWEL_BEFORE_GERESH = (_heb('QAMATS'), _heb('PATAH'), _heb('TSERE'), _heb('SEGOL'), _heb('HIRIQ'));
-my @VOWEL_AFTER_GERESH = (_heb('HOLAM_MALE'), _heb('SHURUK'));
+my @VOWEL_BEFORE_GERESH = _list_heb( qw(QAMATS PATAH TSERE SEGOL HIRIQ) );
+
+my @VOWEL_AFTER_GERESH = _list_heb( qw(HOLAM_MALE SHURUK) );
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 Readonly my %SIMPLE_TRANSLITERATIONS => (
@@ -120,6 +121,10 @@ sub _heb {
     my $spec = shift;
 
     return join('', @HEBREW_LETTERS{split/,/, uc($spec)});
+}
+
+sub _list_heb {
+    return (map { _heb($_) } @_);    
 }
 
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
@@ -356,7 +361,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         }
 
         if ($seq->at_end) {
-            if ($seq->text_to_add ~~ [ _heb('QAMATS'), _heb('SEGOL') ]) {
+            if ($seq->text_to_add ~~ [ _list_heb(qw(QAMATS SEGOL))]) {
                 $heb .= _heb('HE');
             }
         }
