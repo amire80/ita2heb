@@ -28,6 +28,12 @@ sub _build_all_hebrew_vowels {
     ) ];
 }
 
+sub add_heb_final {
+    my ($seq, @args) = @_;
+
+    return $seq->add_final(map { $seq->heb($_) } @args);
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -67,6 +73,11 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
     );
 
 =head1 METHODS
+
+=head2 $seq->add_heb_final($non_final, $final)
+
+Adds the Hebrew as given by $non_final and $final by first calling
+C<< ->heb() >> on them.
 
 =head1 SUPPORT
 

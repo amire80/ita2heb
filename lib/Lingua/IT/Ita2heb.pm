@@ -160,7 +160,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('f') {
-                if (! $seq->add_final($seq->heb('PE'), _heb('FINAL_PE'))) {
+                if (! $seq->add_heb_final('PE', 'FINAL_PE')) {
                     if ($seq->at_start and not $option{'disable_rafe'})
                     {
                         $seq->add( $seq->heb('RAFE') );
@@ -216,7 +216,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('m') {
-                $seq->add_final($seq->heb('MEM'), _heb('FINAL_MEM'));
+                $seq->add_heb_final('MEM', 'FINAL_MEM');
             }
             when ('n') {
                 if ( $seq->match_before([['g']]) )
@@ -224,7 +224,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     next ITA_LETTER;
                 }
 
-                $seq->add_final($seq->heb('NUN'),_heb('FINAL_NUN'));
+                $seq->add_heb_final('NUN', 'FINAL_NUN');
             }
             when ('q') {
                 if ( $seq->match_before([['c']]) )
@@ -271,7 +271,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     $seq->add( $seq->heb('DALET,DAGESH,SHEVA,ZAYIN') );
                 }
                 else {
-                    $seq->add_final($seq->heb('TSADI'), _heb('FINAL_TSADI'));
+                    $seq->add_heb_final('TSADI', 'FINAL_TSADI');
                 }
             }
             default {
