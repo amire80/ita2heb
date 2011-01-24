@@ -135,9 +135,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('h') {    # Niente.
             }
-            when ('m') {
-                $seq->add_heb_final('MEM', 'FINAL_MEM');
-            }
             when ('n') {
                 if ( $seq->match_before([['g']]) )
                 {
