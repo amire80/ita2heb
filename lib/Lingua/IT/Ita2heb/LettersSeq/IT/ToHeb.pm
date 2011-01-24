@@ -348,6 +348,21 @@ sub should_add_dagesh {
     );
 }
 
+sub add_dagesh_if_needed {
+    my ($seq) = @_;
+
+    if ( $seq->should_add_dagesh )
+    {
+        if ($seq->text_to_add ne $seq->heb('RESH')) {
+            $seq->add_heb('DAGESH');
+        }
+
+        $seq->unset_geminated;
+    }
+
+    return;
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -416,6 +431,10 @@ Whether the current letter requires a dagesh phonetic (b or p).
 
 This predicate determines if a dagesh is needed to be added after the current
 letter.
+
+=head2 $seq->add_dagesh_if_needed()
+
+Determines if a dagesh is needed and if so adds it.
 
 =head1 SUPPORT
 

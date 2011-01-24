@@ -120,14 +120,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
         }
 
-        if ( $seq->should_add_dagesh )
-        {
-            if ($seq->text_to_add ne $seq->heb('RESH')) {
-                $seq->add_heb('DAGESH');
-            }
-
-            $seq->unset_geminated;
-        }
+        $seq->add_dagesh_if_needed;
 
         if ($seq->add_geresh and $seq->text_to_add ~~ [@VOWEL_AFTER_GERESH]) {
             $heb .= $GERESH;
