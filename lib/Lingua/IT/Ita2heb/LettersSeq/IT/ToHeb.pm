@@ -35,6 +35,13 @@ has disable_dagesh => (
     },
 );
 
+has handled_letters => (
+    isa => 'HashRef[Str]',
+    is => 'ro',
+    default => sub {
+        return +{ map { $_ => "handle_letter_$_" } qw(c f g q s v z) };
+    },
+);
 
 sub _build_all_hebrew_vowels {
     my ($self) = @_;
@@ -53,6 +60,14 @@ sub add_heb {
     my ($seq, $latinized_spec) = @_;
 
     return $seq->add( $seq->heb( $latinized_spec ) );
+}
+
+sub handle_letter {
+    my ($seq, $letter) = @_;
+
+    my $meth = $seq->handled_letters->{$letter};
+
+    return $seq->$meth();
 }
 
 sub handle_letter_c {
@@ -224,12 +239,6 @@ A converter of letters from Italian to Hebrew.
 
 Version 0.01
 
-=head1 METHODS
-
-=head2 $seq->all_hebrew_vowels()
-
-Returns an array ref of all Hebrew vowels.
-
 =head1 AUTHOR
 
 Amir E. Aharoni, C<< <amir.aharoni at mail.huji.ac.il> >>
@@ -249,6 +258,11 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
 
 =head1 METHODS
 
+=head2 $seq->all_hebrew_vowels()
+
+Returns an array ref of all Hebrew vowels.
+
+
 =head2 $seq->add_heb_final($non_final, $final)
 
 Adds the Hebrew as given by $non_final and $final by first calling
@@ -262,6 +276,10 @@ Hebrew glyphs.
 =head2 $seq->dagesh_enabled
 
 The opposite of $seq->disable_dagesh .
+
+=head2 $seq->handle_letter($letter)
+
+Handles the Latin letter $letter.
 
 =head2 $seq->handle_letter_a
 

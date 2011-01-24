@@ -138,17 +138,11 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             when (%SIMPLE_TRANSLITERATIONS) {
                 $seq->add( $SIMPLE_TRANSLITERATIONS{$_} );
             }
+            when (%{$seq->handled_letters}) {
+                $seq->handle_letter($_);
+            }
             when (@TYPES_OF_A) {
                 $seq->handle_letter_a;
-            }
-            when ('c') {
-                $seq->handle_letter_c;
-            }
-            when ('f') {
-                $seq->handle_letter_f;
-            }
-            when ('g') {
-                $seq->handle_letter_g;
             }
             when ('h') {    # Niente.
             }
@@ -166,12 +160,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
                 $seq->add_heb_final('NUN', 'FINAL_NUN');
             }
-            when ('q') {
-                $seq->handle_letter_q;
-            }
-            when ('s') {
-                $seq->handle_letter_s;
-            }
             when (@TYPES_OF_U) {
                 if ($seq->match_before([['q']]))
                 {
@@ -180,12 +168,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 else {
                     $seq->add_heb('SHURUK');
                 }
-            }
-            when ('v') {
-                $seq->handle_letter_v;
-            }
-            when ('z') {
-                $seq->handle_letter_z;
             }
             default {
                 $seq->add(q{?});
