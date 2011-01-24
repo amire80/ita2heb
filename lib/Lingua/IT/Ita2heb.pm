@@ -20,9 +20,9 @@ our $VERSION = '0.01';
 my %HEBREW_LETTERS =
 (
     ALEF => "\N{HEBREW LETTER ALEF}",
+    BET => "\N{HEBREW LETTER BET}",
 );
 
-my $BET          = "\N{HEBREW LETTER BET}";
 my $GIMEL        = "\N{HEBREW LETTER GIMEL}";
 my $DALET        = "\N{HEBREW LETTER DALET}";
 my $HE           = "\N{HEBREW LETTER HE}";
@@ -112,7 +112,7 @@ my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
 Readonly my %SIMPLE_TRANSLITERATIONS => (
-    'b' => $BET,
+    'b' => _heb('BET'),
     'd' => $DALET,
     (map { $_ => $SEGOL } @TYPES_OF_E),
     'k' => $QOF,
@@ -307,7 +307,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('v') {
-                $seq->add($seq->does_v_require_bet ? $BET : $VAV);
+                $seq->add($seq->does_v_require_bet ? _heb('BET') : $VAV);
             }
             when ('z') {
                 if ($seq->at_start) {
