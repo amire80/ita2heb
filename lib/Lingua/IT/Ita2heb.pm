@@ -17,7 +17,11 @@ use Lingua::IT::Ita2heb::LettersSeq::IT;
 
 our $VERSION = '0.01';
 
-my $ALEF         = "\N{HEBREW LETTER ALEF}";
+my %HEBREW_LETTERS =
+(
+    ALEF => "\N{HEBREW LETTER ALEF}",
+);
+
 my $BET          = "\N{HEBREW LETTER BET}";
 my $GIMEL        = "\N{HEBREW LETTER GIMEL}";
 my $DALET        = "\N{HEBREW LETTER DALET}";
@@ -120,6 +124,12 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'x' => $SHIN, # This isn't right, of course
 );
 
+sub _heb {
+    my $spec = shift;
+
+    return join('', @HEBREW_LETTERS{split/,/, uc($spec)});
+}
+
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
 
@@ -155,7 +165,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         if ($seq->should_add_alef)
         {
-            $heb .= $ALEF;
+            $heb .= _heb('ALEF');
         }
 
         if ($seq->try_geminated)
