@@ -62,7 +62,7 @@ sub should_add_alef
         $self->_is_current_a_vowel
         and ($self->at_start or $self->wrote_vowel)
         and not (  $self->current ~~ @{$self->types_of_i}
-            and $self->match_after([$self->all_latin_vowels])
+            and $self->match_vowel_after
             and ($self->match_before([$self->all_latin_vowels])
                 or $self->at_start))
     );
@@ -119,6 +119,12 @@ sub should_add_sheva {
             @{$seq->sheva_specs()},
         )
     );
+}
+
+sub match_vowel_after {
+    my ($seq) = @_;
+
+    return $seq->match_after([$seq->all_latin_vowels]);
 }
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
@@ -178,6 +184,11 @@ Returns if it matches a CG modifier with an with or without the prefix.
 =head2 $seq->should_add_sheva()
 
 A predicate that returns whether a sheva should be added or not.
+
+=head2 $seq->match_vowel_after()
+
+A predicate that returns whether there's any Latin vowel in the character
+after the current position.
 
 =head1 SUPPORT
 

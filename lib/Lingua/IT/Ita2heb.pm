@@ -239,12 +239,12 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 )
                 {
                     if ($add_geresh) {
-                        if (not $seq->match_after([\@ALL_LATIN_VOWELS]) )
+                        if (not $seq->match_vowel_after )
                         {
                             $seq->add( $HIRIQ );
                         }
                     }
-                    elsif ($seq->match_after([\@ALL_LATIN_VOWELS]))
+                    elsif ($seq->match_vowel_after)
                     {
                         if (   $seq->at_start
                             or $seq->match_before([\@ALL_LATIN_VOWELS])) {
@@ -285,7 +285,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('s') {
                 if (    $seq->match_before([[@ALL_LATIN_VOWELS]])
-                    and $seq->match_after([\@ALL_LATIN_VOWELS])
+                    and $seq->match_vowel_after
                 )
                 {
                     $seq->add( $ZAYIN );
