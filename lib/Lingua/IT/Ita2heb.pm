@@ -96,6 +96,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         {
             ita_letters => \@ita_letters,
             disable_rafe => ($option{disable_rafe} ? 1 : 0),
+            disable_dagesh => ($option{disable_dagesh} ? 1 : 0),
         }
     );
 
@@ -168,7 +169,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             when ('q') {
                 if ( $seq->match_before([['c']]) )
                 {
-                    if (not $option{disable_dagesh}) {
+                    if (not $seq->disable_dagesh) {
                         $seq->add_heb('DAGESH')
                     }
                 }
@@ -222,7 +223,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         if (
             $ita_letter ~~ @REQUIRES_DAGESH_PHONETIC  # Dagesh phonetic (b, p)
             or
-            ($seq->geminated and not $option{disable_dagesh})   # Dagesh geminating
+            ($seq->geminated and not $seq->disable_dagesh)   # Dagesh geminating
             or (
                 (not $seq->match_vowel_before)
                 and $seq->text_to_add ~~ @REQUIRES_DAGESH_LENE
