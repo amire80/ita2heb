@@ -19,13 +19,13 @@ our $VERSION = '0.01';
 
 my %HEBREW_LETTERS =
 (
-    map { $_ => (eval qq{"\\N{HEBREW LETTER $_}"}) }
-    qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD),
+    map { 
+        my $l = $_; my $h = $l; $h =~ tr/_/ /;
+        $l => (eval qq{"\\N{HEBREW LETTER $h}"}) 
+    }
+    qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED),
 );
 
-my $KAF          = "\N{HEBREW LETTER KAF}";
-my $FINAL_KAF    = "\N{HEBREW LETTER FINAL KAF}";
-my $LAMED        = "\N{HEBREW LETTER LAMED}";
 my $MEM          = "\N{HEBREW LETTER MEM}";
 my $FINAL_MEM    = "\N{HEBREW LETTER FINAL MEM}";
 my $NUN          = "\N{HEBREW LETTER NUN}";
@@ -108,7 +108,7 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     'd' => _heb('DALET'),
     (map { $_ => $SEGOL } @TYPES_OF_E),
     'k' => $QOF,
-    'l' => $LAMED,
+    'l' => _heb('LAMED'),
     (map { $_ => $HOLAM_MALE } @TYPES_OF_O),
     'p' => $PE,
     'r' => $RESH,
