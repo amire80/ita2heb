@@ -42,17 +42,47 @@ has disable_dagesh => (
     },
 );
 
+has '_simple_trs' => (
+    is => 'ro',
+    isa => 'HashRef[Str]',
+    lazy_build => 1,
+);
+
+sub _build__simple_trs {
+    my $seq = shift;
+
+    return +{
+        'b' => $seq->heb('BET'),
+        'd' => $seq->heb('DALET'),
+        (map { $_ => $seq->heb('SEGOL') } @{$seq->types_of_e}),
+        'k' => $seq->heb('QOF'),
+        'l' => $seq->heb('LAMED'),
+        (map { $_ => $seq->heb('HOLAM_MALE') } @{$seq->types_of_o}),
+        'p' => $seq->heb('PE'),
+        'r' => $seq->heb('RESH'),
+        't' => $seq->heb('TET'),
+        'x' => $seq->heb('SHIN'), # This isn't right, of course
+    };
+}
+
 has handled_letters => (
     isa => 'HashRef[Str]',
     is => 'ro',
-    default => sub {
-        return +{ (map { $_ => "_handle_letter_$_" } qw(c f g h m n q s v z)),
-            (map { $_ => "_handle_letter_a" } @{__PACKAGE__->types_of_a}),
-            (map { $_ => "_handle_letter_i" } @{__PACKAGE__->types_of_i}),
-            (map { $_ => "_handle_letter_u" } @{__PACKAGE__->types_of_u}),
-        };
-    },
+    lazy_build => 1,
 );
+
+sub _build_handled_letters {
+    my $seq = shift;
+
+    return +{ (map { $_ => "_handle_letter_$_" } qw(c f g h m n q s v z)),
+        (map { $_ => "_handle_letter_a" } @{$seq->types_of_a}),
+        (map { $_ => "_handle_letter_i" } @{$seq->types_of_i}),
+        (map { $_ => "_handle_letter_u" } @{$seq->types_of_u}),
+        (map { $_ => "_handle_simple_tr_letter" } 
+            keys(%{$seq->_simple_trs})
+        ),
+    };
+}
 
 sub _build_all_hebrew_vowels {
     my ($self) = @_;
@@ -78,7 +108,15 @@ sub handle_letter {
 
     my $meth = $seq->handled_letters->{$letter};
 
-    return $seq->$meth();
+    return $seq->$meth($letter);
+}
+
+sub _handle_simple_tr_letter {
+    my ($seq, $letter) = @_;
+
+    $seq->add( $seq->_simple_trs->{$letter} );
+
+    return;
 }
 
 sub _handle_letter_a {

@@ -61,18 +61,6 @@ my @VOWEL_BEFORE_GERESH = _list_heb( qw(QAMATS PATAH TSERE SEGOL HIRIQ) );
 my @VOWEL_AFTER_GERESH = _list_heb( qw(HOLAM_MALE SHURUK) );
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
-Readonly my %SIMPLE_TRANSLITERATIONS => (
-    'b' => _heb('BET'),
-    'd' => _heb('DALET'),
-    (map { $_ => _heb('SEGOL') } @TYPES_OF_E),
-    'k' => _heb('QOF'),
-    'l' => _heb('LAMED'),
-    (map { $_ => _heb('HOLAM_MALE') } @TYPES_OF_O),
-    'p' => _heb('PE'),
-    'r' => _heb('RESH'),
-    't' => _heb('TET'),
-    'x' => _heb('SHIN'), # This isn't right, of course
-);
 
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
@@ -122,9 +110,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         $seq->unset_wrote_vowel;
 
         given ($ita_letter) {
-            when (%SIMPLE_TRANSLITERATIONS) {
-                $seq->add( $SIMPLE_TRANSLITERATIONS{$_} );
-            }
             when (%{$seq->handled_letters}) {
                 if (defined ( my $error_code = $seq->handle_letter($_) ) ) {
                     if ($error_code eq $seq->next_letter_error_code()) {

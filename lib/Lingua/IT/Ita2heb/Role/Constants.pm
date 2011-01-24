@@ -63,6 +63,16 @@ sub all_latin_vowels
     return \@ALL_LATIN_VOWELS;
 }
 
+sub types_of_e
+{
+    return \@TYPES_OF_E;
+}
+
+sub types_of_o
+{
+    return \@TYPES_OF_O;
+}
+
 sub types_of_i
 {
     return \@TYPES_OF_I;
@@ -128,9 +138,17 @@ Returns a reference to an array with all the Latin/Italian vowels.
 
 Returns an array ref of the letters considered to be "A".
 
+=head2 types_of_e
+
+Returns an array ref of the letters considered to be "E".
+
 =head2 types_of_i
 
 Returns an array ref of the letters considered to be "I".
+
+=head2 types_of_o
+
+returns an array ref of the letters considered to be "O".
 
 =head2 types_of_u
 
