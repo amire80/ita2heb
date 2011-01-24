@@ -35,10 +35,6 @@ sub _list_heb {
     return $heb_letters_man->list_heb(@_);
 }
 
-my @ALL_HEBREW_VOWELS =_list_heb( qw( QAMATS HATAF_QAMATS PATAH HATAF_PATAH
-    TSERE SEGOL HATAF_SEGOL HIRIQ HIRIQ_MALE HOLAM HOLAM_MALE QUBUTS SHURUK)
-);
-
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
 my @TYPES_OF_E = (
     'e',
@@ -330,7 +326,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
         }
 
-        if ($seq->text_to_add ~~ @ALL_HEBREW_VOWELS) {
+        if ($seq->text_to_add ~~ $seq->all_hebrew_vowels) {
             $seq->set_wrote_vowel;
         }
     }

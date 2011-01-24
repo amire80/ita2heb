@@ -14,6 +14,20 @@ extends(
 
 with( 'Lingua::IT::Ita2heb::Role::Constants::Hebrew' );
 
+has all_hebrew_vowels =>
+(
+    is => 'ro',
+    isa => 'ArrayRef[Str]',
+    lazy_build => 1,
+);
+
+sub _build_all_hebrew_vowels {
+    my ($self) = @_;
+    return [ $self->list_heb( qw( QAMATS HATAF_QAMATS PATAH HATAF_PATAH
+        TSERE SEGOL HATAF_SEGOL HIRIQ HIRIQ_MALE HOLAM HOLAM_MALE QUBUTS SHURUK)
+    ) ];
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -30,6 +44,12 @@ A converter of letters from Italian to Hebrew.
 =head1 VERSION
 
 Version 0.01
+
+=head1 METHODS
+
+=head2 $seq->all_hebrew_vowels()
+
+Returns an array ref of all Hebrew vowels.
 
 =head1 AUTHOR
 
