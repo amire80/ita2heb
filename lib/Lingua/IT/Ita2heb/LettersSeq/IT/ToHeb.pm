@@ -39,7 +39,9 @@ has handled_letters => (
     isa => 'HashRef[Str]',
     is => 'ro',
     default => sub {
-        return +{ map { $_ => "handle_letter_$_" } qw(c f g q s v z) };
+        return +{ (map { $_ => "handle_letter_$_" } qw(c f g q s v z)),
+            (map { $_ => "_handle_letter_a" } @{__PACKAGE__->types_of_a}),
+        };
     },
 );
 
@@ -173,7 +175,7 @@ sub handle_letter_q {
     return;
 }
 
-sub handle_letter_a {
+sub _handle_letter_a {
     my ($seq) = @_;
 
     $seq->add_heb($seq->closed_syllable ? 'PATAH' : 'QAMATS');
@@ -280,8 +282,6 @@ The opposite of $seq->disable_dagesh .
 =head2 $seq->handle_letter($letter)
 
 Handles the Latin letter $letter.
-
-=head2 $seq->handle_letter_a
 
 =head2 $seq->handle_letter_c
 

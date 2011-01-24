@@ -141,9 +141,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             when (%{$seq->handled_letters}) {
                 $seq->handle_letter($_);
             }
-            when (@TYPES_OF_A) {
-                $seq->handle_letter_a;
-            }
             when ('h') {    # Niente.
             }
             when (@TYPES_OF_I) {

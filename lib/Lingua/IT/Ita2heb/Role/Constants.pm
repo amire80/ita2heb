@@ -53,6 +53,10 @@ Readonly my @SHEVA_SPECS => (
     [ 0 => [ ['c'], ['q'] ] ],
 );
 
+sub types_of_a
+{
+    return \@TYPES_OF_A;
+}
 
 sub all_latin_vowels
 {
@@ -119,6 +123,10 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
 =head2 all_latin_vowels
 
 Returns a reference to an array with all the Latin/Italian vowels.
+
+=head2 types_of_a
+
+Returns an array ref of the letters considered to be "A".
 
 =head2 types_of_i
 
