@@ -35,16 +35,15 @@ my %HEBREW_LETTERS =
         my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
         $l => (eval qq{"\\N{HEBREW POINT $heb}"}) 
     }
-    qw(QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL HIRIQ),
+    qw(QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL HIRIQ
+    HOLAM QUBUTS),
     ),
 );
 
-my $HOLAM        = "\N{HEBREW POINT HOLAM}";
-my $QUBUTS       = "\N{HEBREW POINT QUBUTS}";
 my $SHEVA        = "\N{HEBREW POINT SHEVA}";
 my $RAFE         = "\N{HEBREW POINT RAFE}";
 my $DAGESH       = my $MAPIQ = "\N{HEBREW POINT DAGESH OR MAPIQ}";
-my $HOLAM_MALE   = _heb('VAV') . $HOLAM;
+my $HOLAM_MALE   = _heb('VAV,HOLAM');
 my $SHURUK       = _heb('VAV') . $DAGESH;
 my $HIRIQ_MALE   = _heb('HIRIQ,YOD');
 my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
@@ -53,8 +52,8 @@ my $TRUE_MAQAF   = "\N{HEBREW PUNCTUATION MAQAF}";
 my @ALL_HEBREW_VOWELS = (
     _heb('QAMATS'), _heb('HATAF_QAMATS'), _heb('PATAH'), _heb('HATAF_PATAH'), 
     _heb('TSERE'), _heb('SEGOL'), _heb('HATAF_SEGOL'),
-    _heb('HIRIQ'), $HIRIQ_MALE,  $HOLAM,
-    $HOLAM_MALE, $QUBUTS,       $SHURUK,
+    _heb('HIRIQ'), $HIRIQ_MALE,  _heb('HOLAM'),
+    $HOLAM_MALE, _heb('QUBUTS'),       $SHURUK,
 );
 
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
