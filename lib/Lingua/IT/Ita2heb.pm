@@ -161,12 +161,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('f') {
-                if (! $seq->add_heb_final('PE', 'FINAL_PE')) {
-                    if ($seq->at_start and not $seq->disable_rafe)
-                    {
-                        $seq->add( $seq->heb('RAFE') );
-                    }
-                }
+                $seq->handle_letter_f;
             }
             when ('g') {
                 $seq->set_optional_cg_geresh([['g']]);

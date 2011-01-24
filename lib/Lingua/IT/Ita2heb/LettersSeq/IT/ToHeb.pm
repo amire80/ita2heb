@@ -39,6 +39,18 @@ sub add_heb_final {
     return $seq->add_final(map { $seq->heb($_) } @args);
 }
 
+sub handle_letter_f {
+    my ($seq) = @_;
+
+    if (! $seq->add_heb_final('PE', 'FINAL_PE')) {
+        if ($seq->at_start and not $seq->disable_rafe)
+        {
+            $seq->add( $seq->heb('RAFE') );
+        }
+    }
+}
+
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -83,6 +95,8 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
 
 Adds the Hebrew as given by $non_final and $final by first calling
 C<< ->heb() >> on them.
+
+=head2 $seq->handle_letter_f
 
 =head1 SUPPORT
 
