@@ -21,6 +21,11 @@ has all_hebrew_vowels =>
     lazy_build => 1,
 );
 
+has disable_rafe => (
+    is => 'ro',
+    isa => 'Bool',
+);
+
 sub _build_all_hebrew_vowels {
     my ($self) = @_;
     return [ $self->list_heb( qw( QAMATS HATAF_QAMATS PATAH HATAF_PATAH

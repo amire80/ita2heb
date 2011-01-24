@@ -95,6 +95,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
         {
             ita_letters => \@ita_letters,
+            disable_rafe => ($option{disable_rafe} ? 1 : 0),
         }
     );
 
@@ -161,7 +162,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('f') {
                 if (! $seq->add_heb_final('PE', 'FINAL_PE')) {
-                    if ($seq->at_start and not $option{'disable_rafe'})
+                    if ($seq->at_start and not $seq->disable_rafe)
                     {
                         $seq->add( $seq->heb('RAFE') );
                     }
