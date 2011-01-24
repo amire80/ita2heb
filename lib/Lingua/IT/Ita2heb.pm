@@ -23,13 +23,11 @@ my %HEBREW_LETTERS =
         my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
         $l => (eval qq{"\\N{HEBREW LETTER $heb}"}) 
     }
-    qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED),
+    qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED
+       MEM FINAL_MEM NUN FINAL_NUN
+    ),
 );
 
-my $MEM          = "\N{HEBREW LETTER MEM}";
-my $FINAL_MEM    = "\N{HEBREW LETTER FINAL MEM}";
-my $NUN          = "\N{HEBREW LETTER NUN}";
-my $FINAL_NUN    = "\N{HEBREW LETTER FINAL NUN}";
 my $SAMEKH       = "\N{HEBREW LETTER SAMEKH}";
 my $AYIN         = "\N{HEBREW LETTER AYIN}";
 my $PE           = "\N{HEBREW LETTER PE}";
@@ -207,7 +205,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
                 if ($seq->match_after([['n']]))
                 {
-                    $seq->add( $NUN . $SHEVA . _heb('YOD') );
+                    $seq->add( _heb('NUN') . $SHEVA . _heb('YOD') );
                 }
                 elsif (
                     not(
@@ -251,7 +249,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('m') {
-                $seq->add_final($MEM, $FINAL_MEM);
+                $seq->add_final(_heb('MEM'), _heb('FINAL_MEM'));
             }
             when ('n') {
                 if ( $seq->match_before([['g']]) )
@@ -259,7 +257,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     next ITA_LETTER;
                 }
 
-                $seq->add_final($NUN, $FINAL_NUN);
+                $seq->add_final(_heb('NUN'),_heb('FINAL_NUN'));
             }
             when ('q') {
                 if ( $seq->match_before([['c']]) )
