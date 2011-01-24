@@ -142,8 +142,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
     my @ita_letters = split qr//xms, lc $ita;
 
-    my $add_geresh  = 0;
-
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
         {
             ita_letters => \@ita_letters,
@@ -190,7 +188,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     )
                     {
                         $seq->add( $TSADI );
-                        $add_geresh = 1;
+                        $seq->set_add_geresh;
                     }
                     else {
                         $seq->add( $QOF );
@@ -208,7 +206,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             when ('g') {
                 if ( $seq->match_optional_cg([['g']]) )
                 {
-                    $add_geresh = 1;
+                    $seq->set_add_geresh;
                 }
 
                 if ($seq->match_after([['n']]))
@@ -235,7 +233,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     )
                 )
                 {
-                    if ($add_geresh) {
+                    if ($seq->add_geresh) {
                         if (not $seq->match_vowel_after )
                         {
                             $seq->add( $HIRIQ );
@@ -339,9 +337,9 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             $seq->unset_geminated;
         }
 
-        if ($add_geresh and $seq->text_to_add ~~ [@VOWEL_AFTER_GERESH]) {
+        if ($seq->add_geresh and $seq->text_to_add ~~ [@VOWEL_AFTER_GERESH]) {
             $heb .= $GERESH;
-            $add_geresh = 0;
+            $seq->unset_add_geresh;
         }
 
         $heb .= $seq->text_to_add;
@@ -351,14 +349,14 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             $heb .= $SHEVA;
         }
 
-        if ($add_geresh and $seq->text_to_add ~~ @VOWEL_BEFORE_GERESH) {
+        if ($seq->add_geresh and $seq->text_to_add ~~ @VOWEL_BEFORE_GERESH) {
             $heb .= $GERESH;
 
             if ($seq->text_to_add eq $HIRIQ) {
                 $heb .= $YOD;
             }
 
-            $add_geresh = 0;
+            $seq->unset_add_geresh;
         }
 
         if ($seq->at_end) {

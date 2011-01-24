@@ -24,6 +24,18 @@ has geminated => (
     },
 );
 
+has add_geresh => (
+    isa => 'Bool',
+    is => 'ro',
+    default => 0,
+    traits => ['Bool'],
+    handles =>
+    {
+        set_add_geresh => 'set',
+        unset_add_geresh => 'unset',
+    },
+);
+
 with( 'Lingua::IT::Ita2heb::Role::Constants' );
 
 our $VERSION = '0.01';
