@@ -35,11 +35,10 @@ my %HEBREW_LETTERS =
         my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
         $l => (eval qq{"\\N{HEBREW POINT $heb}"}) 
     }
-    qw(QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL),
+    qw(QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL HIRIQ),
     ),
 );
 
-my $HIRIQ        = "\N{HEBREW POINT HIRIQ}";
 my $HOLAM        = "\N{HEBREW POINT HOLAM}";
 my $QUBUTS       = "\N{HEBREW POINT QUBUTS}";
 my $SHEVA        = "\N{HEBREW POINT SHEVA}";
@@ -47,14 +46,14 @@ my $RAFE         = "\N{HEBREW POINT RAFE}";
 my $DAGESH       = my $MAPIQ = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 my $HOLAM_MALE   = _heb('VAV') . $HOLAM;
 my $SHURUK       = _heb('VAV') . $DAGESH;
-my $HIRIQ_MALE   = $HIRIQ . _heb('YOD');
+my $HIRIQ_MALE   = _heb('HIRIQ,YOD');
 my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
 my $TRUE_MAQAF   = "\N{HEBREW PUNCTUATION MAQAF}";
 
 my @ALL_HEBREW_VOWELS = (
     _heb('QAMATS'), _heb('HATAF_QAMATS'), _heb('PATAH'), _heb('HATAF_PATAH'), 
     _heb('TSERE'), _heb('SEGOL'), _heb('HATAF_SEGOL'),
-    $HIRIQ, $HIRIQ_MALE,  $HOLAM,
+    _heb('HIRIQ'), $HIRIQ_MALE,  $HOLAM,
     $HOLAM_MALE, $QUBUTS,       $SHURUK,
 );
 
@@ -92,7 +91,7 @@ my @REQUIRES_DAGESH_PHONETIC = qw(b p);
 # of the standard...
 my @REQUIRES_DAGESH_LENE = (_heb('GIMEL'), _heb('DALET'));
 
-my @VOWEL_BEFORE_GERESH = (_heb('QAMATS'), _heb('PATAH'), _heb('TSERE'), _heb('SEGOL'), $HIRIQ);
+my @VOWEL_BEFORE_GERESH = (_heb('QAMATS'), _heb('PATAH'), _heb('TSERE'), _heb('SEGOL'), _heb('HIRIQ'));
 my @VOWEL_AFTER_GERESH = ($HOLAM_MALE, $SHURUK);
 
 Readonly my $NO_CLOSED_PAST_THIS => 3;
@@ -225,7 +224,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     if ($seq->add_geresh) {
                         if (not $seq->match_vowel_after )
                         {
-                            $seq->add( $HIRIQ );
+                            $seq->add( _heb('HIRIQ') );
                         }
                     }
                     elsif ($seq->match_vowel_after)
@@ -341,7 +340,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         if ($seq->add_geresh and $seq->text_to_add ~~ @VOWEL_BEFORE_GERESH) {
             $heb .= $GERESH;
 
-            if ($seq->text_to_add eq $HIRIQ) {
+            if ($seq->text_to_add eq _heb('HIRIQ')) {
                 $heb .= _heb('YOD');
             }
 
