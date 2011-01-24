@@ -167,17 +167,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 $seq->add_heb_final('NUN', 'FINAL_NUN');
             }
             when ('q') {
-                if ( $seq->match_before([['c']]) )
-                {
-                    if ($seq->dagesh_enabled) {
-                        $seq->add_heb('DAGESH')
-                    }
-                }
-                else {
-                    $seq->add_heb('QOF')
-                }
-
-                $seq->add_heb('SHEVA,VAV')
+                $seq->handle_letter_q;
             }
             when ('s') {
                 if (    $seq->match_vowel_before

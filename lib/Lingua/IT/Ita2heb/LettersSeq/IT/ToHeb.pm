@@ -140,6 +140,24 @@ sub handle_letter_i {
     return;
 }
 
+sub handle_letter_q {
+    my ($seq) = @_;
+
+    if ( $seq->match_before([['c']]) )
+    {
+        if ($seq->dagesh_enabled) {
+            $seq->add_heb('DAGESH');
+        }
+    }
+    else {
+        $seq->add_heb('QOF');
+    }
+
+    $seq->add_heb('SHEVA,VAV');
+
+    return;
+}
+
 sub handle_letter_a {
     my ($seq) = @_;
 
@@ -214,6 +232,8 @@ The opposite of $seq->disable_dagesh .
 =head2 $seq->handle_letter_g
 
 =head2 $seq->handle_letter_i
+
+=head2 $seq->handle_letter_q
 
 =head1 SUPPORT
 
