@@ -20,13 +20,9 @@ our $VERSION = '0.01';
 my %HEBREW_LETTERS =
 (
     map { $_ => (eval qq{"\\N{HEBREW LETTER $_}"}) }
-    qw(ALEF BET GIMEL DALET HE VAV),
+    qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD),
 );
 
-my $ZAYIN        = "\N{HEBREW LETTER ZAYIN}";
-my $HET          = "\N{HEBREW LETTER HET}";
-my $TET          = "\N{HEBREW LETTER TET}";
-my $YOD          = "\N{HEBREW LETTER YOD}";
 my $KAF          = "\N{HEBREW LETTER KAF}";
 my $FINAL_KAF    = "\N{HEBREW LETTER FINAL KAF}";
 my $LAMED        = "\N{HEBREW LETTER LAMED}";
@@ -59,7 +55,7 @@ my $RAFE         = "\N{HEBREW POINT RAFE}";
 my $DAGESH       = my $MAPIQ = "\N{HEBREW POINT DAGESH OR MAPIQ}";
 my $HOLAM_MALE   = _heb('VAV') . $HOLAM;
 my $SHURUK       = _heb('VAV') . $DAGESH;
-my $HIRIQ_MALE   = $HIRIQ . $YOD;
+my $HIRIQ_MALE   = $HIRIQ . _heb('YOD');
 my $TRUE_GERESH  = "\N{HEBREW PUNCTUATION GERESH}";
 my $TRUE_MAQAF   = "\N{HEBREW PUNCTUATION MAQAF}";
 
@@ -116,7 +112,7 @@ Readonly my %SIMPLE_TRANSLITERATIONS => (
     (map { $_ => $HOLAM_MALE } @TYPES_OF_O),
     'p' => $PE,
     'r' => $RESH,
-    't' => $TET,
+    't' => _heb('TET'),
     'x' => $SHIN, # This isn't right, of course
 );
 
@@ -211,7 +207,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
                 if ($seq->match_after([['n']]))
                 {
-                    $seq->add( $NUN . $SHEVA . $YOD );
+                    $seq->add( $NUN . $SHEVA . _heb('YOD') );
                 }
                 elsif (
                     not(
@@ -243,10 +239,10 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     {
                         if (   $seq->at_start
                             or $seq->match_vowel_before) {
-                            $seq->add( $YOD );
+                            $seq->add( _heb('YOD') );
                         }
                         else {
-                            $seq->add( $SHEVA . $YOD );
+                            $seq->add( $SHEVA . _heb('YOD') );
                         }
                     }
                     else {
@@ -283,7 +279,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                     and $seq->match_vowel_after
                 )
                 {
-                    $seq->add( $ZAYIN );
+                    $seq->add( _heb('ZAYIN') );
                 }
                 elsif ($seq->match_cg_mod_after([['c']]))
                 {
@@ -307,7 +303,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('z') {
                 if ($seq->at_start) {
-                    $seq->add( _heb('DALET') . $DAGESH . $SHEVA . $ZAYIN );
+                    $seq->add( _heb('DALET') . $DAGESH . $SHEVA . _heb('ZAYIN') );
                 }
                 else {
                     $seq->add_final($TSADI, $FINAL_TSADI);
@@ -353,7 +349,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             $heb .= $GERESH;
 
             if ($seq->text_to_add eq $HIRIQ) {
-                $heb .= $YOD;
+                $heb .= _heb('YOD');
             }
 
             $seq->unset_add_geresh;
