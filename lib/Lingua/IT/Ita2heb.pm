@@ -21,7 +21,7 @@ package Lingua::IT::Ita2heb;
 
 use List::MoreUtils ();
 
-use Lingua::IT::Ita2heb::LettersSeq::IT;
+use Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb;
 
 our $VERSION = '0.01';
 
@@ -113,7 +113,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
     my @ita_letters = split qr//xms, lc $ita;
 
-    my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
+    my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
         {
             ita_letters => \@ita_letters,
         }
@@ -341,7 +341,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 sub closed_syllable {
     my ($letters_ref, $letter_index) = @_;
 
-    my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
+    my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
         {
             ita_letters => $letters_ref,
             idx => $letter_index,
