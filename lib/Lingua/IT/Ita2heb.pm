@@ -35,7 +35,6 @@ sub _list_heb {
     return $heb_letters_man->list_heb(@_);
 }
 
-my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
 my @TYPES_OF_E = (
     'e',
     "\N{LATIN SMALL LETTER E WITH GRAVE}",
