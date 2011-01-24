@@ -201,7 +201,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('f') {
-                if ($seq->after_start and $seq->at_end)
+                if ($seq->middle_at_end)
                 {
                     $seq->add( $FINAL_PE );
                 }
@@ -269,7 +269,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('m') {
                 $seq->add(
-                    ($seq->after_start and $seq->at_end)
+                    $seq->middle_at_end
                     ? $FINAL_MEM
                     : $MEM
                 );
@@ -281,7 +281,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
 
                 $seq->add(
-                    ($seq->after_start and $seq->at_end)
+                    $seq->middle_at_end
                     ? $FINAL_NUN
                     : $NUN
                 );
@@ -343,8 +343,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
                 else {
                     $seq->add(
-                        (       $seq->after_start
-                            and $seq->at_end)
+                        $seq->middle_at_end
                         ? $FINAL_TSADI
                         : $TSADI
                     );

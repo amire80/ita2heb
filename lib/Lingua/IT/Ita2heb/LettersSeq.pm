@@ -151,6 +151,12 @@ sub curr_lett_eq_next {
         || ($self->current eq $self->_letter($self->idx+1)));
 }
 
+sub middle_at_end {
+    my ($self) = @_;
+
+    return ($self->after_start and $self->at_end);
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq
 
 __END__
@@ -239,6 +245,11 @@ false.
 
 Whether the current letter is the same as the next or alternatively we
 are the end of the string.
+
+=head2 $seq->middle_at_end()
+
+A predicate that returns true if the letter is after the start and right at
+the end.
 
 =head1 SUPPORT
 
