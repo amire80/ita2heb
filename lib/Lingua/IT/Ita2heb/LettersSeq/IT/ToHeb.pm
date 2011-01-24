@@ -41,6 +41,8 @@ has handled_letters => (
     default => sub {
         return +{ (map { $_ => "handle_letter_$_" } qw(c f g q s v z)),
             (map { $_ => "_handle_letter_a" } @{__PACKAGE__->types_of_a}),
+            (map { $_ => "_handle_letter_i" } @{__PACKAGE__->types_of_i}),
+
         };
     },
 );
@@ -123,7 +125,7 @@ sub handle_letter_g {
     return;
 }
 
-sub handle_letter_i {
+sub _handle_letter_i {
     my ($seq) = @_;
 
     if ( # No [i] in sci, except end of word
@@ -288,8 +290,6 @@ Handles the Latin letter $letter.
 =head2 $seq->handle_letter_f
 
 =head2 $seq->handle_letter_g
-
-=head2 $seq->handle_letter_i
 
 =head2 $seq->handle_letter_q
 

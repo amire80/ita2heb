@@ -142,9 +142,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             when ('h') {    # Niente.
             }
-            when (@TYPES_OF_I) {
-                $seq->handle_letter_i;
-            }
             when ('m') {
                 $seq->add_heb_final('MEM', 'FINAL_MEM');
             }
