@@ -146,13 +146,9 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                         and $seq->match_cg_mod_after([]))
                 )
                 {
-                    if ( $seq->set_optional_cg_geresh([['c']]) )
-                    {
-                        $seq->add_heb('TSADI')
-                    }
-                    else {
-                        $seq->add_heb('QOF')
-                    }
+                    $seq->add_heb(
+                        $seq->set_optional_cg_geresh([['c']]) ? 'TSADI' : 'QOF'
+                    );
                 }
             }
             when ('f') {
