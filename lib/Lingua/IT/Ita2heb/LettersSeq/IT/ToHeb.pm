@@ -45,7 +45,7 @@ sub handle_letter_f {
     if (! $seq->add_heb_final('PE', 'FINAL_PE')) {
         if ($seq->at_start and not $seq->disable_rafe)
         {
-            $seq->add( $seq->heb('RAFE') );
+            $seq->add_heb('RAFE');
         }
     }
 
@@ -59,7 +59,7 @@ sub handle_letter_g {
 
     if ($seq->match_after([['n']]))
     {
-        $seq->add( $seq->heb('NUN,SHEVA,YOD') );
+        $seq->add_heb('NUN,SHEVA,YOD');
     }
     elsif (
         not(
@@ -68,10 +68,16 @@ sub handle_letter_g {
         )
     )
     {
-        $seq->add( $seq->heb('GIMEL') );
+        $seq->add_heb('GIMEL');
     }
 
     return;
+}
+
+sub add_heb {
+    my ($seq, $latinized_spec) = @_;
+
+    return $seq->add( $seq->heb( $latinized_spec ) );
 }
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
@@ -118,6 +124,11 @@ and Shlomi Fish ( L<http://www.shlomifish.org/> ).
 
 Adds the Hebrew as given by $non_final and $final by first calling
 C<< ->heb() >> on them.
+
+=head2 $seq->add_heb($latinized_spec)
+
+Adds the Hebrew Latinized spec $latinized_spec after converting it to the
+Hebrew glyphs.
 
 =head2 $seq->handle_letter_f
 
