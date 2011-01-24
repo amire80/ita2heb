@@ -42,6 +42,8 @@ my @ALL_LATIN_VOWELS =
 my @CG_MODIFIER              = (@TYPES_OF_E, @TYPES_OF_I);
 my @G_SILENCERS              = qw(l n);
 
+my @REQUIRES_BET_FOR_V       = (@TYPES_OF_O, @TYPES_OF_U);
+
 Readonly my @SHEVA_SPECS => (
     [ 0  => [ [@ALL_LATIN_VOWELS] ] ],
     [ 1  => [ [ @ALL_LATIN_VOWELS, 'h' ] ] ],
@@ -69,6 +71,10 @@ sub cg_modifier
 
 sub sheva_specs {
     return \@SHEVA_SPECS;
+}
+
+sub requires_bet_for_v {
+    return \@REQUIRES_BET_FOR_V;
 }
 
 no Moose::Role;
@@ -125,6 +131,10 @@ An array ref of CG modifiers.
 =head2 sheva_specs
 
 Specs of when to add a sheva.
+
+=head2 requires_bet_for_v
+
+Array ref of letters that require bet for v.
 
 =head1 SUPPORT
 

@@ -134,6 +134,18 @@ sub match_vowel_after {
     return $seq->match_after([$seq->all_latin_vowels]);
 }
 
+sub does_v_require_bet {
+    my ($seq) = @_;
+
+    return (
+        $seq->after_start
+            and 
+        ($seq->match_before([$seq->requires_bet_for_v])
+        or $seq->match_after([$seq->requires_bet_for_v])
+        or $seq->at_end)
+    );
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT
 
 __END__
@@ -201,6 +213,10 @@ before the current position.
 
 A predicate that returns whether there's any Latin vowel in the character
 after the current position.
+
+=head2 $seq->does_v_require_bet()
+
+A predicate that returns whether the 'v' requires a Hebrew Bet.
 
 =head1 SUPPORT
 

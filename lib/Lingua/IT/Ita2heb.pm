@@ -95,7 +95,6 @@ my @TYPES_OF_U = (
 );
 
 my @REQUIRES_DAGESH_PHONETIC = qw(b p);
-my @REQUIRES_BET_FOR_V       = (@TYPES_OF_O, @TYPES_OF_U);
 
 # Dagesh qal.
 # BET and PE must not change according to these rules in transliterated
@@ -306,12 +305,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
                 }
             }
             when ('v') {
-                if (
-                    $seq->after_start
-                    and ($seq->match_before([[@REQUIRES_BET_FOR_V]])
-                        or $seq->match_after([\@REQUIRES_BET_FOR_V])
-                        or $seq->at_end)
-                    )
+                if ($seq->does_v_require_bet)
                 {
                     $seq->add( $BET );
                 }
