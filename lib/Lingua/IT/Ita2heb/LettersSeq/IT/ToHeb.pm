@@ -323,11 +323,22 @@ sub _handle_letter_z {
 {
     my @REQUIRES_DAGESH_LENE = __PACKAGE__->list_heb( qw(GIMEL DALET) );
 
-    sub text_to_add_requires_dagesh_lene
-    {
+    sub text_to_add_requires_dagesh_lene {
         my ($seq) = @_;
 
         return $seq->text_to_add ~~ @REQUIRES_DAGESH_LENE;
+    }
+}
+
+{
+    my @VOWEL_BEFORE_GERESH = __PACKAGE__->list_heb( 
+        qw(QAMATS PATAH TSERE SEGOL HIRIQ) 
+    );
+
+    sub text_to_add_requires_before_geresh {
+        my ($seq) = @_;
+
+        return $seq->text_to_add ~~ @VOWEL_BEFORE_GERESH;
     }
 }
 
@@ -426,6 +437,8 @@ Handles the Latin letter $letter.
 Whether the current letter requires a dagesh phonetic (b or p).
 
 =head2 $seq->text_to_add_requires_dagesh_lene()
+
+=head2 $seq->text_to_add_requires_before_geresh()
 
 =head2 $seq->should_add_dagesh()
 
