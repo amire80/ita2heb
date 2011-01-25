@@ -465,15 +465,36 @@ sub _add_geresh_to_text {
     return;
 }
 
+sub _before_geresh_helper {
+    my ($seq) = @_;
+
+    if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
+        $seq->_main_add_heb( 'YOD' );
+    }
+
+    return;
+}
+
+
+sub _on_geresh {
+    my ($seq, $cond_meth, $callback) = @_;
+
+    if ($seq->$cond_meth()) {
+        $seq->_add_geresh_to_text;
+        $seq->unset_add_geresh;
+
+        $seq->$callback();
+    }
+
+    return;
+}
+
 sub after_switch {
     my ($seq) = @_;
 
     $seq->add_dagesh_if_needed;
 
-    if ($seq->requires_after_geresh) {
-        $seq->_add_geresh_to_text;
-        $seq->unset_add_geresh;
-    }
+    $seq->_on_geresh('requires_after_geresh', sub { return; },);
 
     $seq->main_add( $seq->text_to_add );
 
@@ -482,14 +503,7 @@ sub after_switch {
         $seq->_main_add_heb( 'SHEVA' );
     }
 
-    if ($seq->requires_before_geresh) {
-        $seq->_add_geresh_to_text;
-        $seq->unset_add_geresh;
-
-        if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
-            $seq->_main_add_heb( 'YOD' );
-        }
-    }
+    $seq->_on_geresh('requires_before_geresh', '_before_geresh_helper');
 
     if ($seq->at_end) {
         if ($seq->text_to_add ~~ [ $seq->list_heb(qw(QAMATS SEGOL))]) {
