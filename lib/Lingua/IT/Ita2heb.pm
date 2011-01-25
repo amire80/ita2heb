@@ -37,11 +37,9 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         }
     );
 
-    my $MAQAF  = $seq->maqaf;
-
     # Recursion on punctuation marks
     foreach my $punctuation (
-        [qr/ /ms, q{ },], [qr{-}ms, $MAQAF,], [qr{'}ms, q{'},] ) {
+        [qr/ /ms, q{ },], [qr{-}ms, $seq->maqaf,], [qr{'}ms, q{'},] ) {
         my ($re, $replacement) = @$punctuation;
         if ($ita =~ $re) {
             return join $replacement,
