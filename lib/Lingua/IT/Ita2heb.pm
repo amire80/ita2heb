@@ -41,7 +41,6 @@ sub _list_heb {
 # Dagesh qal in GIMEL and DALET is totally artificial, but it's part
 # of the standard...
 
-my @VOWEL_AFTER_GERESH = _list_heb( qw(HOLAM_MALE SHURUK) );
 
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
@@ -106,7 +105,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         $seq->add_dagesh_if_needed;
 
-        if ($seq->add_geresh and $seq->text_to_add ~~ [@VOWEL_AFTER_GERESH]) {
+        if ($seq->requires_after_geresh) {
             $heb .= $GERESH;
             $seq->unset_add_geresh;
         }
@@ -118,7 +117,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             $heb .= $seq->heb('SHEVA');
         }
 
-        if ($seq->add_geresh and $seq->text_to_add_requires_before_geresh) {
+        if ($seq->requires_before_geresh) {
             $heb .= $GERESH;
 
             if ($seq->text_to_add eq $seq->heb('HIRIQ')) {

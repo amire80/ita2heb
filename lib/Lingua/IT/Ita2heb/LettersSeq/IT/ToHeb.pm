@@ -342,6 +342,16 @@ sub _handle_letter_z {
     }
 }
 
+{
+    my @VOWEL_AFTER_GERESH = __PACKAGE__->list_heb( qw(HOLAM_MALE SHURUK) );
+
+    sub text_to_add_requires_after_geresh {
+        my ($seq) = @_;
+
+        return $seq->text_to_add ~~ @VOWEL_AFTER_GERESH;
+    }
+}
+
 sub should_add_dagesh {
     my ($seq) = @_;
 
@@ -372,6 +382,20 @@ sub add_dagesh_if_needed {
     }
 
     return;
+}
+
+sub _add_geresh_cond {
+    my ($seq, $predicate) = @_;
+
+    return ($seq->add_geresh and $seq->$predicate());
+}
+
+sub requires_after_geresh {
+    return shift->_add_geresh_cond('text_to_add_requires_after_geresh');
+}
+
+sub requires_before_geresh {
+    return shift->_add_geresh_cond('text_to_add_requires_before_geresh');
 }
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
@@ -439,6 +463,12 @@ Whether the current letter requires a dagesh phonetic (b or p).
 =head2 $seq->text_to_add_requires_dagesh_lene()
 
 =head2 $seq->text_to_add_requires_before_geresh()
+
+=head2 $seq->text_to_add_requires_after_geresh()
+
+=head2 $seq->requires_after_geresh()
+
+=head2 $seq->requires_before_geresh()
 
 =head2 $seq->should_add_dagesh()
 
