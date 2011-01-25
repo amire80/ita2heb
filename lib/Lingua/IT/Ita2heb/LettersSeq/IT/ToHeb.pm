@@ -494,6 +494,23 @@ sub before_switch {
     return;
 }
 
+sub main_loop {
+    my ($seq) = @_;
+
+    ITA_LETTER:
+    while (defined($seq->next_index)) {
+        foreach my $method (qw(before_switch perform_switch after_switch)) {
+            if (defined ( my $error_code = $seq->$method() ) ) {
+                if ($error_code eq $seq->next_letter_error_code()) {
+                    next ITA_LETTER;
+                }
+            }
+        }
+    }
+
+    return;
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -582,6 +599,10 @@ Perform the switch itself.
 =head2 $seq->after_switch()
 
 Do all the relevant operations after the given/when on the $ita_letter .
+
+=head2 $seq->main_loop()
+
+Loop over the letters and process them.
 
 =head1 SUPPORT
 

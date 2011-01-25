@@ -50,16 +50,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         }
     }
 
-    ITA_LETTER:
-    while (defined($seq->next_index)) {
-        foreach my $method (qw(before_switch perform_switch after_switch)) {
-            if (defined ( my $error_code = $seq->$method() ) ) {
-                if ($error_code eq $seq->next_letter_error_code()) {
-                    next ITA_LETTER;
-                }
-            }
-        }
-    }
+    $seq->main_loop;
 
     return $seq->total_text;
 }
