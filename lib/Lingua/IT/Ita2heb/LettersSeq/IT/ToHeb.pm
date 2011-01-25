@@ -138,6 +138,12 @@ sub add_heb {
     return $seq->add( $seq->heb( $latinized_spec ) );
 }
 
+sub _main_add_heb {
+    my ($seq, $latinized_spec) = @_;
+
+    return $seq->main_add( $seq->heb( $latinized_spec ) );
+}
+
 sub handle_letter {
     my ($seq, $letter) = @_;
 
@@ -473,7 +479,7 @@ sub after_switch {
 
     if ($seq->should_add_sheva)
     {
-        $seq->main_add( $seq->heb('SHEVA') );
+        $seq->_main_add_heb( 'SHEVA' );
     }
 
     if ($seq->requires_before_geresh) {
@@ -481,13 +487,13 @@ sub after_switch {
         $seq->unset_add_geresh;
 
         if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
-            $seq->main_add( $seq->heb('YOD') );
+            $seq->_main_add_heb( 'YOD' );
         }
     }
 
     if ($seq->at_end) {
         if ($seq->text_to_add ~~ [ $seq->list_heb(qw(QAMATS SEGOL))]) {
-            $seq->main_add( $seq->heb('HE') );
+            $seq->_main_add_heb( 'HE' );
         }
     }
 
@@ -503,7 +509,7 @@ sub before_switch {
 
     if ($seq->should_add_alef)
     {
-        $seq->main_add( $seq->heb('ALEF') );
+        $seq->_main_add_heb( 'ALEF' );
     }
 
     if ($seq->try_geminated)
