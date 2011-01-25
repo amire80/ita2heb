@@ -453,6 +453,26 @@ sub after_switch {
     if ($seq->text_to_add ~~ $seq->all_hebrew_vowels) {
         $seq->set_wrote_vowel;
     }
+
+    return;
+}
+
+sub before_switch {
+    my ($seq) = @_;
+
+    if ($seq->should_add_alef)
+    {
+        $seq->main_add( $seq->heb('ALEF') );
+    }
+
+    if ($seq->try_geminated)
+    {
+        return $seq->next_letter_error_code;
+    }
+
+    $seq->unset_wrote_vowel;
+
+    return;
 }
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
@@ -532,9 +552,13 @@ letter.
 
 Determines if a dagesh is needed and if so adds it.
 
+=head2 $seq->before_switch()
+
+Do all the relevant operations before the given/when on the $ita_letter .
+
 =head2 $seq->after_switch()
 
-Do all operations after the given/when on the $ita_letter .
+Do all the relevant operations after the given/when on the $ita_letter .
 
 =head1 SUPPORT
 

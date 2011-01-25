@@ -55,17 +55,11 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     ITA_LETTER:
     while (defined($seq->next_index)) {
 
-        if ($seq->should_add_alef)
-        {
-            $seq->main_add( $seq->heb('ALEF') );
+        if (defined ( my $error_code = $seq->before_switch ) ) {
+            if ($error_code eq $seq->next_letter_error_code()) {
+                next ITA_LETTER;
+            }
         }
-
-        if ($seq->try_geminated)
-        {
-            next ITA_LETTER;
-        }
-
-        $seq->unset_wrote_vowel;
 
         given ($seq->current) {
             when (%{$seq->handled_letters}) {
