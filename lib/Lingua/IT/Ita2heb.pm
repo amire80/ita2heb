@@ -35,18 +35,6 @@ sub _list_heb {
     return $heb_letters_man->list_heb(@_);
 }
 
-my @TYPES_OF_E = (
-    'e',
-    "\N{LATIN SMALL LETTER E WITH GRAVE}",
-    "\N{LATIN SMALL LETTER E WITH ACUTE}",
-);
-
-my @TYPES_OF_O = (
-    'o',
-    "\N{LATIN SMALL LETTER O WITH GRAVE}",
-    "\N{LATIN SMALL LETTER O WITH ACUTE}",
-);
-
 # Dagesh qal.
 # BET and PE must not change according to these rules in transliterated
 # Italian and KAF and TAV are not needed in Italian at all.
