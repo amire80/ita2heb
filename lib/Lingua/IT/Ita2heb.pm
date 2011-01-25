@@ -34,10 +34,10 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             ita_letters => \@ita_letters,
             disable_rafe => ($option{disable_rafe} ? 1 : 0),
             disable_dagesh => ($option{disable_dagesh} ? 1 : 0),
+            ascii_geresh => ($option{ascii_geresh} ? 1 : 0),
         }
     );
 
-    my $GERESH = $option{ascii_geresh} ? q{'} : $seq->heb('TRUE_GERESH');
     my $MAQAF  = $option{ascii_maqaf}  ? q{-} : $seq->heb('TRUE_MAQAF');
 
     my %PUNCTUATION_REPLACEMENTS = (q{ }, q{ }, q{-}, $MAQAF, q{'}, q{'},);
@@ -83,38 +83,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
         }
 
-        $seq->add_dagesh_if_needed;
-
-        if ($seq->requires_after_geresh) {
-            $seq->main_add($GERESH);
-            $seq->unset_add_geresh;
-        }
-
-        $seq->main_add( $seq->text_to_add );
-
-        if ($seq->should_add_sheva)
-        {
-            $seq->main_add( $seq->heb('SHEVA') );
-        }
-
-        if ($seq->requires_before_geresh) {
-            $seq->main_add( $GERESH );
-            $seq->unset_add_geresh;
-
-            if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
-                $seq->main_add( $seq->heb('YOD') );
-            }
-        }
-
-        if ($seq->at_end) {
-            if ($seq->text_to_add ~~ [ $seq->list_heb(qw(QAMATS SEGOL))]) {
-                $seq->main_add( $seq->heb('HE') );
-            }
-        }
-
-        if ($seq->text_to_add ~~ $seq->all_hebrew_vowels) {
-            $seq->set_wrote_vowel;
-        }
+        $seq->after_switch();
     }
 
     return $seq->total_text;

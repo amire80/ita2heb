@@ -45,6 +45,12 @@ has disable_rafe => (
     isa => 'Bool',
 );
 
+has ascii_geresh => (
+    is => 'ro',
+    isa => 'Bool',
+);
+
+
 has disable_dagesh => (
     is => 'ro',
     isa => 'Bool',
@@ -410,6 +416,45 @@ sub requires_before_geresh {
     return shift->_add_geresh_cond('_text_to_add_requires_before_geresh');
 }
 
+sub after_switch {
+    my ($seq) = @_;
+
+    my $GERESH = $seq->ascii_geresh ? q{'} : $seq->heb('TRUE_GERESH');
+
+    $seq->add_dagesh_if_needed;
+
+    if ($seq->requires_after_geresh) {
+        $seq->main_add($GERESH);
+        $seq->unset_add_geresh;
+    }
+
+    $seq->main_add( $seq->text_to_add );
+
+    if ($seq->should_add_sheva)
+    {
+        $seq->main_add( $seq->heb('SHEVA') );
+    }
+
+    if ($seq->requires_before_geresh) {
+        $seq->main_add( $GERESH );
+        $seq->unset_add_geresh;
+
+        if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
+            $seq->main_add( $seq->heb('YOD') );
+        }
+    }
+
+    if ($seq->at_end) {
+        if ($seq->text_to_add ~~ [ $seq->list_heb(qw(QAMATS SEGOL))]) {
+            $seq->main_add( $seq->heb('HE') );
+        }
+    }
+
+    if ($seq->text_to_add ~~ $seq->all_hebrew_vowels) {
+        $seq->set_wrote_vowel;
+    }
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -486,6 +531,10 @@ letter.
 =head2 $seq->add_dagesh_if_needed()
 
 Determines if a dagesh is needed and if so adds it.
+
+=head2 $seq->after_switch()
+
+Do all operations after the given/when on the $ita_letter .
 
 =head1 SUPPORT
 
