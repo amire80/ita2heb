@@ -101,12 +101,11 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         if ($seq->requires_before_geresh) {
             $heb .= $GERESH;
+            $seq->unset_add_geresh;
 
             if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
                 $heb .= $seq->heb('YOD');
             }
-
-            $seq->unset_add_geresh;
         }
 
         if ($seq->at_end) {
