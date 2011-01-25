@@ -24,7 +24,7 @@ has geminated => (
     },
 );
 
-has add_geresh => (
+has should_add_geresh => (
     isa => 'Bool',
     is => 'ro',
     default => 0,

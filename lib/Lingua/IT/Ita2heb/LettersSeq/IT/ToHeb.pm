@@ -227,7 +227,7 @@ sub _handle_letter_i {
         )
     )
     {
-        if ($seq->add_geresh) {
+        if ($seq->should_add_geresh) {
             if (not $seq->match_vowel_after )
             {
                 $seq->add_heb('HIRIQ')
@@ -422,7 +422,7 @@ sub add_dagesh_if_needed {
 sub _add_geresh_cond {
     my ($seq, $predicate) = @_;
 
-    return ($seq->add_geresh and $seq->$predicate());
+    return ($seq->should_add_geresh and $seq->$predicate());
 }
 
 sub requires_after_geresh {
@@ -451,7 +451,7 @@ sub perform_switch {
     return;
 }
 
-sub _add_geresh {
+sub _add_geresh_to_text {
     my ($seq) = @_;
 
     $seq->main_add( $seq->_geresh );
@@ -465,7 +465,7 @@ sub after_switch {
     $seq->add_dagesh_if_needed;
 
     if ($seq->requires_after_geresh) {
-        $seq->_add_geresh;
+        $seq->_add_geresh_to_text;
         $seq->unset_add_geresh;
     }
 
@@ -477,7 +477,7 @@ sub after_switch {
     }
 
     if ($seq->requires_before_geresh) {
-        $seq->_add_geresh;
+        $seq->_add_geresh_to_text;
         $seq->unset_add_geresh;
 
         if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
