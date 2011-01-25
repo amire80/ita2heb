@@ -45,8 +45,6 @@ my @VOWEL_BEFORE_GERESH = _list_heb( qw(QAMATS PATAH TSERE SEGOL HIRIQ) );
 
 my @VOWEL_AFTER_GERESH = _list_heb( qw(HOLAM_MALE SHURUK) );
 
-Readonly my $NO_CLOSED_PAST_THIS => 3;
-
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
 
