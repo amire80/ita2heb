@@ -7,8 +7,6 @@ use warnings;
 use utf8;
 use charnames ':full';
 
-use Carp;
-
 use Readonly;
 
 use List::MoreUtils ();
@@ -61,17 +59,9 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
         }
 
-        given ($seq->current) {
-            when (%{$seq->handled_letters}) {
-                if (defined ( my $error_code = $seq->handle_letter($_) ) ) {
-                    if ($error_code eq $seq->next_letter_error_code()) {
-                        next ITA_LETTER;
-                    }
-                }
-            }
-            default {
-                $seq->add(q{?});
-                carp('Unknown letter ' . $seq->current . ' in the source.');
+        if (defined ( my $error_code = $seq->perform_switch ) ) {
+            if ($error_code eq $seq->next_letter_error_code()) {
+                next ITA_LETTER;
             }
         }
 

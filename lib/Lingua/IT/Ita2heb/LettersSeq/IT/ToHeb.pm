@@ -4,6 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
+use Carp;
 use Readonly;
 
 use Moose;
@@ -416,6 +417,24 @@ sub requires_before_geresh {
     return shift->_add_geresh_cond('_text_to_add_requires_before_geresh');
 }
 
+sub perform_switch {
+    my ($seq) = @_;
+
+    given ($seq->current) {
+        when (%{$seq->handled_letters}) {
+            if (defined ( my $error_code = $seq->handle_letter($_) ) ) {
+                return $error_code;
+            }
+        }
+        default {
+            $seq->add(q{?});
+            carp('Unknown letter ' . $seq->current . ' in the source.');
+        }
+    }
+
+    return;
+}
+
 sub after_switch {
     my ($seq) = @_;
 
@@ -550,11 +569,15 @@ letter.
 
 =head2 $seq->add_dagesh_if_needed()
 
-Determines if a dagesh is needed and if so adds it.
+determines if a dagesh is needed and if so adds it.
 
 =head2 $seq->before_switch()
 
-Do all the relevant operations before the given/when on the $ita_letter .
+do all the relevant operations before the given/when on the $ita_letter .
+
+=head2 $seq->perform_switch()
+
+Perform the switch itself.
 
 =head2 $seq->after_switch()
 
