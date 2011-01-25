@@ -11,14 +11,6 @@ use Carp;
 
 use Readonly;
 
-package Lingua::IT::Ita2heb::_Class::Heb;
-
-use Moose;
-
-with('Lingua::IT::Ita2heb::Role::Constants::Hebrew');
-
-package Lingua::IT::Ita2heb;
-
 use List::MoreUtils ();
 
 use Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb;
