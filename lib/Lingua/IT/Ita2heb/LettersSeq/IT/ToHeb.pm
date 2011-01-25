@@ -51,6 +51,10 @@ has ascii_geresh => (
     isa => 'Bool',
 );
 
+has ascii_maqaf => (
+    is => 'ro',
+    isa => 'Bool',
+);
 
 has disable_dagesh => (
     is => 'ro',
@@ -511,6 +515,12 @@ sub main_loop {
     return;
 }
 
+sub maqaf {
+    my ($seq) = @_;
+
+    return $seq->ascii_maqaf ? q{-} : $seq->heb('TRUE_MAQAF');
+}
+
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
 
 __END__
@@ -603,6 +613,10 @@ Do all the relevant operations after the given/when on the $ita_letter .
 =head2 $seq->main_loop()
 
 Loop over the letters and process them.
+
+=head2 $seq->maqaf()
+
+Returns the Maqaf that should be used according to the options.
 
 =head1 SUPPORT
 

@@ -33,10 +33,11 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             disable_rafe => ($option{disable_rafe} ? 1 : 0),
             disable_dagesh => ($option{disable_dagesh} ? 1 : 0),
             ascii_geresh => ($option{ascii_geresh} ? 1 : 0),
+            ascii_maqaf => ($option{ascii_maqaf} ? 1 : 0),
         }
     );
 
-    my $MAQAF  = $option{ascii_maqaf}  ? q{-} : $seq->heb('TRUE_MAQAF');
+    my $MAQAF  = $seq->maqaf;
 
     # Recursion on punctuation marks
     foreach my $punctuation (
