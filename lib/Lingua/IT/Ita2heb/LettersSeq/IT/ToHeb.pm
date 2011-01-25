@@ -14,6 +14,18 @@ extends(
 
 with( 'Lingua::IT::Ita2heb::Role::Constants::Hebrew' );
 
+has total_text =>
+(
+    is => 'ro',
+    isa => 'Str',
+    traits => ['String'],
+    default => q{},
+    handles =>
+    {
+        main_add => 'append',
+    },
+);
+
 has next_letter_error_code =>
 (
     is => 'ro',

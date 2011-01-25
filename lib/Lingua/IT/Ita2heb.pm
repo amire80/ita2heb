@@ -40,8 +40,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my $GERESH = $option{ascii_geresh} ? q{'} : $seq->heb('TRUE_GERESH');
     my $MAQAF  = $option{ascii_maqaf}  ? q{-} : $seq->heb('TRUE_MAQAF');
 
-    my $heb = q{};
-
     my %PUNCTUATION_REPLACEMENTS = (q{ }, q{ }, q{-}, $MAQAF, q{'}, q{'},);
 
     # Recursion on punctuation marks
@@ -61,7 +59,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         if ($seq->should_add_alef)
         {
-            $heb .= $seq->heb('ALEF');
+            $seq->main_add( $seq->heb('ALEF') );
         }
 
         if ($seq->try_geminated)
@@ -88,29 +86,29 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         $seq->add_dagesh_if_needed;
 
         if ($seq->requires_after_geresh) {
-            $heb .= $GERESH;
+            $seq->main_add($GERESH);
             $seq->unset_add_geresh;
         }
 
-        $heb .= $seq->text_to_add;
+        $seq->main_add( $seq->text_to_add );
 
         if ($seq->should_add_sheva)
         {
-            $heb .= $seq->heb('SHEVA');
+            $seq->main_add( $seq->heb('SHEVA') );
         }
 
         if ($seq->requires_before_geresh) {
-            $heb .= $GERESH;
+            $seq->main_add( $GERESH );
             $seq->unset_add_geresh;
 
             if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
-                $heb .= $seq->heb('YOD');
+                $seq->main_add( $seq->heb('YOD') );
             }
         }
 
         if ($seq->at_end) {
             if ($seq->text_to_add ~~ [ $seq->list_heb(qw(QAMATS SEGOL))]) {
-                $heb .= $seq->heb('HE');
+                $seq->main_add( $seq->heb('HE') );
             }
         }
 
@@ -119,7 +117,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
         }
     }
 
-    return $heb;
+    return $seq->total_text;
 }
 
 sub closed_syllable {
