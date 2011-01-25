@@ -38,15 +38,13 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
     my $MAQAF  = $option{ascii_maqaf}  ? q{-} : $seq->heb('TRUE_MAQAF');
 
-    my %PUNCTUATION_REPLACEMENTS = (q{ }, q{ }, q{-}, $MAQAF, q{'}, q{'},);
-
     # Recursion on punctuation marks
-    foreach my $punctuation_mark (q{ }, q{-}, q{'}) {    # order is important
-        ## no critic (RegularExpressions::RequireExtendedFormatting)
-        my $punctuation_re = qr/$punctuation_mark/ms;
-        if ($ita =~ $punctuation_re) {
-            return join $PUNCTUATION_REPLACEMENTS{$punctuation_mark},
-                map { ita_to_heb($_) } split $punctuation_re, $ita;
+    foreach my $punctuation (
+        [qr/ /ms, q{ },], [qr{-}ms, $MAQAF,], [qr{'}ms, q{'},] ) {
+        my ($re, $replacement) = @$punctuation;
+        if ($ita =~ $re) {
+            return join $replacement,
+                map { ita_to_heb($_) } split $re, $ita;
         }
     }
 
