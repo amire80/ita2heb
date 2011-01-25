@@ -88,6 +88,18 @@ sub _build__simple_trs {
     };
 }
 
+has _geresh => (
+    is => 'ro',
+    isa => 'Str',
+    lazy_build => 1,
+);
+
+sub _build__geresh {
+    my ($seq) = @_;
+
+    return $seq->ascii_geresh ? q{'} : $seq->heb('TRUE_GERESH');
+}
+
 has handled_letters => (
     isa => 'HashRef[Str]',
     is => 'ro',
@@ -442,7 +454,7 @@ sub perform_switch {
 sub after_switch {
     my ($seq) = @_;
 
-    my $GERESH = $seq->ascii_geresh ? q{'} : $seq->heb('TRUE_GERESH');
+    my $GERESH = $seq->_geresh;
 
     $seq->add_dagesh_if_needed;
 
