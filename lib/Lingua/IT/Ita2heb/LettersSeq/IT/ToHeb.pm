@@ -413,23 +413,6 @@ sub _add_geresh_cond {
     return ($seq->should_add_geresh and $seq->_to_add_in($letters_aref));
 }
 
-{
-    my @VOWEL_AFTER_GERESH = __PACKAGE__->list_heb( qw(HOLAM_MALE SHURUK) );
-    sub requires_after_geresh {
-        return shift->_add_geresh_cond(\@VOWEL_AFTER_GERESH);
-    }
-}
-
-{
-    my @VOWEL_BEFORE_GERESH = __PACKAGE__->list_heb( 
-        qw(QAMATS PATAH TSERE SEGOL HIRIQ) 
-    );
-
-    sub requires_before_geresh {
-        return shift->_add_geresh_cond(\@VOWEL_BEFORE_GERESH);
-    }
-}
-
 sub perform_switch {
     my ($seq) = @_;
 
@@ -468,9 +451,9 @@ sub _before_geresh_helper {
 
 
 sub _on_geresh {
-    my ($seq, $cond_meth, $callback) = @_;
+    my ($seq, $letters_aref, $callback) = @_;
 
-    if ($seq->$cond_meth()) {
+    if ($seq->_add_geresh_cond($letters_aref)) {
         $seq->_add_geresh_to_text;
         $seq->unset_add_geresh;
 
@@ -480,12 +463,19 @@ sub _on_geresh {
     return;
 }
 
+{
+    my @VOWEL_AFTER_GERESH = __PACKAGE__->list_heb( qw(HOLAM_MALE SHURUK) );
+
+    my @VOWEL_BEFORE_GERESH = __PACKAGE__->list_heb( 
+        qw(QAMATS PATAH TSERE SEGOL HIRIQ) 
+    );
+
 sub after_switch {
     my ($seq) = @_;
 
     $seq->add_dagesh_if_needed;
 
-    $seq->_on_geresh('requires_after_geresh', sub { return; },);
+    $seq->_on_geresh(\@VOWEL_AFTER_GERESH, sub { return; },);
 
     $seq->main_add( $seq->text_to_add );
 
@@ -494,7 +484,7 @@ sub after_switch {
         $seq->_main_add_heb( 'SHEVA' );
     }
 
-    $seq->_on_geresh('requires_before_geresh', '_before_geresh_helper');
+    $seq->_on_geresh(\@VOWEL_BEFORE_GERESH, '_before_geresh_helper');
 
     if ($seq->at_end) {
         if ($seq->_to_add_in([ $seq->list_heb(qw(QAMATS SEGOL))])) {
@@ -507,6 +497,7 @@ sub after_switch {
     }
 
     return;
+}
 }
 
 sub before_switch {
@@ -613,10 +604,6 @@ Handles the Latin letter $letter.
 Whether the current letter requires a dagesh phonetic (b or p).
 
 =head2 $seq->text_to_add_requires_dagesh_lene()
-
-=head2 $seq->requires_after_geresh()
-
-=head2 $seq->requires_before_geresh()
 
 =head2 $seq->should_add_dagesh()
 
