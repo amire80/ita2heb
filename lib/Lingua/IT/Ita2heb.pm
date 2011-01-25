@@ -25,16 +25,6 @@ use Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb;
 
 our $VERSION = '0.01';
 
-my $heb_letters_man = Lingua::IT::Ita2heb::_Class::Heb->new();
-
-sub _heb {
-    return $heb_letters_man->heb(@_);
-}
-
-sub _list_heb {
-    return $heb_letters_man->list_heb(@_);
-}
-
 # Dagesh qal.
 # BET and PE must not change according to these rules in transliterated
 # Italian and KAF and TAV are not needed in Italian at all.
