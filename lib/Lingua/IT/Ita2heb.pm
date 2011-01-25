@@ -55,8 +55,6 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     ITA_LETTER:
     while (defined($seq->next_index)) {
 
-        my $ita_letter = $seq->current;
-
         if ($seq->should_add_alef)
         {
             $seq->main_add( $seq->heb('ALEF') );
@@ -69,7 +67,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
 
         $seq->unset_wrote_vowel;
 
-        given ($ita_letter) {
+        given ($seq->current) {
             when (%{$seq->handled_letters}) {
                 if (defined ( my $error_code = $seq->handle_letter($_) ) ) {
                     if ($error_code eq $seq->next_letter_error_code()) {
@@ -79,7 +77,7 @@ sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
             }
             default {
                 $seq->add(q{?});
-                carp("Unknown letter $ita_letter in the source.");
+                carp('Unknown letter ' . $seq->current . ' in the source.');
             }
         }
 
