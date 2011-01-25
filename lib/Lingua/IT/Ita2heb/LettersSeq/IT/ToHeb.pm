@@ -420,16 +420,16 @@ sub requires_before_geresh {
 sub perform_switch {
     my ($seq) = @_;
 
-    given ($seq->current) {
-        when (%{$seq->handled_letters}) {
-            if (defined ( my $error_code = $seq->handle_letter($_) ) ) {
-                return $error_code;
-            }
+    my $letter = $seq->current;
+
+    if ( exists($seq->handled_letters->{$letter}) ) {
+        if (defined ( my $error_code = $seq->handle_letter($letter) ) ) {
+            return $error_code;
         }
-        default {
-            $seq->add(q{?});
-            carp('Unknown letter ' . $seq->current . ' in the source.');
-        }
+    }
+    else {
+        $seq->add(q{?});
+        carp('Unknown letter ' . $seq->current . ' in the source.');
     }
 
     return;
