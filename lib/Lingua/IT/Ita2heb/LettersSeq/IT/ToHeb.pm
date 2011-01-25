@@ -451,13 +451,21 @@ sub perform_switch {
     return;
 }
 
+sub _add_geresh {
+    my ($seq) = @_;
+
+    $seq->main_add( $seq->_geresh );
+
+    return;
+}
+
 sub after_switch {
     my ($seq) = @_;
 
     $seq->add_dagesh_if_needed;
 
     if ($seq->requires_after_geresh) {
-        $seq->main_add( $seq->_geresh );
+        $seq->_add_geresh;
         $seq->unset_add_geresh;
     }
 
@@ -469,7 +477,7 @@ sub after_switch {
     }
 
     if ($seq->requires_before_geresh) {
-        $seq->main_add( $seq->_geresh );
+        $seq->_add_geresh;
         $seq->unset_add_geresh;
 
         if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
