@@ -335,7 +335,7 @@ sub _handle_letter_z {
         qw(QAMATS PATAH TSERE SEGOL HIRIQ) 
     );
 
-    sub text_to_add_requires_before_geresh {
+    sub _text_to_add_requires_before_geresh {
         my ($seq) = @_;
 
         return $seq->text_to_add ~~ @VOWEL_BEFORE_GERESH;
@@ -345,7 +345,7 @@ sub _handle_letter_z {
 {
     my @VOWEL_AFTER_GERESH = __PACKAGE__->list_heb( qw(HOLAM_MALE SHURUK) );
 
-    sub text_to_add_requires_after_geresh {
+    sub _text_to_add_requires_after_geresh {
         my ($seq) = @_;
 
         return $seq->text_to_add ~~ @VOWEL_AFTER_GERESH;
@@ -391,11 +391,11 @@ sub _add_geresh_cond {
 }
 
 sub requires_after_geresh {
-    return shift->_add_geresh_cond('text_to_add_requires_after_geresh');
+    return shift->_add_geresh_cond('_text_to_add_requires_after_geresh');
 }
 
 sub requires_before_geresh {
-    return shift->_add_geresh_cond('text_to_add_requires_before_geresh');
+    return shift->_add_geresh_cond('_text_to_add_requires_before_geresh');
 }
 
 1;    # End of Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb
@@ -461,10 +461,6 @@ Handles the Latin letter $letter.
 Whether the current letter requires a dagesh phonetic (b or p).
 
 =head2 $seq->text_to_add_requires_dagesh_lene()
-
-=head2 $seq->text_to_add_requires_before_geresh()
-
-=head2 $seq->text_to_add_requires_after_geresh()
 
 =head2 $seq->requires_after_geresh()
 
