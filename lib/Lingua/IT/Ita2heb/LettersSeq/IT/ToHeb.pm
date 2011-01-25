@@ -375,24 +375,6 @@ sub _to_add_in {
     }
 }
 
-{
-    my @VOWEL_BEFORE_GERESH = __PACKAGE__->list_heb( 
-        qw(QAMATS PATAH TSERE SEGOL HIRIQ) 
-    );
-
-    sub _text_to_add_requires_before_geresh {
-        return shift->_to_add_in(\@VOWEL_BEFORE_GERESH);
-    }
-}
-
-{
-    my @VOWEL_AFTER_GERESH = __PACKAGE__->list_heb( qw(HOLAM_MALE SHURUK) );
-
-    sub _text_to_add_requires_after_geresh {
-        return shift->_to_add_in(\@VOWEL_AFTER_GERESH);
-    }
-}
-
 sub should_add_dagesh {
     my ($seq) = @_;
 
@@ -426,17 +408,26 @@ sub add_dagesh_if_needed {
 }
 
 sub _add_geresh_cond {
-    my ($seq, $predicate) = @_;
+    my ($seq, $letters_aref) = @_;
 
-    return ($seq->should_add_geresh and $seq->$predicate());
+    return ($seq->should_add_geresh and $seq->_to_add_in($letters_aref));
 }
 
-sub requires_after_geresh {
-    return shift->_add_geresh_cond('_text_to_add_requires_after_geresh');
+{
+    my @VOWEL_AFTER_GERESH = __PACKAGE__->list_heb( qw(HOLAM_MALE SHURUK) );
+    sub requires_after_geresh {
+        return shift->_add_geresh_cond(\@VOWEL_AFTER_GERESH);
+    }
 }
 
-sub requires_before_geresh {
-    return shift->_add_geresh_cond('_text_to_add_requires_before_geresh');
+{
+    my @VOWEL_BEFORE_GERESH = __PACKAGE__->list_heb( 
+        qw(QAMATS PATAH TSERE SEGOL HIRIQ) 
+    );
+
+    sub requires_before_geresh {
+        return shift->_add_geresh_cond(\@VOWEL_BEFORE_GERESH);
+    }
 }
 
 sub perform_switch {
