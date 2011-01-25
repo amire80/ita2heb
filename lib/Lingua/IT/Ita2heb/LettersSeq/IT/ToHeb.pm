@@ -454,12 +454,10 @@ sub perform_switch {
 sub after_switch {
     my ($seq) = @_;
 
-    my $GERESH = $seq->_geresh;
-
     $seq->add_dagesh_if_needed;
 
     if ($seq->requires_after_geresh) {
-        $seq->main_add($GERESH);
+        $seq->main_add( $seq->_geresh );
         $seq->unset_add_geresh;
     }
 
@@ -471,7 +469,7 @@ sub after_switch {
     }
 
     if ($seq->requires_before_geresh) {
-        $seq->main_add( $GERESH );
+        $seq->main_add( $seq->_geresh );
         $seq->unset_add_geresh;
 
         if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
