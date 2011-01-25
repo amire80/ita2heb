@@ -361,13 +361,17 @@ sub _handle_letter_z {
     }
 }
 
+sub _to_add_in {
+    my ($seq, $letters_aref) = @_;
+
+    return ($seq->text_to_add ~~ $letters_aref);
+}
+
 {
     my @REQUIRES_DAGESH_LENE = __PACKAGE__->list_heb( qw(GIMEL DALET) );
 
     sub text_to_add_requires_dagesh_lene {
-        my ($seq) = @_;
-
-        return $seq->text_to_add ~~ @REQUIRES_DAGESH_LENE;
+        return shift->_to_add_in(\@REQUIRES_DAGESH_LENE);
     }
 }
 
@@ -377,9 +381,7 @@ sub _handle_letter_z {
     );
 
     sub _text_to_add_requires_before_geresh {
-        my ($seq) = @_;
-
-        return $seq->text_to_add ~~ @VOWEL_BEFORE_GERESH;
+        return shift->_to_add_in(\@VOWEL_BEFORE_GERESH);
     }
 }
 
@@ -387,9 +389,7 @@ sub _handle_letter_z {
     my @VOWEL_AFTER_GERESH = __PACKAGE__->list_heb( qw(HOLAM_MALE SHURUK) );
 
     sub _text_to_add_requires_after_geresh {
-        my ($seq) = @_;
-
-        return $seq->text_to_add ~~ @VOWEL_AFTER_GERESH;
+        return shift->_to_add_in(\@VOWEL_AFTER_GERESH);
     }
 }
 
@@ -415,7 +415,7 @@ sub add_dagesh_if_needed {
 
     if ( $seq->should_add_dagesh )
     {
-        if ($seq->text_to_add ne $seq->heb('RESH')) {
+        if (! $seq->_to_add_in([$seq->heb('RESH')])) {
             $seq->add_heb('DAGESH');
         }
 
@@ -468,7 +468,7 @@ sub _add_geresh_to_text {
 sub _before_geresh_helper {
     my ($seq) = @_;
 
-    if ($seq->text_to_add eq $seq->heb('HIRIQ')) {
+    if ($seq->_to_add_in([$seq->heb('HIRIQ')])) {
         $seq->_main_add_heb( 'YOD' );
     }
 
@@ -506,12 +506,12 @@ sub after_switch {
     $seq->_on_geresh('requires_before_geresh', '_before_geresh_helper');
 
     if ($seq->at_end) {
-        if ($seq->text_to_add ~~ [ $seq->list_heb(qw(QAMATS SEGOL))]) {
+        if ($seq->_to_add_in([ $seq->list_heb(qw(QAMATS SEGOL))])) {
             $seq->_main_add_heb( 'HE' );
         }
     }
 
-    if ($seq->text_to_add ~~ $seq->all_hebrew_vowels) {
+    if ($seq->_to_add_in($seq->all_hebrew_vowels)) {
         $seq->set_wrote_vowel;
     }
 
