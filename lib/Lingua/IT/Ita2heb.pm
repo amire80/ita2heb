@@ -15,30 +15,34 @@ use Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb;
 
 our $VERSION = '0.01';
 
-sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
+sub ita_to_heb {
     my ($ita, %option) = @_;
 
     my @ita_letters = split qr//xms, lc $ita;
 
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
         {
-            ita_letters => \@ita_letters,
-            disable_rafe => ($option{disable_rafe} ? 1 : 0),
+            ita_letters    => \@ita_letters,
+            disable_rafe   => ($option{disable_rafe} ? 1 : 0),
             disable_dagesh => ($option{disable_dagesh} ? 1 : 0),
-            ascii_geresh => ($option{ascii_geresh} ? 1 : 0),
-            ascii_maqaf => ($option{ascii_maqaf} ? 1 : 0),
+            ascii_geresh   => ($option{ascii_geresh} ? 1 : 0),
+            ascii_maqaf    => ($option{ascii_maqaf} ? 1 : 0),
         }
     );
 
-    # Recursion on punctuation marks
+    # Recursion on punctuation marks.
+    #<<<
     foreach my $punctuation (
-        [qr/ /ms, q{ },], [qr{-}ms, $seq->maqaf,], [qr{'}ms, q{'},] ) {
-        my ($re, $replacement) = @$punctuation;
+        [ qr/[ ]/xms,   q{ }, ],         # space
+        [ qr{-}xms,     $seq->maqaf, ],  # hyphen
+        [ qr{'}xms,     q{'}, ])         # apostrophe
+    {
+        my ($re, $replacement) = @{$punctuation};
         if ($ita =~ $re) {
-            return join $replacement,
-                map { ita_to_heb($_) } split $re, $ita;
+            return join $replacement, map { ita_to_heb($_) } split $re, $ita;
         }
     }
+    #>>>
 
     $seq->main_loop;
 
@@ -51,7 +55,7 @@ sub closed_syllable {
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
         {
             ita_letters => $letters_ref,
-            idx => $letter_index,
+            idx         => $letter_index,
         },
     );
 
