@@ -88,6 +88,19 @@ sub _build__simple_trs {
     };
 }
 
+has special_words => (
+    is => 'ro',
+    isa => 'HashRef[Str]',
+);
+
+sub _build_special_words {
+    my ($seq) = @_;
+
+    return {
+        Roma => $seq->heb('RESH,VAV,HOLAM,MEM,QAMATS,ALEF'),
+    };
+}
+
 has _geresh => (
     is => 'ro',
     isa => 'Str',
@@ -476,34 +489,34 @@ sub _on_geresh {
         qw(QAMATS PATAH TSERE SEGOL HIRIQ) 
     );
 
-sub after_switch {
-    my ($seq) = @_;
+    sub after_switch {
+        my ($seq) = @_;
 
-    $seq->add_dagesh_if_needed;
+        $seq->add_dagesh_if_needed;
 
-    $seq->_on_geresh(\@VOWEL_AFTER_GERESH, sub { return; },);
+        $seq->_on_geresh(\@VOWEL_AFTER_GERESH, sub { return; },);
 
-    $seq->main_add( $seq->text_to_add );
+        $seq->main_add( $seq->text_to_add );
 
-    if ($seq->should_add_sheva)
-    {
-        $seq->_main_add_heb( 'SHEVA' );
-    }
-
-    $seq->_on_geresh(\@VOWEL_BEFORE_GERESH, '_before_geresh_helper');
-
-    if ($seq->at_end) {
-        if ($seq->_to_add_in([ $seq->list_heb(qw(QAMATS SEGOL))])) {
-            $seq->_main_add_heb( 'HE' );
+        if ($seq->should_add_sheva)
+        {
+            $seq->_main_add_heb( 'SHEVA' );
         }
-    }
 
-    if ($seq->_to_add_in($seq->all_hebrew_vowels)) {
-        $seq->set_wrote_vowel;
-    }
+        $seq->_on_geresh(\@VOWEL_BEFORE_GERESH, '_before_geresh_helper');
 
-    return;
-}
+        if ($seq->at_end) {
+            if ($seq->_to_add_in([ $seq->list_heb(qw(QAMATS SEGOL))])) {
+                $seq->_main_add_heb( 'HE' );
+            }
+        }
+
+        if ($seq->_to_add_in($seq->all_hebrew_vowels)) {
+            $seq->set_wrote_vowel;
+        }
+
+        return;
+    }
 }
 
 sub before_switch {
@@ -526,7 +539,7 @@ sub before_switch {
 
 sub main_loop {
     my ($seq) = @_;
-
+    
     ITA_LETTER:
     while (defined($seq->next_index)) {
         foreach my $method (qw(before_switch perform_switch after_switch)) {
