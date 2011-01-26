@@ -15,13 +15,6 @@ use Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb;
 
 our $VERSION = '0.01';
 
-# Dagesh qal.
-# BET and PE must not change according to these rules in transliterated
-# Italian and KAF and TAV are not needed in Italian at all.
-# Dagesh qal in GIMEL and DALET is totally artificial, but it's part
-# of the standard...
-
-
 sub ita_to_heb {    ## no critic (Subroutines::ProhibitExcessComplexity)
     my ($ita, %option) = @_;
 

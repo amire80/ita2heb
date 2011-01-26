@@ -368,6 +368,12 @@ sub _to_add_in {
 }
 
 {
+    # Dagesh qal.
+    # BET and PE must not change according to these rules in transliterated
+    # Italian and KAF and TAV are not needed in Italian at all.
+    # Dagesh qal in GIMEL and DALET is totally artificial, but it's part
+    # of the standard...
+
     my @REQUIRES_DAGESH_LENE = __PACKAGE__->list_heb( qw(GIMEL DALET) );
 
     sub text_to_add_requires_dagesh_lene {
