@@ -22,11 +22,8 @@ sub ita_to_heb {
 
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb->new(
         {
-            ita_letters    => \@ita_letters,
-            disable_rafe   => ($option{disable_rafe} ? 1 : 0),
-            disable_dagesh => ($option{disable_dagesh} ? 1 : 0),
-            ascii_geresh   => ($option{ascii_geresh} ? 1 : 0),
-            ascii_maqaf    => ($option{ascii_maqaf} ? 1 : 0),
+            ita_letters => \@ita_letters,
+            %option,
         }
     );
 
