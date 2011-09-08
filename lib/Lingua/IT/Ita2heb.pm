@@ -157,8 +157,8 @@ also many words where it is wrong.
 
 =item * Words with ia, ie, io, iu
 
-The letter i is assumed to be a semi-vowel before most of the time,
-but there are also many words where it is wrong.
+The letter i is assumed to be a semi-vowel before a vowel most of
+the time, but there are also many words where it is wrong.
 
 =item * Words with accented vowels
 
@@ -229,7 +229,7 @@ L<http://search.cpan.org/dist/Lingua-IT-Ita2heb/>
 I thank all my Italian and Hebrew teachers.
 
 I thank Shlomi Fish for important technical support
-and refactoring the tests.
+and refactoring.
 
 =head1 LICENSE AND COPYRIGHT
 
