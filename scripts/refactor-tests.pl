@@ -7,7 +7,7 @@ use IO::All;
 
 my $text = io("-")->slurp;
 
-# Space.
+# Space
 my $sp = ' ' x 4;
 my $dq_s_re = qr/[\s\n]*"[^"]+"[\s\n]*(?:#[^\n]*[\s\n]*)?/ms;
 
@@ -16,3 +16,4 @@ $text =~ s/^ok *\([\s\n]*Lingua::IT::Ita2heb::ita_to_heb *\(*(?<ita>[^\)]+)\)[\s
 /egms;
 
 print $text;
+
