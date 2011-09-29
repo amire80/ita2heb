@@ -22,7 +22,7 @@ case $diff_exit_code in
     rm $FILENAME.bak
 ;;
 2)
-    echo trouble in diff after perltidy, exiting.
+    echo Trouble in diff after perltidy, exiting.
     exit 1
 ;;
 esac
@@ -31,3 +31,4 @@ echo criticizing
 perlcritic -brutal --verbose 8 $FILENAME
 
 exit $?
+
