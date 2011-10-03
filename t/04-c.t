@@ -252,3 +252,4 @@ check_ita_tr(
         . "\N{HEBREW LETTER SAMEKH}",
     'Cimolais',
 );
+
