@@ -16,7 +16,7 @@ my $build = Test::Run::Builder->new(
     {
         'Module::Build' => '0.36',
     },
-    requires => 
+    requires =>
     {
         'base' => 0,
         'Carp' => 0,

@@ -47,7 +47,7 @@ my $SANT_AGATA = "\N{HEBREW LETTER SAMEKH}"
     . "\N{HEBREW LETTER TET}"
     . "\N{HEBREW POINT QAMATS}"
     . "\N{HEBREW LETTER HE}";
-    
+
 check_ita_tr(
     [q(Emilia-Romagna)],
         $EMILIA

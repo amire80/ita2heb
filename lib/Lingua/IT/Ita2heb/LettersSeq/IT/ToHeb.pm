@@ -126,7 +126,7 @@ sub _build_handled_letters {
         (map { $_ => "_handle_letter_a" } @{$seq->types_of_a}),
         (map { $_ => "_handle_letter_i" } @{$seq->types_of_i}),
         (map { $_ => "_handle_letter_u" } @{$seq->types_of_u}),
-        (map { $_ => "_handle_simple_tr_letter" } 
+        (map { $_ => "_handle_simple_tr_letter" }
             keys(%{$seq->_simple_trs})
         ),
     };
@@ -185,7 +185,7 @@ sub _handle_letter_c {
     my ($seq) = @_;
 
     if (
-        not(    $seq->match_before([['s']]) 
+        not(    $seq->match_before([['s']])
                 and $seq->match_cg_mod_after([]))
     )
     {
@@ -193,7 +193,7 @@ sub _handle_letter_c {
             $seq->set_optional_cg_geresh([['c']]) ? 'TSADI' : 'QOF'
         );
     }
-    
+
     return;
 }
 
@@ -402,7 +402,7 @@ sub should_add_dagesh {
         $seq->requires_dagesh_phonetic
             or
         ($seq->geminated and $seq->dagesh_enabled)   # Dagesh geminating
-            or 
+            or
         (
             (not $seq->match_vowel_before)
                 and $seq->text_to_add_requires_dagesh_lene
@@ -485,8 +485,8 @@ sub _on_geresh {
 {
     my @VOWEL_AFTER_GERESH = __PACKAGE__->list_heb( qw(HOLAM_MALE SHURUK) );
 
-    my @VOWEL_BEFORE_GERESH = __PACKAGE__->list_heb( 
-        qw(QAMATS PATAH TSERE SEGOL HIRIQ) 
+    my @VOWEL_BEFORE_GERESH = __PACKAGE__->list_heb(
+        qw(QAMATS PATAH TSERE SEGOL HIRIQ)
     );
 
     sub after_switch {
@@ -539,7 +539,7 @@ sub before_switch {
 
 sub main_loop {
     my ($seq) = @_;
-    
+
     ITA_LETTER:
     while (defined($seq->next_index)) {
         foreach my $method (qw(before_switch perform_switch after_switch)) {
@@ -566,7 +566,7 @@ __END__
 
 =head1 NAME
 
-Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb - Italian-to-Hebrew specific 
+Lingua::IT::Ita2heb::LettersSeq::IT::ToHeb - Italian-to-Hebrew specific
 subclass of Lingua::IT::Ita2heb::LettersSeq::IT
 
 =head1 DESCRIPTION

@@ -15,9 +15,9 @@ use Moose::Role;
 my %HEBREW_LETTERS =
 (
     (
-    map { 
+    map {
         my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
-        $l => (eval qq{"\\N{HEBREW LETTER $heb}"}) 
+        $l => (eval qq{"\\N{HEBREW LETTER $heb}"})
     }
     qw(ALEF BET GIMEL DALET HE VAV ZAYIN HET TET YOD KAF FINAL_KAF LAMED
        MEM FINAL_MEM NUN FINAL_NUN SAMEKH AYIN PE FINAL_PE TSADI FINAL_TSADI
@@ -26,18 +26,18 @@ my %HEBREW_LETTERS =
     ),
     SHIN => "\N{HEBREW LETTER SHIN}\N{HEBREW POINT SHIN DOT}",
     (
-    map { 
+    map {
         my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
-        $l => (eval qq{"\\N{HEBREW POINT $heb}"}) 
+        $l => (eval qq{"\\N{HEBREW POINT $heb}"})
     }
     qw(QAMATS HATAF_QAMATS PATAH HATAF_PATAH TSERE SEGOL HATAF_SEGOL HIRIQ
     HOLAM QUBUTS SHEVA RAFE),
     ),
     ( map { $_ => "\N{HEBREW POINT DAGESH OR MAPIQ}" } qw(DAGESH MAPIQ) ),
     (
-    map { 
+    map {
         my $l = $_; my $heb = $l; $heb =~ tr/_/ /;
-        "TRUE_$l" => (eval qq{"\\N{HEBREW PUNCTUATION $heb}"}) 
+        "TRUE_$l" => (eval qq{"\\N{HEBREW PUNCTUATION $heb}"})
     } qw(GERESH MAQAF)
     ),
 );
@@ -62,7 +62,7 @@ sub heb {
 sub list_heb {
     my $self = shift;
 
-    return (map { $self->heb($_) } @_);    
+    return (map { $self->heb($_) } @_);
 }
 
 

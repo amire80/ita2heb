@@ -69,7 +69,7 @@ sub should_add_alef
 {
     my ($self) = @_;
 
-    return 
+    return
     (
         $self->_is_current_a_vowel
         and ($self->at_start or $self->wrote_vowel)
@@ -121,7 +121,7 @@ sub _match_optional_cg {
 
 sub set_optional_cg_geresh {
     my $seq = shift;
-    
+
     my $verdict = $seq->_match_optional_cg(@_);
 
     if ($verdict) {
@@ -138,7 +138,7 @@ sub should_add_sheva {
     (
         (!$seq->curr_lett_eq_next)
             and
-        (List::MoreUtils::none 
+        (List::MoreUtils::none
             { $seq->safe_match_places(@{$_}) }
             @{$seq->sheva_specs()},
         )
@@ -163,7 +163,7 @@ sub does_v_require_bet {
 
     return (
         $seq->after_start
-            and 
+            and
         ($seq->match_before([$seq->requires_bet_for_v])
         or $seq->match_after([$seq->requires_bet_for_v])
         or $seq->at_end)
@@ -192,7 +192,7 @@ Version 0.01
 
     my $seq = Lingua::IT::Ita2heb::LettersSeq::IT->new(
         {
-            ita_letters => \@ita_letters,  
+            ita_letters => \@ita_letters,
         }
     );
 
