@@ -1,6 +1,7 @@
 Build.PL
 Changes
 inc/Test/Run/Builder.pm
+LICENSE
 MANIFEST
 Makefile.PL
 README
@@ -29,3 +30,4 @@ t/style-trailing-space.t
 t/lib/CheckItaTrans.pm
 scripts/refactor-tests.pl
 META.yml
+META.json
