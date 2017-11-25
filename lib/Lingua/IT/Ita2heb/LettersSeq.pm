@@ -10,7 +10,7 @@ our $VERSION = '0.01';
 
 has ita_letters => (
     isa => 'ArrayRef[Str]',
-    is => 'ro', 
+    is => 'ro',
     traits => ['Array'],
     handles => {
         '_letter' => 'get',
@@ -18,7 +18,7 @@ has ita_letters => (
     },
 );
 
-has idx => (isa => 'Int', traits => ['Number'], is => 'rw', 
+has idx => (isa => 'Int', traits => ['Number'], is => 'rw',
     handles => { add_to_idx => 'add',}, default => -1,
 );
 
@@ -192,7 +192,7 @@ Version 0.01
 
     my $seq = Lingua::IT::Ita2heb::LettersSeq->new(
         {
-            ita_letters => \@ita_letters,  
+            ita_letters => \@ita_letters,
         }
     );
 

@@ -11,7 +11,7 @@ use Readonly;
 our $VERSION = '0.01';
 
 use Moose::Role;
- 
+
 my @TYPES_OF_A = ('a', "\N{LATIN SMALL LETTER A WITH GRAVE}");
 my @TYPES_OF_E = (
     'e',

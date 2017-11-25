@@ -41,7 +41,7 @@ sub check_ita_transliteration {
     local $Test::Builder::Level =  ## no critic Variables::ProhibitPackageVars
         $Test::Builder::Level + 1; ## no critic Variables::ProhibitPackageVars
 
-    my $result = 
+    my $result =
         Lingua::IT::Ita2heb::ita_to_heb(
             ref($ita) eq 'ARRAY' ? (@{$ita}) : $ita
         );

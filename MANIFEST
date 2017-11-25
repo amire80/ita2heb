@@ -1,6 +1,7 @@
 Build.PL
 Changes
 inc/Test/Run/Builder.pm
+LICENSE
 MANIFEST
 Makefile.PL
 README
@@ -25,6 +26,8 @@ t/10constants-role.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
+t/style-trailing-space.t
 t/lib/CheckItaTrans.pm
 scripts/refactor-tests.pl
 META.yml
+META.json
